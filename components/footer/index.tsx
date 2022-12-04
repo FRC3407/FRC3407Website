@@ -4,7 +4,7 @@ import styles from "../../styles/Footer.module.scss"
 const Footer: NextComponentType = () => {
     return (
         <div className={styles.footer}>
-            <h1>hi</h1>
+            <p>This is a footer :O (wow)</p>
         </div>
     )
 }
