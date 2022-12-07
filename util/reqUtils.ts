@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from "next"
 import { ReqCachingOptions } from "../typings"
 
 const defaultReqUrl = "http://localhost:3000"
@@ -42,4 +43,14 @@ const proFetch = async (url: string, init?: RequestInit, cacheOptions?: ReqCachi
     return await fetch(thisReq, init)
 }
 
-export { proFetch }
+function filterBadReq(req: NextApiRequest, res: NextApiResponse) {
+    console.log(req)
+    if (req.headers["sec-fetch-site"] !== "same-origin") {
+        res.status(403).send("no")
+        return false
+    }
+
+    return true
+}
+
+export { proFetch, filterBadReq }
