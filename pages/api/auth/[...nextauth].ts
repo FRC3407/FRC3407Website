@@ -18,12 +18,13 @@ export const authOptions = {
                 Brady: { id: 0, name: "Brady" }
             }
       
-            if (credentials?.username && user[credentials.username]) {
+            if (credentials?.username && typeof user[credentials.username] !== "undefined") {
               // Any object returned will be saved in `user` property of the JWT
-              return user as any
+              console.log(user[credentials.username])
+              return user[credentials.username] as any
             } else {
               // If you return null then an error will be displayed advising the user to check their details.
-              return null
+              throw new Error("my helicopter")
       
               // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
             }
