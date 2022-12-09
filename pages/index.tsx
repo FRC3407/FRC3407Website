@@ -2,7 +2,7 @@ import Layout from "../components/layout"
 
 export default function Home() {
   return (
-    <Layout>
+    <Layout title="Home">
       <h1>New Robotics Website!</h1>
       <div className="container-narrow">
 
