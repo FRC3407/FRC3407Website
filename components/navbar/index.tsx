@@ -6,7 +6,7 @@ const Navbar: NextComponentType = () => {
     return (
         <div className={style.nav}>
             <NavLink href="/">Home</NavLink>
-            <NavLink href="/page2">Page2</NavLink>
+            <NavLink href="/page2">Page 2</NavLink>
         </div>
     )
 }
