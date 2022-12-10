@@ -31,6 +31,9 @@ export const authOptions = {
         }
     })
   ],
+  pages: {
+    error: '/auth/error',
+  }
 }
 
 export default NextAuth(authOptions)

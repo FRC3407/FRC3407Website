@@ -1,0 +1,17 @@
+.container {
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.box {
+	border: 1px solid grey;
+	border-radius: 10px;
+	width: fit-content;
+	height: fit-content;
+
+	padding: 20px;
+}
