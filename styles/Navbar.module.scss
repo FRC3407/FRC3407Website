@@ -1,3 +1,6 @@
+$link-color: rgb(67, 72, 90);
+$active-link-color: rgb(59, 105, 71);
+
 .nav {
   font-size: small;
   display: flex;
@@ -7,12 +10,16 @@
   padding: 10px;
 }
 
+.nav a {
+  color: white;
+}
+
 .button {
   width: auto;
   margin: 0px 5px;
   font-size: 16pt;
   padding: 5px 15px;
-  background-color: rgb(67, 72, 90);
+  background-color: $link-color;
 
   color: white;
   text-decoration: none;
@@ -22,13 +29,13 @@
 }
 
 .button.currentPath {
-  background-color: rgb(82, 59, 105);
+  background-color: $active-link-color;
 }
 
 .button:hover {
-  background-color: rgb(72, 81, 112);
+  background-color: lighten($link-color, 10%);
 }
 
 .button.currentPath:hover {
-  background-color: rgb(105, 65, 146);
+  background-color: lighten($active-link-color, 10%);
 }
