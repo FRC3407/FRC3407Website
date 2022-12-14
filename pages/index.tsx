@@ -19,7 +19,7 @@ export default function Home() {
                 Who are the WildCards?
               </h3>
               <p>
-                The WildCards are the Robotics team from Mounds View High School in Arden Hills, MN. Founded in 2009, we have competed annually in FIRST (For Inspiration and Recognition of Science and Technology) Robotics competition as team 3407. Each year we are presented a task in January and are given six weeks to design and build a robot from the ground up. We then br /ing our robot to the Williams Arena at the University of Minnesota to compete against teams from throughout the state in the 10,000 Lakes Regional Competition.
+                The WildCards are the Robotics team from Mounds View High School in Arden Hills, MN. Founded in 2009, we have competed annually in FIRST (For Inspiration and Recognition of Science and Technology) Robotics competition as team 3407. Each year we are presented a task in January and are given six weeks to design and build a robot from the ground up. We then bring our robot to the Williams Arena at the University of Minnesota to compete against teams from throughout the state in the 10,000 Lakes Regional Competition.
               </p>
               <p>
                 We focus on providing students with hands-on experience in science and technology, but our team consists of more than that. While our primary objective is to build a robot each year, we strive to have groups that focus on the behind-the-scenes structure of our team, including finding sponsors to support us and recruiting new members. These groups  have members with interests in marketing, sales, researching, graphic design, and so much more, and do everything from managing our finances to designing our T-shirts.
