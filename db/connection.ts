@@ -1,21 +1,21 @@
 import mongoose from "mongoose";
 
 class Connection {
-    public static async createConnect() {
-        try {
-            let connection = await mongoose.connect("");
+  public static async createConnect() {
+    try {
+      let connection = await mongoose.connect("");
 
-            mongoose.connection.on("error", (error) => {
-                console.error(error)
-            })
+      mongoose.connection.on("error", (error) => {
+        console.error(error);
+      });
 
-            return connection
-        } catch(error: any) {
-            console.error(error)
+      return connection;
+    } catch (error: any) {
+      console.error(error);
 
-            return error as Error
-        }
+      return error as Error;
     }
+  }
 }
 
-export default Connection
+export default Connection;

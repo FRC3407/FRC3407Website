@@ -3633,6 +3633,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:2.8.1":
+  version: 2.8.1
+  resolution: "prettier@npm:2.8.1"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 4f21a0f1269f76fb36f54e9a8a1ea4c11e27478958bf860661fb4b6d7ac69aac1581f8724fa98ea3585e56d42a2ea317a17ff6e3324f40cb11ff9e20b73785cc
+  languageName: node
+  linkType: hard
+
 "pretty-format@npm:^3.8.0":
   version: 3.8.0
   resolution: "pretty-format@npm:3.8.0"
@@ -4393,6 +4402,7 @@ __metadata:
     mongoose: ^6.7.5
     next: 13.0.2
     next-auth: ^4.18.4
+    prettier: 2.8.1
     react: 18.2.0
     react-dom: 18.2.0
     sass: ^1.56.1

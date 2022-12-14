@@ -1,56 +1,84 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import { ReqCachingOptions } from "../typings"
+import { NextApiRequest, NextApiResponse } from "next";
+import { ReqCachingOptions } from "../typings";
 
-const defaultReqUrl = "http://localhost:3000"
+const defaultReqUrl = "http://localhost:3000";
 
 // `${url}#${JSON.stringify(init || {})}`
-type TCachedName = string
+type TCachedName = string;
 
 interface ICachedResult {
-    value: Response
-    valTime: string | "-1" | "+1"
+  value: Response;
+  valTime: string | "-1" | "+1";
 }
-let reqCache: Map<TCachedName, ICachedResult> = new Map<TCachedName, ICachedResult>()
+let reqCache: Map<TCachedName, ICachedResult> = new Map<
+  TCachedName,
+  ICachedResult
+>();
 
-const proFetch = async (url: string, init?: RequestInit, cacheOptions?: ReqCachingOptions) => {
-    let thisReq = ""
+const proFetch = async (
+  url: string,
+  init?: RequestInit,
+  cacheOptions?: ReqCachingOptions
+) => {
+  let thisReq = "";
 
-    const {
-        cacheResults,
-        validTime
-    } = { ...{ cacheResults: true, validTime: 86400000}, ...(cacheOptions ?? {})}
+  const { cacheResults, validTime } = {
+    ...{ cacheResults: true, validTime: 86400000 },
+    ...(cacheOptions ?? {}),
+  };
 
-    if (!url.startsWith("http") && url.match(/[a-z0-9]*\.[a-z/]{1,}/gi) === null) thisReq = `${defaultReqUrl}${url.startsWith("/") ? "" : "/"}${url}`
-    else if (url.startsWith("http") && url.match(/[a-z0-9]*\.[a-z/]{1,}/gi)?.length) thisReq = `http://${(url.match(/[a-z0-9]*\.[a-z/]{1,}/gi) as string[])[0]}`
-    else throw new SyntaxError(`URL ${url} is not a valid request URL`)
+  if (!url.startsWith("http") && url.match(/[a-z0-9]*\.[a-z/]{1,}/gi) === null)
+    thisReq = `${defaultReqUrl}${url.startsWith("/") ? "" : "/"}${url}`;
+  else if (
+    url.startsWith("http") &&
+    url.match(/[a-z0-9]*\.[a-z/]{1,}/gi)?.length
+  )
+    thisReq = `http://${(url.match(/[a-z0-9]*\.[a-z/]{1,}/gi) as string[])[0]}`;
+  else throw new SyntaxError(`URL ${url} is not a valid request URL`);
 
-    if (cacheResults && validTime > 0 && String(validTime).toLowerCase() !== "none") {
-        const cachedName = `${url}#${JSON.stringify(init || {})}`
-        const gotCached = reqCache.get(cachedName)
-        if (typeof gotCached !== "undefined" && (gotCached.valTime === "-1" || new Date((reqCache.get(cachedName) as ICachedResult).valTime).getTime() < new Date().getTime())) return (reqCache.get(cachedName) as ICachedResult).value
-        
-        const res = await fetch(thisReq, init)
+  if (
+    cacheResults &&
+    validTime > 0 &&
+    String(validTime).toLowerCase() !== "none"
+  ) {
+    const cachedName = `${url}#${JSON.stringify(init || {})}`;
+    const gotCached = reqCache.get(cachedName);
+    if (
+      typeof gotCached !== "undefined" &&
+      (gotCached.valTime === "-1" ||
+        new Date(
+          (reqCache.get(cachedName) as ICachedResult).valTime
+        ).getTime() < new Date().getTime())
+    )
+      return (reqCache.get(cachedName) as ICachedResult).value;
 
-        const valTime = (typeof validTime === "number") ? new Date(new Date().getTime() + validTime).toISOString() : (validTime === "forever") ? "+1" : "-1"
-        reqCache.set(cachedName, {
-            value: res,
-            valTime
-        })
+    const res = await fetch(thisReq, init);
 
-        return res
-    }
+    const valTime =
+      typeof validTime === "number"
+        ? new Date(new Date().getTime() + validTime).toISOString()
+        : validTime === "forever"
+        ? "+1"
+        : "-1";
+    reqCache.set(cachedName, {
+      value: res,
+      valTime,
+    });
 
-    return await fetch(thisReq, init)
-}
+    return res;
+  }
+
+  return await fetch(thisReq, init);
+};
 
 function filterBadReq(req: NextApiRequest, res: NextApiResponse) {
-    console.log(req)
-    if (req.headers["sec-fetch-site"] !== "same-origin") {
-        res.status(403).send("no")
-        return false
-    }
+  console.log(req);
+  if (req.headers["sec-fetch-site"] !== "same-origin") {
+    res.status(403).send("no");
+    return false;
+  }
 
-    return true
+  return true;
 }
 
-export { proFetch, filterBadReq }
+export { proFetch, filterBadReq };

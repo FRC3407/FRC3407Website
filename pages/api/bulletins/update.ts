@@ -1,10 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import path from 'path'
-import { IBullet } from '../../../typings'
+import type { NextApiRequest, NextApiResponse } from "next";
+import path from "path";
+import { IBullet } from "../../../typings";
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<boolean>
-) {
-    
-}
+  req: NextApiRequest,
+  res: NextApiResponse<boolean>
+) {}
