@@ -10,7 +10,7 @@ export default function Home() {
 
           <div className="row-fluid">
             <div className="span12">
-              <div className="home-header">
+              <div className="page-header home-header">
                 <h1>Mounds View Robotics</h1>
                 <h3>FRC TEAM 3407</h3>
               </div>

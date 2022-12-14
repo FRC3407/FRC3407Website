@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+$bg-color: rgb(26, 26, 27);
+$page-header-color: rgb(76, 19, 118);
+$home-header-color: rgb(23, 110, 49);
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 // a {
@@ -16,12 +21,39 @@ body {
   transition: all 0.2s;
 }
 
+.content {
+  padding: 10px 40px;
+  margin-bottom: 100px;
+}
+
+.page-header {
+  background-color: $page-header-color;
+  background-image: linear-gradient(90deg, $bg-color, $page-header-color , lighten($page-header-color, 20%) , $page-header-color , $bg-color);
+  text-align: center;
+  padding: 40px 120px;
+  width: fit-content;
+  margin: 20px auto;
+}
+
+.page-header h2 {
+  margin: 0;
+}
+
+.home-header {
+  background-color: $home-header-color;
+  background-image: linear-gradient(90deg, $bg-color, $home-header-color , lighten($home-header-color, 20%) , $home-header-color , $bg-color);
+}
+
+.centeredText {
+  text-align: center;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
   body {
     color: white;
-    background: black;
+    background: $bg-color;
   }
 }

@@ -10,7 +10,9 @@ export default function Layout({ children, title }: { children: any, title: stri
                 <meta name="description" content="The website for FRC 3407" />
             </Head>
             <Navbar/>
-            {children}
+            <div className="content">
+                {children}
+            </div>
             <Footer/>
         </div>
     )
