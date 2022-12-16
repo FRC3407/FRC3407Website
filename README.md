@@ -10,7 +10,8 @@ After install those, clone this repo and run the following command:
 yarn
 ```
 <br/>
-To Start a local dev server run this: 
+To Start a local dev server run this:
+ 
 ```bash
 # To start the dev server run
 yarn dev
