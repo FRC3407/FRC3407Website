@@ -11,7 +11,8 @@ yarn
 ```
 <br/>
 To Start a local dev server run this:
- 
+<br />
+
 ```bash
 # To start the dev server run
 yarn dev
