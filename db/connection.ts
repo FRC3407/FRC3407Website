@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 class Connection {
   public static async createConnect() {
+    if (!process.env.MONGI_URI) return {}
     try {
       let connection = await mongoose.connect("");
 
