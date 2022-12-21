@@ -1,7 +1,7 @@
 # FRC3407Website
 
-Code for the FRC 3407 Wild Cards team website.
-=======
+# Code for the FRC 3407 Wild Cards team website.
+
 To contribute:
 Install [NodeJS](https://nodejs.org/en/) and [Yarn Package Manager](https://yarnpkg.com/getting-started/install)
 After install those, clone this repo and run the following command:

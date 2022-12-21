@@ -1,8 +1,12 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = {
-  // Configure one or more authentication providers
+export const authOptions: AuthOptions = {
+
+  callbacks: {
+
+  },
+
   providers: [
     CredentialsProvider({
       name: "the brady login thingy",
@@ -10,6 +14,7 @@ export const authOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials, req) {
         console.log(credentials, req);
         // Add logic here to look up the user from the credentials supplied
