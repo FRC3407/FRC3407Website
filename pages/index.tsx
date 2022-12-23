@@ -1,6 +1,11 @@
+import { useSession } from "next-auth/react";
 import Layout from "../components/layout";
 
-export default function Home() {
+function Home() {
+  const { data: session, status } = useSession();
+
+  console.log(session, status);
+
   return (
     <Layout title="Home">
       <h1>New Robotics Website!</h1>
@@ -57,3 +62,5 @@ export default function Home() {
     </Layout>
   );
 }
+
+export default Home;

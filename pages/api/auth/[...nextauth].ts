@@ -1,33 +1,40 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { UserAccessLevelRolesEnum } from "../../../util/enums";
 
 export const authOptions: AuthOptions = {
-
   callbacks: {
+    async signIn(params) {
+      return true;
+    },
 
+    async jwt({ token }) {
+      token.accessLevel = UserAccessLevelRolesEnum["dev"];
+      return token;
+    },
+
+    async session({ token, session, user }) {
+      (session.user as any).accessLevel = token.accessLevel;
+      return session;
+    },
   },
 
   providers: [
+    // Remove this provider in production, it's only for testing
     CredentialsProvider({
       name: "the brady login thingy",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: {
+          label: "Email",
+          type: "text",
+          placeholder: "red@theimposter.sus",
+        },
         password: { label: "Password", type: "password" },
       },
 
       async authorize(credentials, req) {
-        console.log(credentials, req);
-        // Add logic here to look up the user from the credentials supplied
-        const user: { [key: string]: { id: number; name: string } } = {
-          Brady: { id: 0, name: "Brady" },
-        };
-
-        if (
-          credentials?.username &&
-          typeof user[credentials.username] !== "undefined"
-        ) {
-          console.log(user[credentials.username]);
-          return user[credentials.username] as any;
+        if (credentials?.username) {
+          return { name: credentials.username || "", id: "5" };
         } else {
           throw new Error("Invalid User");
         }
