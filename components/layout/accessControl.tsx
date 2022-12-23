@@ -21,7 +21,7 @@ export default function AccessControlLayer({
       !loggedInUser
     )
       signIn();
-  }, [status, loggedInUser]);
+  }, [status, loggedInUser, children]);
 
   if (
     loggedInUser &&
