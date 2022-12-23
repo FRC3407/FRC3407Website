@@ -1,10 +1,10 @@
 export enum UserAccessLevelRolesEnum {
-  adm = 3,
+  adm = 4,
   col = 2,
   tm = 1,
-  dev = 4,
+  dev = parseInt(process.env.DEV_ACCESS_LEVEL ?? "") ?? 4,
   vis = 0,
-  admin = 3,
+  admin = 4,
   colead = 2,
   member = 1,
 }

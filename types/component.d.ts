@@ -1,13 +1,15 @@
 import { NextComponentType } from "next/dist/shared/lib/utils";
 import { UserAccessLevelRolesEnum } from "../util/enums";
 
-export interface AuthOptions {
-  accessLevel?: keyof typeof UserAccessLevelRolesEnum;
+export type AccessLevels = keyof typeof UserAccessLevelRolesEnum;
+
+export interface IAuthOptions {
+  accessLevel?: AccessLevels | AccessLevels[];
   loading?: NextComponentType;
   unauthorized?: string;
   requireSignIn?: boolean;
 }
 
 export interface AuthComponent extends NextComponentType {
-  auth?: AuthOptions;
+  auth?: IAuthOptions;
 }

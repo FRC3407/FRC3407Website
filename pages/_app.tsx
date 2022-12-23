@@ -14,13 +14,13 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps<{ session: Session }>) {
-  console.log((Component as AuthComponent).auth, "this");
   return (
     <SessionProvider session={session}>
       <ErrorBoundary>
         {(Component as AuthComponent).auth ? (
           <AccessControlLayer>
-            {(<Component {...pageProps} />) as any}
+            {/* @ts-ignore-error */}
+            <Component {...pageProps} />
           </AccessControlLayer>
         ) : (
           <Component {...pageProps} />

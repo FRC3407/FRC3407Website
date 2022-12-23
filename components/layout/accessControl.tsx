@@ -1,38 +1,44 @@
 import { NextComponentType } from "next";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
-import { AuthOptions } from "../../types/component";
+import { AccessLevels, IAuthOptions } from "../../types/component";
 import { UserAccessLevelRolesEnum } from "../../util/enums";
 import AccessControlledLoading from "../loading/accessControlLoading";
 
 export default function AccessControlLayer({
   children,
 }: {
-  children: NextComponentType & { auth?: AuthOptions };
+  children: NextComponentType & { auth?: IAuthOptions };
 }): JSX.Element {
   const { data: session, status } = useSession({ required: true });
   const loggedInUser = !!session?.user;
+  const auth = ((children as any).type.auth ?? {}) as IAuthOptions;
+  const requiredSignIn = auth.requireSignIn || !!auth.unauthorized;
+  auth.accessLevel = auth.accessLevel ?? "tm";
 
   useEffect(() => {
     if (status === "loading") return;
+    if (requiredSignIn && !loggedInUser) signIn();
+  }, [status, loggedInUser, requiredSignIn]);
+
+  if (loggedInUser) {
     if (
-      ((children.auth?.requireSignIn ?? true) ||
-        !!children.auth?.unauthorized) &&
-      !loggedInUser
+      Array.isArray(auth.accessLevel) &&
+      !auth.accessLevel.every(
+        (accessLevel) =>
+          UserAccessLevelRolesEnum[accessLevel] !==
+          (session.user as any).accessLevel
+      )
     )
-      signIn();
-  }, [status, loggedInUser, children]);
+      return <>{children}</>;
+    if (
+      !Array.isArray(auth.accessLevel) &&
+      UserAccessLevelRolesEnum[auth.accessLevel as AccessLevels] <=
+        (session.user as any).accessLevel
+    )
+      return <>{children}</>;
+    window.location.replace(auth.unauthorized ?? "/error/access-denied");
+  }
 
-  if (
-    loggedInUser &&
-    (session.user as any).accessLevel ==
-      UserAccessLevelRolesEnum[children.auth?.accessLevel ?? "tm"]
-  )
-    return <>{children}</>;
-  else if (loggedInUser)
-    window.location.replace(
-      children.auth?.unauthorized ?? "/error/access-denied"
-    );
-
-  return (children.auth?.loading || AccessControlledLoading()) as JSX.Element;
+  return (auth.loading || AccessControlledLoading()) as JSX.Element;
 }
