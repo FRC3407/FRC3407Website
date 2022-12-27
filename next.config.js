@@ -6,6 +6,9 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname
+  }
 };
 
 module.exports = nextConfig;
