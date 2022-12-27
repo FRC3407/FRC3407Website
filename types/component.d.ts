@@ -10,6 +10,6 @@ export interface IAuthOptions {
   requireSignIn?: boolean;
 }
 
-export interface AuthComponent extends NextComponentType {
+export interface ExtendedComponent extends NextComponentType {
   auth?: IAuthOptions;
 }

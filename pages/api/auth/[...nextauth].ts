@@ -15,7 +15,6 @@ export const authOptions: AuthOptions = {
     },
 
     async session({ token, session, user }) {
-      console.log(token);
       (session.user as any).accessLevel = token.accessLevel;
       return session;
     },

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "yarn prettier --write . && next dev",
-    "build": "yarn prettier --write . && next build",
+    "build": "next build",
+    "prebuild": "yarn prettier --write . && node prebuild",
     "start": "next start",
     "lint": "next lint"
   },

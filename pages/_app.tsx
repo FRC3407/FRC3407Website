@@ -2,13 +2,12 @@
 // Or not whatever you prefer
 
 import "../styles/globals.scss";
-import type { AppProps } from "next/app";
+import type { AppProps, NextWebVitalsMetric } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import ErrorBoundary from "../components/errors";
 import { Session } from "next-auth";
-import { Component } from "react";
-import { AuthComponent } from "../types/component";
-import AccessControlLayer from "../components/layout/accessControl";
+import { ExtendedComponent } from "../types/component";
+import AccessControlLayer from "@components/layout/accessControl";
 
 export default function App({
   Component,
@@ -17,7 +16,7 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <ErrorBoundary>
-        {(Component as AuthComponent).auth ? (
+        {(Component as ExtendedComponent).auth ? (
           <AccessControlLayer>
             {/* @ts-ignore-error */}
             <Component {...pageProps} />
@@ -28,4 +27,12 @@ export default function App({
       </ErrorBoundary>
     </SessionProvider>
   );
+}
+
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+  fetch("/api/metrics/report", {
+    body: JSON.stringify(metric),
+    headers: { "content-type": "application/json" },
+    method: "PUT",
+  });
 }

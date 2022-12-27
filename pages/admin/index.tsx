@@ -7,9 +7,9 @@ const auth: IAuthOptions = {
 
 function AdminPage() {
   return (
-    <Layout title="admin">
+    <Layout title="Admin Dashboard">
       <div>
-        <h1>admin</h1>
+        <h1>Admin Dashboard</h1>
       </div>
     </Layout>
   );
