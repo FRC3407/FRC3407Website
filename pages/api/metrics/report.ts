@@ -10,9 +10,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     !req.headers.referer
   )
     return;
-  addReport({
-    path: req.headers.referer.replace(domainRegex, ""),
-    time: new Date().toISOString(),
-    ...req.body,
-  } as never);
+  // addReport({
+  //   path: req.headers.referer.replace(domainRegex, ""),
+  //   time: new Date().toISOString(),
+  //   ...req.body,
+  // } as never);
 }
