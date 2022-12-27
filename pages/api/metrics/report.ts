@@ -12,10 +12,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     !req.headers.referer
   )
     return;
-  fs.writeFileSync(path.join(process.cwd(), "json", "metrics.json"), JSON.stringify("hi"))
-  // addReport({
-  //   path: req.headers.referer.replace(domainRegex, ""),
-  //   time: new Date().toISOString(),
-  //   ...req.body,
-  // } as never);
+  console.log(`Report Received`)
 }
