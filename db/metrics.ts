@@ -9,7 +9,7 @@ const config = getConfig() as {
 };
 const metricsPath = path.join(
   config.serverRuntimeConfig.PROJECT_ROOT,
-  "public",
+  "json",
   "metrics.json"
 );
 
