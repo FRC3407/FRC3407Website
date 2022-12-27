@@ -7,7 +7,7 @@ const nextConfig = {
     defaultLocale: "en",
   },
   serverRuntimeConfig: {
-    PROJECT_ROOT: __dirname
+    PROJECT_ROOT: process.cwd()
   }
 };
 
