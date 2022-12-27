@@ -14,7 +14,7 @@ const metricsPath = path.join(
 );
 
 export async function addReport(report: IReport) {
-  console.log(fs.readdirSync(__dirname));
+  console.log(fs.readdirSync(config.serverRuntimeConfig.PROJECT_ROOT));
   const content = JSON.parse(
     fs.readFileSync(metricsPath, "utf-8")
   ) as IReport[];
