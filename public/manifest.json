@@ -1,0 +1,10 @@
+{
+  "name": "FRC Team 3407",
+  "short_name": "Team 3407",
+  "icons": [],
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

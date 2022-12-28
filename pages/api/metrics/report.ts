@@ -12,5 +12,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     !req.headers.referer
   )
     return;
-  console.log(`Report Received`)
+  // console.log(`Report Received`);
 }
