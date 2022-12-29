@@ -8,3 +8,11 @@ export enum UserAccessLevelRolesEnum {
   colead = 2,
   member = 1,
 }
+
+export const UserAccessDashboardsEnum = {
+  4: "/admin",
+  3: "/developer",
+  2: "/colead",
+  1: "/team",
+  0: "/",
+};

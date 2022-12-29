@@ -6,8 +6,9 @@ import Document, {
   NextScript,
 } from "next/document";
 
-const APP_NAME = "next-pwa example";
-const APP_DESCRIPTION = "This is an example of using next-pwa plugin";
+const APP_NAME = "Wild Cards Team Website";
+const APP_DESCRIPTION =
+  "The Official Website of the Wild Cards (FRC Team 3407)";
 
 class _Document extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -37,10 +38,7 @@ class _Document extends Document {
           />
           <link rel="shortcut icon" href="/favicon.ico" />
           <meta charSet="utf-8" />
-          <meta
-            name="description"
-            content="The Official Website of the Wild Cards (FRC Team 3407)"
-          />
+          <meta name="description" content={APP_DESCRIPTION} />
           <meta
             name="keywords"
             content="robotics,3407,first,frc.moundsview,mounds view,high school,wild cards"
@@ -61,20 +59,14 @@ class _Document extends Document {
           />
           <link rel="apple-touch-icon" href="/apple-icon.png"></link>
           <meta name="theme-color" content="#317EFB" />
-          <meta name="application-name" content="Wild Cards Team Website" />
+          <meta name="application-name" content={APP_NAME} />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="default"
           />
-          <meta
-            name="apple-mobile-web-app-title"
-            content="Wild Cards Team Website"
-          />
-          <meta
-            name="description"
-            content="The Official Website of the Wild Cards (FRC Team 3407)"
-          />
+          <meta name="apple-mobile-web-app-title" content={APP_NAME} />
+          <meta name="description" content={APP_DESCRIPTION} />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
           <meta
@@ -124,23 +116,16 @@ class _Document extends Document {
 
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:url" content="https://yourdomain.com" />
-          <meta name="twitter:title" content="Wild Cards Team Website" />
-          <meta
-            name="twitter:description"
-            content="The Official Website of the Wild Cards (FRC Team 3407)"
-          />
+          <meta name="twitter:title" content={APP_NAME} />
+          <meta name="twitter:description" content={APP_DESCRIPTION} />
           <meta
             name="twitter:image"
             content="https://yourdomain.com/icons/android-chrome-192x192.png"
           />
-          <meta name="twitter:creator" content="@DavidWShadow" />
           <meta property="og:type" content="website" />
-          <meta property="og:title" content="Wild Cards Team Website" />
-          <meta
-            property="og:description"
-            content="The Official Website of the Wild Cards (FRC Team 3407)"
-          />
-          <meta property="og:site_name" content="Wild Cards Team Website" />
+          <meta property="og:title" content={APP_NAME} />
+          <meta property="og:description" content={APP_DESCRIPTION} />
+          <meta property="og:site_name" content={APP_NAME} />
           <meta property="og:url" content="https://yourdomain.com" />
           <meta
             property="og:image"
