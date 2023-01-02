@@ -6,7 +6,7 @@ export default function Layout({
   children,
   title,
 }: {
-  children: any;
+  children: React.ReactNode;
   title: string;
 }) {
   return (

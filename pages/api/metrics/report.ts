@@ -1,10 +1,11 @@
-import fs from "fs";
+import connect from "db/connection";
+import Report from "db/schemas/report.schema";
 import { NextApiRequest, NextApiResponse } from "next";
-import path from "path";
-import { addReport } from "../../../db/metrics";
-import { domainRegex } from "../../../util/regex";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   res.status(200).send("Thanks fetch function, ur the bestest");
   if (
     req.method !== "PUT" ||
@@ -13,5 +14,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   )
     return;
 
-  // console.log(`Report Received`);
+  const connection = await connect();
+
+  if (connection === "NO URI PROVIDED") return;
+
+  try {
+    await new Report({
+      path: new URL(req.headers.referer).pathname,
+      ...req.body,
+    }).save();
+  } catch (err) {
+    console.error(err);
+  }
 }
