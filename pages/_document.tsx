@@ -36,7 +36,7 @@ class _Document extends Document {
             sizes="180x180"
             href="/icons/apple-touch-icon.png"
           />
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/icons/mvhsroboticsicon_512x512.jpg" />
           <meta charSet="utf-8" />
           <meta name="description" content={APP_DESCRIPTION} />
           <meta
@@ -57,7 +57,7 @@ class _Document extends Document {
             type="image/png"
             sizes="32x32"
           />
-          <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+          <link rel="apple-touch-icon" href="/icons/mvhsroboticsicon_512x512.jpg"></link>
           <meta name="theme-color" content="#317EFB" />
           <meta name="application-name" content={APP_NAME} />
           <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -109,10 +109,9 @@ class _Document extends Document {
           <link rel="manifest" href="/manifest.json" />
           <link
             rel="mask-icon"
-            href="/icons/safari-pinned-tab.svg"
+            href="/icons/mvhsroboticsicon_512x512.jpg"
             color="#5bbad5"
           />
-          <link rel="shortcut icon" href="/favicon.ico" />
 
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:url" content="https://yourdomain.com" />
