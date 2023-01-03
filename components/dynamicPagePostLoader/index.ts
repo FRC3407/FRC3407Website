@@ -1,54 +1,74 @@
-import React from "react";
-import { IDynamicPagePostOptions } from "types";
+import { IDynamicPagePostReturn } from "types";
 import * as fs from "fs/promises";
-import path, { dirname } from "path";
+import path from "path";
 import getConfig from "next/config";
 const config = getConfig();
 
+/**
+ * This function should be called in getStaticProps, it searches recursively through all of the pages in the specified directory
+ * @param {string} dirPath This is the path to the directory to be scanned, it should be the url where the pages are found (like /banana or /flying/helicopters)
+ * @warning This returns an empty array during dev mode, this is because of next.js wacky built process
+ */
+
 export default async function getDynamicPagePosts<
-  T extends IDynamicPagePostOptions
+  T extends IDynamicPagePostReturn
 >(dirPath: string): Promise<T[]> {
   let files: string[] = await fs.readdir(
     path.join(config.serverRuntimeConfig.PROJECT_ROOT, "pages", dirPath)
   );
 
-  for (let i in files) {
-    files[i] = await fs.readFile(
-      (await getFilePath(
-        path
-          .join(
-            dirPath,
-            path.parse(files[i]).name !== "index"
-              ? path.parse(files[i]).name
-              : ""
-          )
-          .replaceAll("\\", "/")
-      )) || "",
-      "utf8"
-    );
-  }
-
-  files = files.filter((file) => file.includes("i.postSettings"));
-
-  console.log(files);
+  let fileContent: { path: string; content: string }[] = [];
 
   for (let i in files) {
-    files[i] = detectObject(
-      files[i].substring(files[i].indexOf("i.postSettings"))
-    );
+    fileContent.push({
+      path: path
+        .join(
+          dirPath,
+          path.parse(files[i]).name !== "index" ? path.parse(files[i]).name : ""
+        )
+        .replaceAll("\\", "/"),
+      content: await fs.readFile(
+        (await getFilePath(
+          path
+            .join(
+              dirPath,
+              path.parse(files[i]).name !== "index"
+                ? path.parse(files[i]).name
+                : ""
+            )
+            .replaceAll("\\", "/")
+        )) || "",
+        "utf8"
+      ),
+    });
   }
-  const objects = files.map((file) =>
-    Object.fromEntries(
-      file
-        .replace(/["]/g, "")
-        .split(",")
-        .map((spl) => spl.split(":"))
-    )
+
+  fileContent = fileContent.filter((file) =>
+    file.content.includes(".postSettings={")
   );
 
-  console.log(objects);
+  for (let i in fileContent) {
+    fileContent[i].content = detectObject(
+      fileContent[i].content.substring(
+        fileContent[i].content.indexOf(".postSettings={")
+      )
+    );
+  }
 
-  return objects;
+  const objects = fileContent.map(
+    (file) =>
+      new Object({
+        path: file.path.replace(dirPath, ""),
+        ...Object.fromEntries(
+          file.content
+            .replace(/["]/g, "")
+            .split(",")
+            .map((spl) => spl.split(":"))
+        ),
+      })
+  );
+
+  return objects as any;
 }
 
 async function getFilePath(

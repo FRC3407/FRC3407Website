@@ -3,3 +3,7 @@ export interface IDynamicPagePostOptions {
   description: string;
   imgUrl?: string;
 }
+
+export interface IDynamicPagePostReturn extends IDynamicPagePostOptions {
+  path: string;
+}

@@ -73,6 +73,12 @@ a:visited {
   color: rgb(133, 88, 200);
 }
 
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -81,4 +87,8 @@ a:visited {
     color: white;
     background: $bg-color;
   }
+}
+
+.titanic {
+  float: none;
 }

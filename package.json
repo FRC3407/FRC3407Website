@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "yarn prettier --write . && next dev",
+    "dev": "next dev",
     "build": "next build",
     "prebuild": "yarn prettier --write . && node prebuild",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "devbuild": "next build && next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/node": "^18.11.17",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
