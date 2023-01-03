@@ -31,10 +31,7 @@ class _Document extends Document {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="theme-color" content="#FFFFFF" />
 
-          <link
-            rel="apple-touch-icon"
-            href="/icons/apple-touch-icon.png"
-          />
+          <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
           <link rel="shortcut icon" href="/icons/icon_512x512.png" />
           <meta charSet="utf-8" />
           <meta name="description" content={APP_DESCRIPTION} />
