@@ -35,7 +35,7 @@ class _Document extends Document {
             rel="apple-touch-icon"
             href="/icons/apple-touch-icon.png"
           />
-          <link rel="shortcut icon" href="/icons/icon_512x512.jpg" />
+          <link rel="shortcut icon" href="/icons/icon_512x512.png" />
           <meta charSet="utf-8" />
           <meta name="description" content={APP_DESCRIPTION} />
           <meta
@@ -44,7 +44,7 @@ class _Document extends Document {
           />
 
           <link rel="manifest" href="/manifest.json" />
-          <link rel="apple-touch-icon" href="/icons/icon_512x512.jpg"></link>
+          <link rel="apple-touch-icon" href="/icons/icon_512x512.png"></link>
           <meta name="theme-color" content="#317EFB" />
           <meta name="application-name" content={APP_NAME} />
           <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,20 +66,20 @@ class _Document extends Document {
 
           <link
             rel="icon"
-            type="image/jpeg"
+            type="image/png"
             sizes="32x32"
-            href="/icons/icon_32x32.jpg"
+            href="/icons/icon_32x32.png"
           />
           <link
             rel="icon"
-            type="image/jpeg"
+            type="image/png"
             sizes="16x16"
-            href="/icons/icon_16x16.jpg"
+            href="/icons/icon_16x16.png"
           />
           <link rel="manifest" href="/manifest.json" />
           <link
             rel="mask-icon"
-            href="/icons/icon_512x512.jpg"
+            href="/icons/icon_512x512.png"
             color="#5bbad5"
           />
 
@@ -98,7 +98,7 @@ class _Document extends Document {
           <meta property="og:url" content="https://yourdomain.com" />
           <meta
             property="og:image"
-            content="https://yourdomain.com/icons/icon_72x72.jpg"
+            content="https://yourdomain.com/icons/icon_72x72.png"
           />
         </Head>
         <body>
