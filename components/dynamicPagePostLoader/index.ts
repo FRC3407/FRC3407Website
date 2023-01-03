@@ -7,7 +7,7 @@ const config = getConfig();
 /**
  * This function should be called in getStaticProps, it searches recursively through all of the pages in the specified directory
  * @param {string} dirPath This is the path to the directory to be scanned, it should be the url where the pages are found (like /banana or /flying/helicopters)
- * @warning This returns an empty array during dev mode, this is because of next.js wacky built process
+ * @warning This returns an empty array during dev mode, this is because this function reads the content from the static build files which aren't generated during dev mode
  */
 
 export default async function getDynamicPagePosts<
