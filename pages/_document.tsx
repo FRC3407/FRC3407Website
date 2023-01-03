@@ -33,10 +33,9 @@ class _Document extends Document {
 
           <link
             rel="apple-touch-icon"
-            sizes="180x180"
             href="/icons/apple-touch-icon.png"
           />
-          <link rel="shortcut icon" href="/icons/mvhsroboticsicon_512x512.jpg" />
+          <link rel="shortcut icon" href="/icons/icon_512x512.jpg" />
           <meta charSet="utf-8" />
           <meta name="description" content={APP_DESCRIPTION} />
           <meta
@@ -45,19 +44,7 @@ class _Document extends Document {
           />
 
           <link rel="manifest" href="/manifest.json" />
-          <link
-            href="/icons/favicon-16x16.png"
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-          />
-          <link
-            href="/icons/favicon-32x32.png"
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-          />
-          <link rel="apple-touch-icon" href="/icons/mvhsroboticsicon_512x512.jpg"></link>
+          <link rel="apple-touch-icon" href="/icons/icon_512x512.jpg"></link>
           <meta name="theme-color" content="#317EFB" />
           <meta name="application-name" content={APP_NAME} />
           <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -77,39 +64,22 @@ class _Document extends Document {
           <meta name="msapplication-tap-highlight" content="no" />
           <meta name="theme-color" content="#000000" />
 
-          <link rel="apple-touch-icon" href="/icons/touch-icon-iphone.png" />
-          <link
-            rel="apple-touch-icon"
-            sizes="152x152"
-            href="/icons/touch-icon-ipad.png"
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/icons/touch-icon-iphone-retina.png"
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="167x167"
-            href="/icons/touch-icon-ipad-retina.png"
-          />
-
           <link
             rel="icon"
-            type="image/png"
+            type="image/jpeg"
             sizes="32x32"
-            href="/icons/favicon-32x32.png"
+            href="/icons/icon_32x32.jpg"
           />
           <link
             rel="icon"
-            type="image/png"
+            type="image/jpeg"
             sizes="16x16"
-            href="/icons/favicon-16x16.png"
+            href="/icons/icon_16x16.jpg"
           />
           <link rel="manifest" href="/manifest.json" />
           <link
             rel="mask-icon"
-            href="/icons/mvhsroboticsicon_512x512.jpg"
+            href="/icons/icon_512x512.jpg"
             color="#5bbad5"
           />
 
@@ -128,7 +98,7 @@ class _Document extends Document {
           <meta property="og:url" content="https://yourdomain.com" />
           <meta
             property="og:image"
-            content="https://yourdomain.com/icons/apple-touch-icon.png"
+            content="https://yourdomain.com/icons/icon_72x72.jpg"
           />
         </Head>
         <body>
