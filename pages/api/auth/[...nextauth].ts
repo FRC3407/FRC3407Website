@@ -1,56 +1,46 @@
-import NextAuth, { AuthOptions, User } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { UserAccessLevelRolesEnum } from "../../../util/enums";
+import connect from "db/connection";
+import Users from "db/schemas/user.schema";
+import NextAuth, { AuthOptions } from "next-auth";
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: AuthOptions = {
   callbacks: {
-    async signIn({ user, account, profile, credentials }) {
+    async signIn() {
       return true;
     },
 
-    async jwt({ token, user, account, profile, isNewUser }) {
-      if (!token.accessLevel)
-        token.accessLevel = parseInt((user as any)?.accessLevel || 0);
+    async jwt({ token }) {
+      if (typeof token.accessLevel !== "number") {
+        let accessLevel = 1
+
+        if (await connect() !== "NO URI PROVIDED") {
+          const dbUser = await Users.findOne({ email: token.email })
+
+          if (dbUser) accessLevel = dbUser.accessLevel
+        }
+
+        token.accessLevel = accessLevel;
+      }
+        
       return token;
     },
 
-    async session({ token, session, user }) {
-      (session.user as any).accessLevel = token.accessLevel;
+    async session({ token, session }) {
+      session.user.accessLevel = token.accessLevel;
       return session;
     },
   },
 
   providers: [
-    // Remove this provider in production, it's only for testing
-    CredentialsProvider({
-      name: "the brady login thingy",
-      credentials: {
-        username: {
-          label: "Email",
-          type: "text",
-          placeholder: "red@theimposter.sus",
-        },
-        password: { label: "Password", type: "password" },
-        accessLevel: {
-          label: "Access Level (0-4)",
-          type: "number",
-          min: 0,
-          max: 4,
-        },
-      },
-
-      async authorize(credentials, req) {
-        if (credentials?.username) {
-          return {
-            name: credentials.username || "",
-            id: "5",
-            accessLevel: credentials?.accessLevel,
-          };
-        } else {
-          throw new Error("Invalid User");
-        }
-      },
+    GoogleProvider({
+      clientId: process.env.GOOGLE_OAUTH_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET ?? ""
     }),
+    GithubProvider({
+      clientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? "",
+      clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? ""
+    })
   ],
   pages: {
     error: "/auth/error",

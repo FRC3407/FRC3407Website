@@ -27,14 +27,14 @@ export default function AccessControlLayer({
       !auth.accessLevel.every(
         (accessLevel) =>
           UserAccessLevelRolesEnum[accessLevel] !==
-          (session.user as any).accessLevel
+          session.user.accessLevel
       )
     )
       return <>{children}</>;
     if (
       !Array.isArray(auth.accessLevel) &&
       UserAccessLevelRolesEnum[auth.accessLevel as AccessLevels] <=
-        (session.user as any).accessLevel
+        session.user.accessLevel
     )
       return <>{children}</>;
     window.location.replace(auth.unauthorized ?? "/error/access-denied");
