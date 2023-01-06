@@ -7,7 +7,7 @@ type Data = { bullets: string[] };
 export const getServerSideProps: GetServerSideProps<{
   bullets: IBullet[];
 }> = async () => {
-  const res = await fetch("http://localhost:3000/api/bulletins/fetch", {
+  const res = await fetch("/api/bulletins/fetch", {
     method: "PUT",
     body: JSON.stringify({
       bullet: {

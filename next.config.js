@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+const withPWA = require('next-pwa')({
+  dest: 'public'
+})
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -6,6 +10,9 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: process.cwd()
+  }
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

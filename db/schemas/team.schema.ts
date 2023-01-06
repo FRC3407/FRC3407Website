@@ -6,6 +6,7 @@ interface ITeam {
   coleads: string[]; // Mongo IDs
   mentors: string[]; // Mongo IDs
   name: string;
+  slackChannel: string; //
 }
 
 const reqStringArray = {
@@ -18,6 +19,10 @@ const TeamSchema = new mongoose.Schema<ITeam>({
   teamMembers: reqStringArray,
   coleads: reqStringArray,
   mentors: reqStringArray,
+  slackChannel: {
+    required: true,
+    type: String,
+  },
   name: {
     required: true,
     type: String,

@@ -1,33 +1,46 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import connect from "db/connection";
+import Users from "db/schemas/user.schema";
+import NextAuth, { AuthOptions } from "next-auth";
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions = {
-  // Configure one or more authentication providers
-  providers: [
-    CredentialsProvider({
-      name: "the brady login thingy",
-      credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials, req) {
-        console.log(credentials, req);
-        // Add logic here to look up the user from the credentials supplied
-        const user: { [key: string]: { id: number; name: string } } = {
-          Brady: { id: 0, name: "Brady" },
-        };
+export const authOptions: AuthOptions = {
+  callbacks: {
+    async signIn() {
+      return true;
+    },
 
-        if (
-          credentials?.username &&
-          typeof user[credentials.username] !== "undefined"
-        ) {
-          console.log(user[credentials.username]);
-          return user[credentials.username] as any;
-        } else {
-          throw new Error("Invalid User");
+    async jwt({ token }) {
+      if (typeof token.accessLevel !== "number") {
+        let accessLevel = 1
+
+        if (await connect() !== "NO URI PROVIDED") {
+          const dbUser = await Users.findOne({ email: token.email })
+
+          if (dbUser) accessLevel = dbUser.accessLevel
         }
-      },
+
+        token.accessLevel = accessLevel;
+      }
+        
+      return token;
+    },
+
+    async session({ token, session }) {
+      session.user.accessLevel = token.accessLevel;
+      return session;
+    },
+  },
+
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_OAUTH_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET ?? ""
     }),
+    GithubProvider({
+      clientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? "",
+      clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? ""
+    })
   ],
   pages: {
     error: "/auth/error",

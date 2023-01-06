@@ -1,0 +1,101 @@
+.RichButton {
+  background-color: gray;
+  min-height: 30px;
+  display: flex;
+  border-radius: 25px;
+  overflow: hidden;
+  max-height: 200px;
+  max-width: 600px;
+  cursor: pointer;
+  margin: 5px;
+
+  & .RichButtonImage {
+    position: relative;
+    left: 0;
+    width: 30%;
+    display: flex;
+    aspect-ratio: 1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+
+    & .icon {
+      margin: 40px;
+    }
+  }
+
+  & .RichButtonText {
+    padding: 10px;
+    position: relative;
+    right: 0;
+    width: 70%;
+    display: block;
+
+    & .RichButtonTextTitleLink {
+      display: block;
+      position: relative;
+      width: 100%;
+
+      & h3,
+      h4 {
+        padding: none;
+        margin: 0px;
+        height: min-content;
+      }
+
+      & a {
+        margin-left: auto;
+        color: rgb(0, 72, 255);
+      }
+    }
+
+    & .RichButtonTextDescription {
+      margin: 2px;
+      & p {
+        margin: 2px;
+      }
+    }
+  }
+
+  &:hover {
+    & .RichButtonImage {
+      width: 35%;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .RichButton {
+    min-height: 30px;
+    display: block;
+    max-height: 600px;
+    height: auto;
+    width: fit-content;
+
+    & .RichButtonImage {
+      position: relative;
+      top: 0;
+      height: 30%;
+      width: 100%;
+    }
+
+    & .RichButtonText {
+      & .RichButtonTextTitleLink {
+        width: fit-content;
+      }
+
+      & .RichButtonTextDescription {
+        display: none;
+      }
+    }
+
+    &:hover {
+      & .RichButtonImage {
+        height: 30%;
+        width: 100%;
+      }
+    }
+  }
+}
