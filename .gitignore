@@ -41,3 +41,4 @@ public/workbox-*
 .yarn/cache
 public/sw.js.*
 public/sw 2.js
+public/sw 3.js
