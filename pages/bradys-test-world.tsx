@@ -4,6 +4,7 @@ import importImages from "@components/dynamicImgGallery/import";
 import Layout from "@components/layout";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import * as fs from "fs/promises"
+import path from "path";
 
 export default function BradysTestWorld({ log }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   console.log(log)
@@ -30,7 +31,7 @@ export const getServerSideProps: GetServerSideProps<{ log: string[] }> = async (
 
   return {
     props: {
-      log: await fs.readdir(process.cwd())
+      log: await fs.readdir(path.join(process.cwd(), ".next"))
     },
   };
 };
