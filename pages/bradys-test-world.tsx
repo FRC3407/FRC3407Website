@@ -24,14 +24,14 @@ export default function BradysTestWorld({ log }: InferGetServerSidePropsType<typ
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ log: string[] }> = async () => {
+export const getServerSideProps: GetServerSideProps<{ log: string }> = async () => {
   // const images = await importImages("gallery");
 
   // console.log(images)
 
   return {
     props: {
-      log: await fs.readdir(path.join(process.cwd(), ".next", "routes-manifest.json"))
+      log: await fs.readFile(path.join(process.cwd(), ".next", "routes-manifest.json"), "utf-8")
     },
   };
 };
