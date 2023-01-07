@@ -7,8 +7,8 @@ import * as fs from "fs/promises"
 import * as fss from "fs"
 import path from "path";
 
-export default function BradysTestWorld({ log }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(log)
+export default function BradysTestWorld({ log, fpath }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log(log, fpath)
   return (
     <Layout title="Brady's Test World">
       <h1 className="centeredText">Brady&apos;s Test World</h1>
@@ -25,7 +25,7 @@ export default function BradysTestWorld({ log }: InferGetServerSidePropsType<typ
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ log: (string[] | string | undefined)[] }> = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   // const images = await importImages("gallery");
 
   // console.log(images)
@@ -41,7 +41,8 @@ export const getServerSideProps: GetServerSideProps<{ log: (string[] | string | 
         } catch (err) {
           console.log(err)
         }
-      })
+      }),
+      paths: (await fs.readdir(path.join(process.cwd(), ".next")))
     },
   };
 };
