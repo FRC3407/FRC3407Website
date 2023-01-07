@@ -25,7 +25,7 @@ export default function BradysTestWorld({ log }: InferGetServerSidePropsType<typ
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ log: (string[] | undefined)[] }> = async () => {
+export const getServerSideProps: GetServerSideProps<{ log: (string[] | string | undefined)[] }> = async () => {
   // const images = await importImages("gallery");
 
   // console.log(images)
@@ -33,6 +33,9 @@ export const getServerSideProps: GetServerSideProps<{ log: (string[] | undefined
   return {
     props: {
       log: (await fs.readdir(path.join(process.cwd(), ".next"))).map(fpath => {
+
+        if (fpath.includes(".")) return fpath
+
         try {
           return fss.readdirSync(path.join(process.cwd(), ".next", fpath))
         } catch (err) {
