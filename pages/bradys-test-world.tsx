@@ -22,7 +22,9 @@ export default function BradysTestWorld() {
 }
 
 export const getServerSideProps: GetServerSideProps<{}> = async () => {
-  await importImages();
+  const images = await importImages("gallery");
+
+  console.log(images)
 
   return {
     props: {},

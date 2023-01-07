@@ -39,3 +39,5 @@ next-env.d.ts
 public/sw.js
 public/workbox-*
 .yarn/cache
+public/sw.js.*
+public/sw 2.js
