@@ -7,8 +7,8 @@ import * as fs from "fs/promises"
 import * as fss from "fs"
 import path from "path";
 
-export default function BradysTestWorld({ log, fpath }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(log, fpath)
+export default function BradysTestWorld({ log, paths }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log(log, paths)
   return (
     <Layout title="Brady's Test World">
       <h1 className="centeredText">Brady&apos;s Test World</h1>
