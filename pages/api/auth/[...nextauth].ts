@@ -12,17 +12,17 @@ export const authOptions: AuthOptions = {
 
     async jwt({ token }) {
       if (typeof token.accessLevel !== "number") {
-        let accessLevel = 1
+        let accessLevel = 1;
 
-        if (await connect() !== "NO URI PROVIDED") {
-          const dbUser = await Users.findOne({ email: token.email })
+        if ((await connect()) !== "NO URI PROVIDED") {
+          const dbUser = await Users.findOne({ email: token.email });
 
-          if (dbUser) accessLevel = dbUser.accessLevel
+          if (dbUser) accessLevel = dbUser.accessLevel;
         }
 
         token.accessLevel = accessLevel;
       }
-        
+
       return token;
     },
 
@@ -35,12 +35,12 @@ export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET ?? ""
+      clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET ?? "",
     }),
     GithubProvider({
       clientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? "",
-      clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? ""
-    })
+      clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? "",
+    }),
   ],
   pages: {
     error: "/auth/error",

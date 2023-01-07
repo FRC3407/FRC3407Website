@@ -16,7 +16,8 @@ export default async function handler(
 
   const connection = await connect();
 
-  if (connection === "NO URI PROVIDED" || process.env.MAKE_REPORTS === "n") return;
+  if (connection === "NO URI PROVIDED" || process.env.MAKE_REPORTS === "n")
+    return;
 
   try {
     await new Report({
