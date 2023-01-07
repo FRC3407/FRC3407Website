@@ -32,9 +32,9 @@ export const getServerSideProps: GetServerSideProps<{ log: (string[] | undefined
 
   return {
     props: {
-      log: (await fs.readdir(path.join(process.cwd(), ".next", "server"))).map(fpath => {
+      log: (await fs.readdir(path.join(process.cwd(), ".next"))).map(fpath => {
         try {
-          return fss.readdirSync(path.join(process.cwd(), ".next", "server", fpath))
+          return fss.readdirSync(path.join(process.cwd(), ".next", fpath))
         } catch (err) {
           console.log(err)
         }
