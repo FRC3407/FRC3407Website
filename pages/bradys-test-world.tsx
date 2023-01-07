@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps<{ log: string[] }> = async (
 
   return {
     props: {
-      log: await fs.readdir(path.join(process.cwd(), ".next", "cache"))
+      log: await fs.readdir(path.join(process.cwd(), ".next", "server"))
     },
   };
 };
