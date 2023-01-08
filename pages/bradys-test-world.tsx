@@ -48,7 +48,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
         }
       ),
       paths: await fs.readdir(path.join(process.cwd(), ".next")),
-      folders: await fs.readdir(process.cwd())
+      folders: (await fs.readdir(process.cwd())).map(
+        (fpath) => {
+          if (fpath.includes(".")) return fpath;
+
+          try {
+            return fss.readdirSync(path.join(process.cwd(), fpath));
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      ),
     },
   };
 };
