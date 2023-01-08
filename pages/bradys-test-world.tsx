@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      paths: [tryCatch(fss.readdirSync, config.serverRuntimeConfig.PROJECT_ROOT), tryCatch(fss.readdirSync, process.cwd())],
+      paths: [tryCatch(fss.lstatSync, config.serverRuntimeConfig.PROJECT_ROOT), tryCatch(fss.lstatSync, process.cwd())],
     },
   };
 };
