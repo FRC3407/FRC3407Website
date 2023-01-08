@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      paths: config.serverRuntimeConfig.PROJECT_ROOT,
+      paths: [config.serverRuntimeConfig.PROJECT_ROOT, process.cwd()],
     },
   };
 };
