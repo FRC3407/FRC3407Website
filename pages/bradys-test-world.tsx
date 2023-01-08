@@ -6,6 +6,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import * as fs from "fs/promises";
 import * as fss from "fs";
 import path from "path";
+import getConfig from "next/config";
+const config = getConfig()
 
 export default function BradysTestWorld({
   log,
@@ -36,19 +38,19 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      log: (await fs.readdir(path.join(process.cwd(), ".next"))).map(
+      log: (await fs.readdir(config.serverRuntimeConfig.PROJECT_ROOT)).map(
         (fpath) => {
           if (fpath.includes(".")) return fpath;
 
           try {
-            return fss.readdirSync(path.join(process.cwd(), ".next", fpath));
+            return fss.readdirSync(path.join(config.serverRuntimeConfig.PROJECT_ROOT, fpath));
           } catch (err) {
             console.log(err);
           }
         }
       ),
-      paths: await fs.readdir(path.join(process.cwd(), ".next")),
-      folders: (await fs.readdir(process.cwd())).map(
+      paths: await fs.readdir(config.serverRuntimeConfig.PROJECT_ROOT),
+      folders: (await fs.readdir(config.serverRuntimeConfig.PROJECT_ROOT)).map(
         (fpath) => {
           if (fpath.includes(".") && !fpath.startsWith(".")) return fpath;
 
