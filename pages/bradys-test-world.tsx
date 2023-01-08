@@ -10,11 +10,9 @@ import getConfig from "next/config";
 const config = getConfig()
 
 export default function BradysTestWorld({
-  log,
-  paths,
-  folders
+paths
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log(log, paths, folders);
+  console.log(paths);
   return (
     <Layout title="Brady's Test World">
       <h1 className="centeredText">Brady&apos;s Test World</h1>
@@ -38,29 +36,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      log: (await fs.readdir(config.serverRuntimeConfig.PROJECT_ROOT)).map(
-        (fpath) => {
-          if (fpath.includes(".")) return fpath;
-
-          try {
-            return fss.readdirSync(path.join(config.serverRuntimeConfig.PROJECT_ROOT, fpath));
-          } catch (err) {
-            console.log(err);
-          }
-        }
-      ),
       paths: await fs.readdir(config.serverRuntimeConfig.PROJECT_ROOT),
-      folders: (await fs.readdir(config.serverRuntimeConfig.PROJECT_ROOT)).map(
-        (fpath) => {
-          if (fpath.includes(".") && !fpath.startsWith(".")) return fpath;
-
-          try {
-            return fss.readdirSync(path.join(process.cwd(), fpath));
-          } catch (err) {
-            console.log(err);
-          }
-        }
-      ),
     },
   };
 };
