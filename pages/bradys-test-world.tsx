@@ -36,7 +36,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      paths: [config.serverRuntimeConfig.PROJECT_ROOT, process.cwd()],
+      paths: [tryCatch(fss.readdirSync, config.serverRuntimeConfig.PROJECT_ROOT), tryCatch(fss.readdirSync, process.cwd())],
     },
   };
 };
+
+const tryCatch = (callback: Function, ...params: any[]) => {
+  try {
+    return callback(...params)
+  } catch (error) {
+    return null
+  }
+}
