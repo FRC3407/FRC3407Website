@@ -1,3 +1,3 @@
 const fs = require("fs")
 
-fs.readdirSync(path.join(process.cwd()))
+//fs.readdirSync(path.join(process.cwd()))
