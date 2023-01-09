@@ -31,8 +31,8 @@ class _Document extends Document {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="theme-color" content="#FFFFFF" />
 
-          <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-          <link rel="shortcut icon" href="/icons/icon_512x512.png" />
+          <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png" />
+          <link rel="shortcut icon" href="/static/icons/icon_512x512.png" />
           <meta charSet="utf-8" />
           <meta name="description" content={APP_DESCRIPTION} />
           <meta
@@ -41,7 +41,7 @@ class _Document extends Document {
           />
 
           <link rel="manifest" href="/manifest.json" />
-          <link rel="apple-touch-icon" href="/icons/icon_512x512.png"></link>
+          <link rel="apple-touch-icon" href="/static/icons/icon_512x512.png"></link>
           <meta name="theme-color" content="#317EFB" />
           <meta name="application-name" content={APP_NAME} />
           <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,7 +55,7 @@ class _Document extends Document {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta
             name="msapplication-config"
-            content="/icons/browserconfig.xml"
+            content="/static/icons/browserconfig.xml"
           />
           <meta name="msapplication-TileColor" content="#2B5797" />
           <meta name="msapplication-tap-highlight" content="no" />
@@ -65,18 +65,18 @@ class _Document extends Document {
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href="/icons/icon_32x32.png"
+            href="/static/icons/icon_32x32.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href="/icons/icon_16x16.png"
+            href="/static/icons/icon_16x16.png"
           />
           <link rel="manifest" href="/manifest.json" />
           <link
             rel="mask-icon"
-            href="/icons/icon_512x512.png"
+            href="/static/icons/icon_512x512.png"
             color="#5bbad5"
           />
 
