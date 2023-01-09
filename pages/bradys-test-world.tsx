@@ -7,10 +7,10 @@ import * as fs from "fs/promises";
 import * as fss from "fs";
 import path from "path";
 import getConfig from "next/config";
-const config = getConfig()
+const config = getConfig();
 
 export default function BradysTestWorld({
-paths
+  paths,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   console.log(paths);
   return (
@@ -32,7 +32,7 @@ paths
 export const getServerSideProps: GetServerSideProps = async () => {
   // const images = await importImages("gallery");
 
-  // console.log(images)
+  console.log(process.env.HELLO);
 
   return {
     props: {
@@ -43,8 +43,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const tryCatch = (callback: Function, ...params: any[]) => {
   try {
-    return callback(...params)
+    return callback(...params);
   } catch (error) {
-    return null
+    return null;
   }
-}
+};
