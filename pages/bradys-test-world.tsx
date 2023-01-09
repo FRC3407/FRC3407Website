@@ -7,6 +7,7 @@ import * as fs from "fs/promises";
 import * as fss from "fs";
 import path from "path";
 import getConfig from "next/config";
+import getImages from "@components/dynamicImgGallery/import";
 const config = getConfig();
 
 export default function BradysTestWorld({
@@ -36,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      paths: [process.cwd(), await fs.readdir(process.cwd())],
+      paths: await getImages(""),
     },
   };
 };
