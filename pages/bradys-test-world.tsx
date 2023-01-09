@@ -33,11 +33,12 @@ export default function BradysTestWorld({
 export const getServerSideProps: GetServerSideProps = async () => {
   // const images = await importImages("gallery");
 
-  console.log(process.env.HELLO);
+  // console.log();
+  
 
   return {
     props: {
-      paths: await getImages(""),
+      paths: await getImages("gallery"),
     },
   };
 };
