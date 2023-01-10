@@ -3,18 +3,34 @@ import * as fss from "fs"
 import path from "path";
 
 const getImages = async (...folder: string[]) => {
+    console.log("here")
 
   let files = await fs.readdir(
     path.join(process.cwd(), "public", "static", "images", "dynamic", ...folder)
   );
 
-  await Promise.all(files.map(async (file) => {
-    if ((await fs.stat(path.join(process.cwd(), "public", "static", "images", "dynamic", ...folder, file))).isDirectory()) console.log(file)
-    return file
+  let mappedFiles: any = await Promise.all(files.map(async (file) => {
+    if ((await fs.stat(path.join(process.cwd(), "public", "static", "images", "dynamic", ...folder, file))).isDirectory()) return await getImages(path.join(...folder, file))
+    return path.join("/static", "images", "dynamic", ...folder, file).replaceAll("\\", "/")
   }))
+  console.log("this", mappedFiles)
   
+  mappedFiles =  removeDArray<string>(mappedFiles).filter((element) => element.startsWith("/"))
 
-  return files
+  mappedFiles = mappedFiles.map((image: any) => [path.basename(image), image])
+
+  return mappedFiles
+}
+
+function removeDArray<T = any>(array: (T | T[])[]): T[]{
+    const newArray: T[] = []
+
+    array.forEach(element => {
+        if (Array.isArray(element)) newArray.push(...removeDArray<T>(element))
+        else newArray.push(element)
+    })
+
+    return newArray
 }
 
 export default getImages;
