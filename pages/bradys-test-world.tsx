@@ -25,7 +25,7 @@ export default function BradysTestWorld({
       <Calendar />
 
       <h2>Dynamic Picture Loader</h2>
-      <DynamicGallery />
+      <DynamicGallery images={paths} />
     </Layout>
   );
 }
