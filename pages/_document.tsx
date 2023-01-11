@@ -31,7 +31,10 @@ class _Document extends Document {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="theme-color" content="#FFFFFF" />
 
-          <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png" />
+          <link
+            rel="apple-touch-icon"
+            href="/static/icons/apple-touch-icon.png"
+          />
           <link rel="shortcut icon" href="/static/icons/icon_512x512.png" />
           <meta charSet="utf-8" />
           <meta name="description" content={APP_DESCRIPTION} />
@@ -41,7 +44,10 @@ class _Document extends Document {
           />
 
           <link rel="manifest" href="/manifest.json" />
-          <link rel="apple-touch-icon" href="/static/icons/icon_512x512.png"></link>
+          <link
+            rel="apple-touch-icon"
+            href="/static/icons/icon_512x512.png"
+          ></link>
           <meta name="theme-color" content="#317EFB" />
           <meta name="application-name" content={APP_NAME} />
           <meta name="apple-mobile-web-app-capable" content="yes" />

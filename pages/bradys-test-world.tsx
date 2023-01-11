@@ -1,18 +1,12 @@
 import Calendar from "@components/calendar";
 import DynamicGallery from "@components/dynamicImgGallery";
-import importImages from "@components/dynamicImgGallery/import";
 import Layout from "@components/layout";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import * as fs from "fs/promises";
-import * as fss from "fs";
-import path from "path";
-import getConfig from "next/config";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import getImages from "@components/dynamicImgGallery/import";
-const config = getConfig();
 
 export default function BradysTestWorld({
   paths,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   console.log(paths);
   return (
     <Layout title="Brady's Test World">
@@ -30,23 +24,10 @@ export default function BradysTestWorld({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  // const images = await importImages("gallery");
-
-  // console.log();
-  
-
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       paths: await getImages("gallery"),
     },
   };
-};
-
-const tryCatch = (callback: Function, ...params: any[]) => {
-  try {
-    return callback(...params);
-  } catch (error) {
-    return null;
-  }
 };
