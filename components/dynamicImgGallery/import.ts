@@ -3,6 +3,8 @@ import path from "path";
 import imageSize from "image-size";
 import { ISizeCalculationResult } from "image-size/dist/types/interface";
 
+const supportedFileTypes: string[] = ["png", "jpg"]
+
 const getImages: (
   ...folders: string[]
 ) => Promise<
@@ -52,7 +54,7 @@ const getImages: (
       )
     )) as any
   )
-    .filter((element) => element.startsWith("/"))
+    .filter((element) => element.startsWith("/") && supportedFileTypes.includes(path.extname(element).toLowerCase().replaceAll(".", "")))
     .map((image: any) => {
       return {
         file: path.basename(image),

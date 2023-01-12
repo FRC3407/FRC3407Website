@@ -35,7 +35,7 @@ export default function DynamicGallery({
         </div>
       ))}
       <div className={styles.controls}>
-        <button onClick={incrementSlide} className={styles.navButton}>
+        <button onClick={decrementSlide} className={styles.navButton}>
           &#10094;
         </button>
         <div className={styles.slideSelectors}>
@@ -50,7 +50,7 @@ export default function DynamicGallery({
             </button>
           ))}
         </div>
-        <button onClick={decrementSlide} className={styles.navButton}>
+        <button onClick={incrementSlide} className={styles.navButton}>
           &#10095;
         </button>
       </div>
