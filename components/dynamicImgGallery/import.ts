@@ -1,7 +1,73 @@
 import * as fs from "fs/promises";
 import path from "path";
+import imageSize from "image-size";
+import { ISizeCalculationResult } from "image-size/dist/types/interface";
 
-const getImages: (...folders: string[]) => Promise<{ file: string; url: string; meta: { season: string; description: string; title: string; fileType: string; }}[]> = async (...folder: string[]) => removeDArray<string>(await Promise.all((await fs.readdir(path.join(process.cwd(), "public", "static", "images", "dynamic", ...folder))).map(async (file) => (await fs.stat(path.join(process.cwd(),"public", "static", "images", "dynamic", ...folder, file))).isDirectory() ? await getImages(path.join(...folder, file)) : path.join("/static", "images", "dynamic", ...folder, file).replaceAll("\\", "/"))) as any).filter((element) => element.startsWith("/")).map((image: any) => { return { file: path.basename(image), url: image, meta: { season: path.basename(image).split("_")[0], description: "", title: path.parse(image).name.replaceAll("-", " ").split("_").at(-1) ?? path.parse(image).name, fileType: path.extname(image)}}});
+const getImages: (
+  ...folders: string[]
+) => Promise<
+  {
+    file: string;
+    url: string;
+    meta: {
+      season: string;
+      description: string;
+      title: string;
+      fileType: string;
+      imageSize: ISizeCalculationResult
+    };
+  }[]
+> = async (...folder: string[]) =>
+  removeDArray<string>(
+    (await Promise.all(
+      (
+        await fs.readdir(
+          path.join(
+            process.cwd(),
+            "public",
+            "static",
+            "images",
+            "dynamic",
+            ...folder
+          )
+        )
+      ).map(async (file) =>
+        (
+          await fs.stat(
+            path.join(
+              process.cwd(),
+              "public",
+              "static",
+              "images",
+              "dynamic",
+              ...folder,
+              file
+            )
+          )
+        ).isDirectory()
+          ? await getImages(path.join(...folder, file))
+          : path
+              .join("/static", "images", "dynamic", ...folder, file)
+              .replaceAll("\\", "/")
+      )
+    )) as any
+  )
+    .filter((element) => element.startsWith("/"))
+    .map((image: any) => {
+      return {
+        file: path.basename(image),
+        url: image,
+        meta: {
+          season: path.basename(image).split("_")[0],
+          description: "",
+          title:
+            path.parse(image).name.replaceAll("-", " ").split("_").at(-1) ??
+            path.parse(image).name,
+          fileType: path.extname(image),
+          imageSize: imageSize(path.join(process.cwd(), "public", image))
+        },
+      };
+    });
 
 function removeDArray<T = any>(array: (T | T[])[]): T[] {
   const newArray: T[] = [];
