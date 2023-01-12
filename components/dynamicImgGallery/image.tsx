@@ -7,5 +7,5 @@ export default function GalleryImage({
   src: string;
   alt?: string;
 }) {
-  return <Image src={src} alt={alt} width={800} height={500} />;
+  return <Image src={src} alt={alt} width={800} height={500} priority />;
 }

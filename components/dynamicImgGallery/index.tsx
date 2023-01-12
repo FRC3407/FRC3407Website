@@ -11,18 +11,11 @@ export default function DynamicGallery({
 
   const [slide, setSlide] = useState(0)
 
-  function incrementSlide() {
-    setSlide((slide + 1) % images.length)
-  }
-
-  function decrementSlide() {
-    setSlide((slide + images.length - 1) % images.length)
-  }
+  const incrementSlide = () => setSlide((slide + 1) % images.length)
+  const decrementSlide = () => setSlide((slide + images.length - 1) % images.length)
 
   return (
     <div className={styles.galleryContainer}>
-      <button onClick={incrementSlide}>This</button>
-      <button onClick={decrementSlide}>Here</button>
       {images.map((image, index) => (
         <div key={index} className={styles.image} style={{
           display: displayStyle(index, slide)
@@ -30,6 +23,15 @@ export default function DynamicGallery({
           <Image alt={image.file} src={image.url} />
         </div>
       ))}
+      <div className={styles.controls}>
+        <button onClick={incrementSlide} className={styles.navButton}>&#10094;</button>
+        <div className={styles.slideSelectors}>
+          {images.map((element, index) => (
+            <button key={index} className={styles.slideNumber} onClick={() => setSlide(index)}>{index + 1}</button>
+          ))}
+        </div>
+        <button onClick={decrementSlide} className={styles.navButton}>&#10095;</button>
+      </div>
     </div>
   );
 }

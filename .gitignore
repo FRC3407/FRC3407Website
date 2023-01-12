@@ -40,3 +40,4 @@ public/sw.js
 public/workbox-*
 .yarn/cache
 public/sw *.js
+public/sw.js.map
