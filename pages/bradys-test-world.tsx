@@ -3,6 +3,8 @@ import DynamicGallery from "@components/dynamicImgGallery";
 import Layout from "@components/layout";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import getImages from "@components/dynamicImgGallery/import";
+import DynamicRobotInformationSystem from "@components/markUpFileInitalRenderer";
+import getMD from "@components/markUpFileInitalRenderer/import";
 
 export default function BradysTestWorld({
   paths,
@@ -18,8 +20,7 @@ export default function BradysTestWorld({
       <h2>Calendar:</h2>
       <Calendar />
 
-      <h2>Dynamic Picture Loader</h2>
-      <DynamicGallery images={paths} />
+      <h2>D-RIS (I need a better acoynym(and spellcheck))</h2>
     </Layout>
   );
 }
@@ -27,7 +28,7 @@ export default function BradysTestWorld({
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
-      paths: await getImages("gallery"),
+      // paths: await getMD("gallery"),
     },
   };
 };
