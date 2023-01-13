@@ -1,15 +1,19 @@
 import Calendar from "@components/calendar";
 import DynamicGallery from "@components/dynamicImgGallery";
+import importImages from "@components/dynamicImgGallery/import";
 import Layout from "@components/layout";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import * as fs from "fs/promises";
+import * as fss from "fs";
+import path from "path";
+import getConfig from "next/config";
 import getImages from "@components/dynamicImgGallery/import";
-import DynamicRobotInformationSystem from "@components/markUpFileInitalRenderer";
-import getMD from "@components/markUpFileInitalRenderer/import";
+const config = getConfig();
 
 export default function BradysTestWorld({
   paths,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(paths)
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log(paths);
   return (
     <Layout title="Brady's Test World">
       <h1 className="centeredText">Brady&apos;s Test World</h1>
@@ -20,15 +24,29 @@ export default function BradysTestWorld({
       <h2>Calendar:</h2>
       <Calendar />
 
-      <h2>D-RIS (I need a better acoynym(and spellcheck))</h2>
+      <h2>Dynamic Picture Loader</h2>
+      <DynamicGallery images={paths} />
     </Layout>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
+  // const images = await importImages("gallery");
+
+  // console.log();
+  
+
   return {
     props: {
-      // paths: await getMD("gallery"),
+      paths: await getImages("gallery"),
     },
   };
+};
+
+const tryCatch = (callback: Function, ...params: any[]) => {
+  try {
+    return callback(...params);
+  } catch (error) {
+    return null;
+  }
 };
