@@ -38,5 +38,6 @@ next-env.d.ts
 .envlocalstorage
 public/sw.js
 public/workbox-*
-.yarn/cache
+.yarn
 public/sw *.js
+public/sw.js.map
