@@ -26,8 +26,7 @@ export default function AccessControlLayer({
       Array.isArray(auth.accessLevel) &&
       !auth.accessLevel.every(
         (accessLevel) =>
-          UserAccessLevelRolesEnum[accessLevel] !==
-          session.user.accessLevel
+          UserAccessLevelRolesEnum[accessLevel] !== session.user.accessLevel
       )
     )
       return <>{children}</>;
