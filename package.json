@@ -49,6 +49,5 @@
   "devDependencies": {
     "eslint-plugin-import": "^2.27.4",
     "prettier": "2.8.1"
-  },
-  "packageManager": "yarn@1.21.1"
+  }
 }
