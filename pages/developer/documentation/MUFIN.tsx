@@ -19,18 +19,50 @@ export default function MUFIN() {
         )
       </p>
 
+      <h4>Example Usage:</h4>
       <CodeBlock lang="tsx">
         {`
-                    import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-                    import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-                    
-                    export default function CodeBlock({ lang, children }: { lang: string, children: string }) {
-                        return (
-                            <SyntaxHighlighter language={lang}>
-                                {children}
-                            </SyntaxHighlighter>
-                        )
-                    }
+// pages/documentation/[theFile].tsx
+import MUFIN from "@components/markUpFileInitalRenderer";
+import getMD, { getMDFiles } from "@components/markUpFileInitalRenderer/import";
+import Layout from "@components/layout";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+
+export default function MyReallyCreativeName({
+  data,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  return (
+    <Layout title={(data.meta as { [key: string]: string }).title}>
+      {/* Display the HTML fetched by getServerSideProps */}
+      <MUFIN data={data} />
+    </Layout>
+  );
+}
+
+// Gets the markdown data (statically)
+export const getStaticProps: GetStaticProps<
+  { data: Awaited<ReturnType<typeof getMD>> },
+  { thePage: string }
+> = async (content) => {
+  return {
+    props: {
+
+      // Reads the data in public/static/md/mySuperCreativeFolder/{content.params?.thePage}
+      data: await getMD("mySuperCreativeFolder/" + content.params?.thePage),
+    },
+  };
+};
+
+// Get the static paths for prerendering
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: (await getMDFiles("mySuperCreativeFolder")).map((file) => {
+      return { params: { theFile: file } };
+    }),
+    fallback: false,
+  };
+};
+
                 `}
       </CodeBlock>
     </Layout>
