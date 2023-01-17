@@ -9,7 +9,8 @@ export default function DynamicCalendar() {
 
   const {
     id,
-    cd: countdown = "f"
+    cd: countdown = "f",
+    unit = "day"
   } = router.query
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function DynamicCalendar() {
     if (typeof date === "string" && !isNaN(Number(new Date(date ?? "a")))) {
       const newDate = new Date(date ?? "")
       return (
-        <Calendar day={newDate} countdown={countdown === "t"} />
+        <Calendar day={newDate} countdown={countdown === "t"} unit={makeNiceUnit(unit as string)} />
       )
     }
 
@@ -48,4 +49,16 @@ export default function DynamicCalendar() {
       {useDate()}
     </Layout>
   )
+}
+
+function makeNiceUnit(unit: string) {
+  switch (unit.toLowerCase()) {
+    case "d": return "day"
+    case "day": return "day"
+    case "w": return "week"
+    case "week": return "week"
+    case "m": return "month"
+    case "month": return "month"
+    default: return "day"
+  }
 }
