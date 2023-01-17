@@ -12,8 +12,6 @@ export default function DynamicCalendar() {
     cd: countdown = "f"
   } = router.query
 
-  console.log(countdown)
-
   useEffect(() => {
     const newDate = (id == undefined ? null : new Date(((id as string[]) ?? []).join("/")))
     if (newDate !== null && !isNaN(Number(newDate))) setDate(newDate.toISOString())
