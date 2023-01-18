@@ -36,7 +36,7 @@ export default function Calender({ unit = "month", day = new Date(), countdown =
       ref={calRef}
       initialView={CalViewEnum[unit]}
       nowIndicator
-      initialEvents={[{ title: "nice event", start: new Date("1/17/23 6:30"), url: "./calendar/hello" }]}
+      initialEvents={[{ title: "nice event", start: new Date("1/17/23 6:30") }]}
       navLinks
       weekNumbers
       initialDate={day?.toISOString()}
