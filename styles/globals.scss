@@ -81,6 +81,10 @@ td {
   padding: 5px;
 }
 
+.fc-event {
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

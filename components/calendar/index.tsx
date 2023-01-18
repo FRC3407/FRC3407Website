@@ -22,8 +22,6 @@ export default function Calender({ unit = "month", day = new Date(), countdown =
       days: Math.abs(Math.floor((msToDate / 1000 / 60 / 60 / 24) % 365)),
       years: Math.abs(Math.floor(msToDate / 1000 / 60 / 60 / 24 / 365))
     }).filter((val) => val[1] !== 0 || alwaysInclude.includes(val[0])).reverse()
-    
-    const timeOb = Object.fromEntries(times)
 
     return (
       <div>
@@ -38,7 +36,7 @@ export default function Calender({ unit = "month", day = new Date(), countdown =
       ref={calRef}
       initialView={CalViewEnum[unit]}
       nowIndicator
-      initialEvents={[{ title: "nice event", start: new Date() }]}
+      initialEvents={[{ title: "nice event", start: new Date("1/17/23 6:30"), url: "./calendar/hello" }]}
       navLinks
       weekNumbers
       initialDate={day?.toISOString()}
@@ -46,6 +44,13 @@ export default function Calender({ unit = "month", day = new Date(), countdown =
         start: 'title', 
         center: '',
         end: 'today prev,next dayGridMonth,dayGridWeek,dayGridDay'
+      }}
+      dateClick={(dateClick) => {
+        dateClick.view.calendar.gotoDate(dateClick.date)
+        dateClick.view.calendar.changeView("dayGridDay")
+      }}
+      eventClick={(eventClick) => {
+        console.log(eventClick.event._def)
       }}
     />
   );

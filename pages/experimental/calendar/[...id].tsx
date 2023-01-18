@@ -10,7 +10,8 @@ export default function DynamicCalendar() {
   const {
     id,
     cd: countdown = "f",
-    unit = "day"
+    unit = "day",
+    tz
   } = router.query
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function DynamicCalendar() {
   }
 
   function getTitle() {
-    if (typeof date === "string" && !isNaN(Number(new Date(date ?? "a")))) return ` - ${new Date(date).toUTCString()}`
+    if (typeof date === "string" && !isNaN(Number(new Date(date ?? "a")))) return ` - ${new Date(date).toLocaleString("en-US", Intl.DateTimeFormat().resolvedOptions().timeZone as any)}`
     if (typeof date === "string") return " - Invalid Date"
     return ""
   }
