@@ -3,7 +3,6 @@ import Layout from "../components/layout";
 function Home() {
   return (
     <Layout title="Home">
-      <h1>New Robotics Website!</h1>
       <div className="container-narrow">
         <div className="content">
           <div className="row-fluid">
