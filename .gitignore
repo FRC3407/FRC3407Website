@@ -35,4 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.yarn/
+.envlocalstorage
+public/sw.js
+public/workbox-*
+.yarn
+public/sw *.js
+public/sw.js.map

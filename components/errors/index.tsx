@@ -2,18 +2,18 @@ import React from "react";
 
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
-  { hasError: boolean }
+  { hasError: boolean; error: null | Error }
 > {
   constructor(props: React.DetailedHTMLProps<any, any>) {
     super(props);
 
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null };
   }
 
   public static getDerivedStateFromError(error: Error) {
     console.error(error);
 
-    return { hasError: true };
+    return { hasError: true, error };
   }
 
   public render() {
@@ -21,6 +21,7 @@ class ErrorBoundary extends React.Component<
       return (
         <div>
           <h2>Oops, there is an error!</h2>
+          <h3>{this.state.error?.message}</h3>
           <button
             type="button"
             onClick={() => this.setState({ hasError: false })}

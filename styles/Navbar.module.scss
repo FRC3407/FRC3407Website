@@ -5,9 +5,11 @@ $active-link-color: rgb(59, 105, 71);
   font-size: small;
   display: flex;
   background-color: rgb(57, 60, 71);
-  position: relative;
+  position: fixed;
+  width: 100%;
   top: 0;
   padding: 10px;
+  z-index: 99999;
 }
 
 .nav a {

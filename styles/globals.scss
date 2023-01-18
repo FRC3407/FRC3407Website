@@ -18,12 +18,13 @@ body {
 
 * {
   box-sizing: border-box;
-  transition: all 0.2s;
+  // transition: all 0.2s;
 }
 
 .content {
   padding: 10px 40px;
   margin-bottom: 100px;
+  margin-top: 60px;
   // text-align: center;
   font-size: larger;
 }
@@ -72,6 +73,18 @@ a:visited {
   color: rgb(133, 88, 200);
 }
 
+table,
+th,
+td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+.fc-event {
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -80,4 +93,8 @@ a:visited {
     color: white;
     background: $bg-color;
   }
+}
+
+.titanic {
+  float: none;
 }
