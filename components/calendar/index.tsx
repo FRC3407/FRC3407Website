@@ -1,17 +1,34 @@
 import FullCalendar from "@fullcalendar/react";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { Units } from "types/calendar";
+import { makeNiceUnit } from "util/calendar";
 
-export default function Calender({ unit = "month", day = new Date(), countdown = false }: { unit?: "month" | "day" | "week", day?: Date, countdown?: boolean }) {
+export default function Calendar({ unit = "month", day = new Date(), countdown = false, overrideUrlParams = false }: { unit?: Units, day?: Date, countdown?: boolean, overrideUrlParams?: boolean }) {
   const calRef = React.createRef<FullCalendar>();
   const [current, setCurrent] = useState<Date>(new Date())
+  const [dateCountdown, setCountdown] = useState<boolean>(countdown)
+  const router = useRouter()
 
   useEffect(() => {
     if (countdown) setTimeout(() => { setCurrent(new Date())}, 500)
-  });
+    if (!overrideUrlParams) {
+      if (router.query.countdown === "t" || router.query.cd === "t") setCountdown(true)
+      if (typeof router.query.unit !== "undefined" && calRef.current?.getApi !== undefined) calRef.current.getApi().changeView(CalViewEnum[makeNiceUnit(router.query.unit.toString(), unit)])
+      console.log("render")
+    }
+  }, [router, countdown, overrideUrlParams, calRef, unit]);
 
-  if (countdown) {
+  if ((dateCountdown) && (typeof router.query.date === "string" || typeof router.query.day === "string")) {
+    // const urlDate = new Date()
+    // if (!isNaN(Number(urlDate))) setCurrent(urlDate)
+    console.log("here")
+  }
+
+  if (dateCountdown) {
     const alwaysInclude = ["seconds", "minutes", "hours"]
     const msToDate = day.getTime() > current.getTime() ? day.getTime() - current.getTime() : current.getTime() - day.getTime()
 
@@ -32,11 +49,19 @@ export default function Calender({ unit = "month", day = new Date(), countdown =
 
   return (
     <FullCalendar
-      plugins={[interactionPlugin, dayGridPlugin]}
+      plugins={[interactionPlugin, dayGridPlugin, googleCalendarPlugin]}
       ref={calRef}
       initialView={CalViewEnum[unit]}
       nowIndicator
-      initialEvents={[{ title: "nice event", start: new Date("1/17/23 6:30") }]}
+      googleCalendarApiKey={process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY ?? "NO_KEY_ERROR"}
+      eventSources={[
+        {
+          googleCalendarId: "moundsviewrobotics@gmail.com",
+        },
+        {
+          googleCalendarId: "3nejphqnbp82o3j8vpgtuo1g9c@group.calendar.google.com"
+        }
+      ]}
       navLinks
       weekNumbers
       initialDate={day?.toISOString()}
@@ -50,7 +75,11 @@ export default function Calender({ unit = "month", day = new Date(), countdown =
         dateClick.view.calendar.changeView("dayGridDay")
       }}
       eventClick={(eventClick) => {
-        console.log(eventClick.event._def)
+        eventClick.view.calendar
+      }}
+      eventDataTransform={(event) => {
+        event.url = "/experimental/calendar/events/" + event.id
+        return event
       }}
     />
   );

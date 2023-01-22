@@ -2,6 +2,7 @@ import Calendar from "@components/calendar";
 import Layout from "@components/layout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { makeNiceUnit } from "util/calendar";
 
 export default function DynamicCalendar() {
   const [date, setDate] = useState<string | null>(null);
@@ -18,7 +19,7 @@ export default function DynamicCalendar() {
     const newDate = (id == undefined ? null : new Date(((id as string[]) ?? []).join("/")))
     if (newDate !== null && !isNaN(Number(newDate))) setDate(newDate.toISOString())
     else if (newDate !== null) setDate("Invalid Date")
-  }, [router, date, setDate, id]);
+  }, [id]);
 
   function useDate() {
     if (typeof date === "string" && !isNaN(Number(new Date(date ?? "a")))) {
@@ -52,14 +53,3 @@ export default function DynamicCalendar() {
   )
 }
 
-function makeNiceUnit(unit: string) {
-  switch (unit.toLowerCase()) {
-    case "d": return "day"
-    case "day": return "day"
-    case "w": return "week"
-    case "week": return "week"
-    case "m": return "month"
-    case "month": return "month"
-    default: return "day"
-  }
-}

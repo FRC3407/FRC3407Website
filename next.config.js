@@ -22,7 +22,8 @@ const nextConfig = {
   },
   serverRuntimeConfig: {
     PROJECT_ROOT: __dirname
-  }
+  },
+  redirects: async () => []
 };
 
 module.exports = withMDX(withPWA(nextConfig));
