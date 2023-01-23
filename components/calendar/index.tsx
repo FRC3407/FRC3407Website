@@ -14,19 +14,19 @@ export default function Calendar({ unit = "month", day = new Date(), countdown =
   const router = useRouter()
 
   useEffect(() => {
-    if (countdown) setTimeout(() => { setCurrent(new Date())}, 500)
+    if (dateCountdown) setTimeout(() => { setCurrent(new Date())}, 500)
     if (!overrideUrlParams) {
       if (router.query.countdown === "t" || router.query.cd === "t") setCountdown(true)
       if (typeof router.query.unit !== "undefined" && calRef.current?.getApi !== undefined) calRef.current.getApi().changeView(CalViewEnum[makeNiceUnit(router.query.unit.toString(), unit)])
-      console.log("render")
+      if ((typeof router.query.date === "string" || typeof router.query.day === "string") && Math.max(new Date().getTime(), current.getTime()) - Math.min(new Date().getTime(), current.getTime()) < 1000) {
+        const newDate = new Date(router.query.date as string ?? router.query.day as string)
+        if (!isNaN(Number(newDate))) {
+          setCurrent(newDate)
+          if (!(router.query.countdown === "t" || router.query.cd === "t") && typeof calRef.current?.getApi !== "undefined") calRef.current.getApi().gotoDate(newDate)
+        }
+      }
     }
-  }, [router, countdown, overrideUrlParams, calRef, unit]);
-
-  if ((dateCountdown) && (typeof router.query.date === "string" || typeof router.query.day === "string")) {
-    // const urlDate = new Date()
-    // if (!isNaN(Number(urlDate))) setCurrent(urlDate)
-    console.log("here")
-  }
+  }, [router, countdown, overrideUrlParams, calRef, unit, current, dateCountdown]);
 
   if (dateCountdown) {
     const alwaysInclude = ["seconds", "minutes", "hours"]
