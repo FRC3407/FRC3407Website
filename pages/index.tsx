@@ -38,7 +38,16 @@ function Home() {
 
               <h3>Announcements</h3>
               <p>
-                The next competition will be <a href="https://frc-events.firstinspires.org/2023/MNMI"> Minnesota 10,000 Lakes Regional</a> on Wednesday, March 29 to Saturday, April 1, 2023 at <a href="https://www.google.com/maps?q=1925+University+Avenue+SE,+Minneapolis,+MN,+USA">Williams Arena/The Sports Pavilion Univ of MN</a>.
+                The next competition will be{" "}
+                <a href="https://frc-events.firstinspires.org/2023/MNMI">
+                  {" "}
+                  Minnesota 10,000 Lakes Regional
+                </a>{" "}
+                on Wednesday, March 29 to Saturday, April 1, 2023 at{" "}
+                <a href="https://www.google.com/maps?q=1925+University+Avenue+SE,+Minneapolis,+MN,+USA">
+                  Williams Arena/The Sports Pavilion Univ of MN
+                </a>
+                .
               </p>
               {/* <p>
                 <br />

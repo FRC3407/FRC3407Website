@@ -1,1 +1,1 @@
-export type Units = "day" | "month" | "week"
+export type Units = "day" | "month" | "week";
