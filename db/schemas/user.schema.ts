@@ -27,8 +27,8 @@ const UserSchema = new mongoose.Schema<IUserSchema>({
   accessLevel: {
     type: Number,
     required: true,
-    min: 0,
-    max: 5,
+    min: [0, "The Access Level must be between 0 and 5"],
+    max: [5, "The Access Level must be between 0 and 5"],
   },
   isJohnLofton: {
     type: Boolean,
@@ -43,4 +43,4 @@ const UserSchema = new mongoose.Schema<IUserSchema>({
 export type IUser = HydratedDocument<IUserSchema>;
 
 (global as any).schema = (global as any).schema || mongoose.model<IUserSchema>('User', UserSchema);
-export default (global as any).schema;
+export default (global as any).schema as mongoose.Model<IUser, {}, {}, {}, IUserSchema>;

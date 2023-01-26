@@ -3,26 +3,57 @@ import { FormEvent } from "react";
 import { adminAuth } from "..";
 import formStyles from "styles/form.module.scss"
 import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
+import { useSession } from "next-auth/react";
 
 export default function AddUser() {
 
+    const { data: session } = useSession()
+    console.log(session)
+
     async function submitForm(event: FormEvent) {
+        if (!session?.user) {
+            return document.getElementsByClassName(formStyles.errorBox)[0].textContent = "No User Signed in"
+        }
+
+        document.getElementsByClassName(formStyles.errorBox)[0].textContent = ""
         event.preventDefault()
         const form = event.target as HTMLFormElement
 
-        const splitName = form.userName.value.split(" ") as string[]
+        const splitName = form.userName.value.trim().split(" ") as string[]
+
+        if (parseInt(form.accessLevel.value) === -1) {
+            return document.getElementsByClassName(formStyles.errorBox)[0].textContent = "Please set the user's access level"
+        }
 
         const userData = {
             firstName: splitName.shift(),
             lastName: splitName.join(" "),
-
+            email: form.email.value,
+            accessExpires: new Date(form.accessExpires.value),
+            accessLevel: parseInt(form.accessLevel.value),
+            isJohnLofton: form.userName.value.trim().toLowerCase() === "john lofton",
+            teams: []
         }
 
         console.log(userData)
 
-        const res = await fetch("/api/admin/users/add")
+        const res = await fetch("/api/admin/users/add", { 
+            body: JSON.stringify({
+                user: userData
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "X-Content-Type-Options": "nosniff"
+            },
+            method: "post"
+        })
         
-        console.log(Object.entries(UserAccessLevelRolesDisplayNameEnum), await res.json())
+        const resContent = await res.json()
+
+        if (res.status !== 200) {
+            console.log(resContent)
+            return document.getElementsByClassName(formStyles.errorBox)[0].textContent = resContent.message ?? `${res.status} Error`
+        }
     }
 
     return (
@@ -41,14 +72,18 @@ export default function AddUser() {
                 </div>
                 <div className={formStyles.formInput}>
                     <label htmlFor="accessLevel">Access Level</label><br />
-                    <select id="accessLevel" name="accessLevel">
-                        <option unselectable="on" selected>(Select Access Level)</option>
+                    <select id="accessLevel" name="accessLevel" defaultValue={-1} required>
+                        <option value={-1} disabled unselectable="on">(Select Access Level)</option>
                         <option value={1}>Visitor</option>
                         <option value={2}>Member</option>
                         <option value={3}>Colead</option>
                         <option value={4}>Website Developer</option>
                         <option value={5}>System Administrator</option>
                     </select>
+                </div>
+                <div className={formStyles.formInput}>
+                    <label htmlFor="accessExpires">Access Expires</label><br />
+                    <input type={"date"} id="accessExpires" name="accessExpires" required autoComplete="off" /> 
                 </div>
                 <input type={"submit"} />
             </form>
