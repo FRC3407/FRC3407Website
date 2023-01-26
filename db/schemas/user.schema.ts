@@ -7,6 +7,7 @@ interface IUserSchema {
   teams: string[]; // Team Mongo ID
   accessLevel: number;
   isJohnLofton: boolean; // Are they John Lofton Safety Manager?
+  accessExpires?: Date;
   virtuals: {};
 }
 
@@ -33,7 +34,13 @@ const UserSchema = new mongoose.Schema<IUserSchema>({
     type: Boolean,
     default: false,
   },
+  accessExpires: {
+    type: Date,
+    required: false
+  }
 });
 
 export type IUser = HydratedDocument<IUserSchema>;
-export default mongoose.model<IUserSchema>("user", UserSchema);
+
+(global as any).schema = (global as any).schema || mongoose.model<IUserSchema>('User', UserSchema);
+export default (global as any).schema;

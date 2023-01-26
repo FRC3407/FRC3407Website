@@ -32,8 +32,9 @@ export default function AccessControlLayer({
       return <>{children}</>;
     if (
       !Array.isArray(auth.accessLevel) &&
-      UserAccessLevelRolesEnum[auth.accessLevel as AccessLevels] <=
+      (UserAccessLevelRolesEnum[auth.accessLevel as AccessLevels] <=
         session.user.accessLevel
+      || (session.user.accessLevel === UserAccessLevelRolesEnum.dev)) // So devs can see all pages
     )
       return <>{children}</>;
     window.location.replace(auth.unauthorized ?? "/error/access-denied");
