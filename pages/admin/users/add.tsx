@@ -1,17 +1,19 @@
 import Layout from "@components/layout";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { adminAuth } from "..";
 import formStyles from "styles/form.module.scss"
-import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
 import { useSession } from "next-auth/react";
+import { IUserSchema } from "db/schemas/user.schema";
+import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
 
 export default function AddUser() {
-
     const { data: session } = useSession()
-    console.log(session)
+    const [adding, setAdding] = useState(false)
 
     async function submitForm(event: FormEvent) {
+        setAdding(true)
         if (!session?.user) {
+            setAdding(false)
             return document.getElementsByClassName(formStyles.errorBox)[0].textContent = "No User Signed in"
         }
 
@@ -22,6 +24,7 @@ export default function AddUser() {
         const splitName = form.userName.value.trim().split(" ") as string[]
 
         if (parseInt(form.accessLevel.value) === -1) {
+            setAdding(false)
             return document.getElementsByClassName(formStyles.errorBox)[0].textContent = "Please set the user's access level"
         }
 
@@ -29,13 +32,12 @@ export default function AddUser() {
             firstName: splitName.shift(),
             lastName: splitName.join(" "),
             email: form.email.value,
-            accessExpires: new Date(form.accessExpires.value),
             accessLevel: parseInt(form.accessLevel.value),
             isJohnLofton: form.userName.value.trim().toLowerCase() === "john lofton",
             teams: []
-        }
+        } as IUserSchema
 
-        console.log(userData)
+        if (!isNaN(Number(new Date(form.accessExpires.value)))) userData.accessExpires = new Date(form.accessExpires.value)
 
         const res = await fetch("/api/admin/users/add", { 
             body: JSON.stringify({
@@ -51,9 +53,13 @@ export default function AddUser() {
         const resContent = await res.json()
 
         if (res.status !== 200) {
-            console.log(resContent)
+            setAdding(false)
             return document.getElementsByClassName(formStyles.errorBox)[0].textContent = resContent.message ?? `${res.status} Error`
         }
+        (event.target as HTMLFormElement).reset()
+        setAdding(false)
+        document.getElementsByClassName(formStyles.errorBox)[0].textContent = `Success! User ${resContent.user.firstName} ${resContent.user.lastName} was added as a(n) ${UserAccessLevelRolesDisplayNameEnum[resContent.user.accessLevel]}.`
+        console.log("here")
     }
 
     return (
@@ -83,7 +89,7 @@ export default function AddUser() {
                 </div>
                 <div className={formStyles.formInput}>
                     <label htmlFor="accessExpires">Access Expires</label><br />
-                    <input type={"date"} id="accessExpires" name="accessExpires" required autoComplete="off" /> 
+                    <input type={"date"} id="accessExpires" name="accessExpires" autoComplete="off" /> 
                 </div>
                 <input type={"submit"} />
             </form>

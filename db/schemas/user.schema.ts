@@ -1,6 +1,6 @@
 import mongoose, { HydratedDocument } from "mongoose";
 
-interface IUserSchema {
+export interface IUserSchema {
   firstName: string;
   lastName: string;
   email: string; // Email
@@ -8,7 +8,6 @@ interface IUserSchema {
   accessLevel: number;
   isJohnLofton: boolean; // Are they John Lofton Safety Manager?
   accessExpires?: Date;
-  virtuals: {};
 }
 
 const reqString = {

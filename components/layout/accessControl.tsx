@@ -15,7 +15,6 @@ export default function AccessControlLayer({
   const auth = ((children as any).type.auth ?? {}) as IAuthOptions;
   const requiredSignIn = auth.requireSignIn || !!auth.unauthorized;
   auth.accessLevel = auth.accessLevel ?? "tm";
-
   useEffect(() => {
     if (status === "loading") return;
     if (requiredSignIn && !loggedInUser) signIn();
