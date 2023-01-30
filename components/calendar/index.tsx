@@ -131,6 +131,7 @@ export default function Calendar({
         dateClick.view.calendar.gotoDate(dateClick.date);
         dateClick.view.calendar.changeView("dayGridDay");
       }}
+      // Change this to a <Link> component so it prerenders the page
       eventClick={(eventClick) => {
         const from = new URL(`http://localhost:3000/calendar`);
         from.searchParams.append(

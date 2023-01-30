@@ -16,10 +16,11 @@ import TableRow from "@mui/material/TableRow";
 import { useRouter } from "next/router";
 
 interface IColumn {
-  id: string;
+  id: keyof IUser;
   label: string;
   format?: (user: IUser) => string;
-  sortable?: boolean
+  sortable?: boolean;
+  sort?: (a: IUser, b: IUser) => number;
 }
 
 const columns: IColumn[] = [
@@ -41,6 +42,7 @@ const columns: IColumn[] = [
     format(user) {
       return UserAccessLevelRolesDisplayNameEnum[user.accessLevel];
     },
+    sort: (a, b) => a.accessLevel - b.accessLevel,
   },
   {
     id: "_id",
@@ -53,31 +55,76 @@ export default function UserManager({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
 
-  const {
-    queryPage = 1,
-    
-  } = router.query
+  let { page: queryPage = "1", rowsPerPage: queryRowsPerPage = "10", sortBy: querySortBy = "_id" } =
+    router.query;
 
   /**
-   * [Column ID, Ascending Order]
+   * [Column ID, Ascending Order, sort function]
    */
-  const [sortBy, setSortBy] = useState<[keyof IUser, boolean]>(["_id", false])
 
-  const [rowsPerPage, setRowsPerPage] = useState(parseInt(router.query.rowsPerPage as string ?? 10) ?? 10);
+  // filter out invalid query params
+  if (isNaN(parseInt(queryPage as string))) queryPage = "1";
+  if (isNaN(parseInt(queryRowsPerPage as string))) queryRowsPerPage = "10";
+  if (Array.isArray(dbUsers) && dbUsers.length > 0 && typeof dbUsers[0][querySortBy as "lastName"] === "undefined") querySortBy = "_id"
+
+  const [sortBy, setSortBy] = useState<
+    [keyof IUser, boolean, (a: IUser, b: IUser) => number]
+  >(["_id", false, defaultSort]);
+  const [test, setTest] = useState("_id")
+
+  const [rowsPerPage, setRowsPerPage] = useState(
+    !isNaN(parseInt(queryRowsPerPage as string)) &&
+      parseInt(queryRowsPerPage as string) < 1
+      ? 10
+      : parseInt(queryRowsPerPage as string)
+  );
   const [page, setPage] = useState(
-    ((parseInt(router.query.page as string ?? "0") > Math.ceil(dbUsers.length / rowsPerPage) || parseInt(router.query.page as string ?? "0") < 0) ? 1 : parseInt(router.query.page as string)) - 1
+    !isNaN(parseInt(queryRowsPerPage as string)) &&
+      parseInt(queryRowsPerPage as string) < 1
+      ? 0
+      : parseInt(queryPage as string) > Math.ceil(dbUsers.length / rowsPerPage)
+      ? Math.ceil(dbUsers.length / rowsPerPage) - 1
+      : parseInt(queryPage as string) - 1
   );
 
-  if ((isNaN(page) ? 0 : page) + 1 !== parseInt(router.query.page as string) || rowsPerPage !== parseInt(router.query.rowsPerPage as string)) {
+  const [sortColumn, setSortColumn] = useState<keyof IUser>("_id")
+
+  if (
+    (isNaN(page) ? 0 : page) + 1 !== parseInt(router.query.page as string) ||
+    rowsPerPage !== parseInt(router.query.rowsPerPage as string)
+  ) {
     router.push({
       pathname: "/admin/users",
       query: {
         page: page + 1,
-        rowsPerPage
+        rowsPerPage,
       },
     });
   }
-  console.log([parseInt(router.query.rowsPerPage as string), 10, 25, 100].filter((val) => !isNaN(val)));
+
+  function defaultSort(a: IUser, b: IUser): number {
+    if (typeof a[sortBy[0]] !== typeof b[sortBy[0]]) {
+      throw new SyntaxError(
+        `Can't compare type ${typeof a} with type ${typeof b}`
+      );
+    }
+
+    if (typeof a[sortBy[0]] === "string") {
+      console.log(sortBy, test)
+      console.log(a[sortBy[0]], b[sortBy[0]], a[sortBy[0]].localeCompare(b[sortBy[0]]))
+      return a[sortBy[0]].localeCompare(b[sortBy[0]]);
+    }
+    return a[sortBy[0]] - b[sortBy[0]];
+  }
+
+  function setSort(
+    column: IColumn,
+    ascendingOrder: boolean,
+    sortFn: (a: IUser, b: IUser) => number = defaultSort
+  ) {
+    console.log(column, "this")
+    setSortBy([column.id, ascendingOrder, sortFn]);
+  }
 
   if (typeof dbUsers === "string") {
     return (
@@ -86,83 +133,6 @@ export default function UserManager({
       </Layout>
     );
   }
-
-  const EditAbleColumn = ({ user }: { user: IUser }) => {
-    const [editable, setEditable] = useState(false);
-
-    function userRole() {
-      if (editable)
-        return (
-          <select id={`${user._id.toString()}AccessSelect`}>
-            {Object.entries(UserAccessLevelRolesDisplayNameEnum)
-              .filter(([key]) => isNaN(parseInt(key)))
-              .map(([key, val], index) => (
-                <option
-                  key={index}
-                  value={val}
-                  selected={val === user.accessLevel}
-                >
-                  {key}
-                </option>
-              ))}
-          </select>
-        );
-
-      return UserAccessLevelRolesDisplayNameEnum[user.accessLevel];
-    }
-    return (
-      <tr contentEditable={editable} id={user._id.toString()}>
-        <td>
-          <input type="checkbox" />
-        </td>
-        <td>{user.firstName + " " + user.lastName}</td>
-        <td>{user.email}</td>
-        <td contentEditable={false}>{userRole()}</td>
-        <td contentEditable={false}>{user._id.toString()}</td>
-        <td contentEditable={false}>
-          <button
-            onClick={async () => {
-              if (
-                editable &&
-                (
-                  document.getElementById(
-                    `${user._id.toString()}AccessSelect`
-                  ) as any
-                )?.value
-              ) {
-                user.accessLevel = (
-                  document.getElementById(
-                    `${user._id.toString()}AccessSelect`
-                  ) as any
-                )?.value;
-
-                if (
-                  user.email.match(
-                    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-                  ) === null
-                ) {
-                }
-                const res = await fetch("/api/admin/users/update", {
-                  body: JSON.stringify({
-                    user,
-                  }),
-                  method: "post",
-                  headers: {
-                    "content-type": "application/json",
-                  },
-                });
-                console.log(await res.text(), "here");
-              }
-              setEditable(!editable);
-            }}
-          >
-            {editable ? "save" : "edit"}
-          </button>
-          <button>🗑</button>
-        </td>
-      </tr>
-    );
-  };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -177,35 +147,30 @@ export default function UserManager({
 
   return (
     <Layout title="User Manager">
-      {/* <table>
-        <tr>
-          <th>
-            <input type="checkbox" />
-          </th>
-          <th>User</th>
-          <th>Email</th>
-          <th>Access Level</th>
-          <th>User ID</th>
-        </tr>
-        {dbUsers.map((user, index) => (
-          <EditAbleColumn user={user} key={index} />
-        ))}
-        <button>+</button>
-      </table> */}
       <Paper sx={{ width: "100%" }}>
         <TableContainer sx={{ maxHeight: "70vh" }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
-                  <TableCell key={column.id}>{column.label}</TableCell>
+                  <TableCell
+                    key={column.id}
+                    onClick={(event) => {
+                      console.log(event.target, column.id)
+                      setSort(column, true, column.sort);
+                      setTest(column.id)
+                    }}
+                  >
+                    {sortBy[0] === column.id ? "| " : ""}
+                    {column.label}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
               {dbUsers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .sort((a, b) => b[sortBy[0]].localeCompare(a[sortBy[0]]))
+                .sort(sortBy[2])
                 .map((user) => {
                   return (
                     <TableRow hover role="checkbox" key={user._id.toString()}>
@@ -226,7 +191,14 @@ export default function UserManager({
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[parseInt(router.query.rowsPerPage as string), 10, 25, 100].filter((val, index, array) => !isNaN(val) && array.indexOf(val) === index)}
+          rowsPerPageOptions={[
+            parseInt(router.query.rowsPerPage as string),
+            10,
+            25,
+            100,
+          ].filter(
+            (val, index, array) => !isNaN(val) && array.indexOf(val) === index
+          )}
           component="div"
           count={dbUsers.length}
           rowsPerPage={rowsPerPage}
