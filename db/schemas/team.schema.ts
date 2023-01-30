@@ -29,5 +29,6 @@ const TeamSchema = new mongoose.Schema<ITeam>({
   },
 });
 
-(global as any).schema = (global as any).schema ?? mongoose.model<ITeam>("team", TeamSchema);
-export default (global as any).schema
+(global as any).teamSchema =
+  (global as any).teamSchema ?? mongoose.model<ITeam>("team", TeamSchema);
+export default (global as any).teamSchema;

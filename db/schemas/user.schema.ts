@@ -35,11 +35,18 @@ const UserSchema = new mongoose.Schema<IUserSchema>({
   },
   accessExpires: {
     type: Date,
-    required: false
-  }
+    required: false,
+  },
 });
 
 export type IUser = HydratedDocument<IUserSchema>;
 
-(global as any).schema = (global as any).schema || mongoose.model<IUserSchema>('User', UserSchema);
-export default (global as any).schema as mongoose.Model<IUser, {}, {}, {}, IUserSchema>;
+(global as any).userSchema =
+  (global as any).userSchema || mongoose.model<IUserSchema>("User", UserSchema);
+export default (global as any).userSchema as mongoose.Model<
+  IUser,
+  {},
+  {},
+  {},
+  IUserSchema
+>;

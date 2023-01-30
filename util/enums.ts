@@ -15,7 +15,7 @@ export const UserAccessDashboardsEnum = {
   3: "/colead",
   2: "/team",
   1: "/",
-  0: "/"
+  0: "/",
 };
 
 export enum UserAccessLevelRolesDisplayNameEnum {
@@ -23,5 +23,5 @@ export enum UserAccessLevelRolesDisplayNameEnum {
   "Member" = 2,
   "Colead" = 3,
   "Website Developer" = 4,
-  "Administrator" = 5
+  "Administrator" = 5,
 }

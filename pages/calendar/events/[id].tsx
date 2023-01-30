@@ -10,7 +10,10 @@ export default function CalendarEvent({
 
   let back: () => void;
   if (router.query.back || router.query.from) {
-    back = () => router.push(router.query.back as string ?? router.query.from as string);
+    back = () =>
+      router.push(
+        (router.query.back as string) ?? (router.query.from as string)
+      );
   } else {
     back = router.back;
   }

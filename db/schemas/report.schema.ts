@@ -17,5 +17,7 @@ const ReportSchema = new mongoose.Schema<IReport>({
   label: reqString,
 });
 
-(global as any).schema = (global as any).schema ?? mongoose.model<IReport>("Report", ReportSchema);
-export default (global as any).schema
+(global as any).reportSchema =
+  (global as any).reportSchema ??
+  mongoose.model<IReport>("Report", ReportSchema);
+export default (global as any).reportSchema;

@@ -132,10 +132,20 @@ export default function Calendar({
         dateClick.view.calendar.changeView("dayGridDay");
       }}
       eventClick={(eventClick) => {
-        const from = new URL(`http://localhost:3000/calendar`)
-        from.searchParams.append("unit", CalViewEnum[eventClick.view.calendar.view.type as "month"])
-        from.searchParams.append("day", eventClick.event.start?.toISOString() ?? "")
-        router.push(`/calendar/events/${eventClick.event.id}?from=${encodeURIComponent(`${from.pathname}${from.search}`)}`)
+        const from = new URL(`http://localhost:3000/calendar`);
+        from.searchParams.append(
+          "unit",
+          CalViewEnum[eventClick.view.calendar.view.type as "month"]
+        );
+        from.searchParams.append(
+          "day",
+          eventClick.event.start?.toISOString() ?? ""
+        );
+        router.push(
+          `/calendar/events/${eventClick.event.id}?from=${encodeURIComponent(
+            `${from.pathname}${from.search}`
+          )}`
+        );
       }}
       eventDataTransform={(event) => {
         event.url = "";

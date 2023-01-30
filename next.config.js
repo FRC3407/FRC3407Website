@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const withPWA = require('next-pwa')({
-  dest: 'public'
+  disable: process.env.NODE_ENV === 'development',
+  dest: 'public',
+  scope: '/'
 })
 
 const withMDX = require('@next/mdx')({
@@ -23,7 +25,7 @@ const nextConfig = {
   serverRuntimeConfig: {
     PROJECT_ROOT: __dirname
   },
-  redirects: async () => []
+  redirects: async () => [],
 };
 
 module.exports = withMDX(withPWA(nextConfig));

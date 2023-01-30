@@ -15,13 +15,12 @@ export default async function handler(
     return;
 
   const connection = await connect();
-
   if (connection === "NO URI PROVIDED" || process.env.MAKE_REPORTS === "n")
     return;
 
   try {
     await new Report({
-      path: new URL(req.headers.referer).pathname,
+      path: new URL(req.headers.referer ?? "").pathname,
       ...req.body,
     }).save();
   } catch (err) {
