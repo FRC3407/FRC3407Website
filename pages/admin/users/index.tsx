@@ -14,6 +14,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useRouter } from "next/router";
+import { createSemicolonClassElement } from "typescript";
 
 interface IColumn {
   id: keyof IUser;
@@ -21,6 +22,8 @@ interface IColumn {
   format?: (user: IUser) => string;
   sortable?: boolean;
   sort?: (a: IUser, b: IUser) => number;
+  editable?: boolean;
+  editState?: (user: IUser) => JSX.Element
 }
 
 const columns: IColumn[] = [
@@ -47,7 +50,21 @@ const columns: IColumn[] = [
   {
     id: "_id",
     label: "Id",
+    editable: false
   },
+  {
+    id: "accessExpires",
+    label: "Access Expires",
+    format(user) {
+      if (user.accessExpires) {
+        return new Date(user.accessExpires).toLocaleDateString()
+      }
+      return "Never"
+    },
+    editState: (user) => (
+      <input type={"date"} value={user.accessExpires !== undefined ? new Date(user.accessExpires).toLocaleDateString('en-CA') : undefined} />
+    )
+  }
 ];
 
 export default function UserManager({
@@ -58,26 +75,19 @@ export default function UserManager({
   let { page: queryPage = "1", rowsPerPage: queryRowsPerPage = "10", sortBy: querySortBy = "_id" } =
     router.query;
 
-  /**
-   * [Column ID, Ascending Order, sort function]
-   */
-
   // filter out invalid query params
   if (isNaN(parseInt(queryPage as string))) queryPage = "1";
   if (isNaN(parseInt(queryRowsPerPage as string))) queryRowsPerPage = "10";
   if (Array.isArray(dbUsers) && dbUsers.length > 0 && typeof dbUsers[0][querySortBy as "lastName"] === "undefined") querySortBy = "_id"
 
-  const [sortBy, setSortBy] = useState<
-    [keyof IUser, boolean, (a: IUser, b: IUser) => number]
-  >(["_id", false, defaultSort]);
-  const [test, setTest] = useState("_id")
-
+  // Statefully variable declarations
   const [rowsPerPage, setRowsPerPage] = useState(
     !isNaN(parseInt(queryRowsPerPage as string)) &&
       parseInt(queryRowsPerPage as string) < 1
       ? 10
       : parseInt(queryRowsPerPage as string)
   );
+
   const [page, setPage] = useState(
     !isNaN(parseInt(queryRowsPerPage as string)) &&
       parseInt(queryRowsPerPage as string) < 1
@@ -88,6 +98,17 @@ export default function UserManager({
   );
 
   const [sortColumn, setSortColumn] = useState<keyof IUser>("_id")
+  const [ascending, setAscending] = useState(true)
+  const [search, setSearch] = useState("")
+  const [editRow, setEditRow] = useState<string | false>(false)
+
+  if (typeof dbUsers === "string") {
+    return (
+      <Layout title="User Manager - Error">
+        <p>No valid MongoDB URI provided</p>
+      </Layout>
+    );
+  }
 
   if (
     (isNaN(page) ? 0 : page) + 1 !== parseInt(router.query.page as string) ||
@@ -103,35 +124,16 @@ export default function UserManager({
   }
 
   function defaultSort(a: IUser, b: IUser): number {
-    if (typeof a[sortBy[0]] !== typeof b[sortBy[0]]) {
+    if (typeof a[sortColumn] !== typeof b[sortColumn]) {
       throw new SyntaxError(
         `Can't compare type ${typeof a} with type ${typeof b}`
       );
     }
 
-    if (typeof a[sortBy[0]] === "string") {
-      console.log(sortBy, test)
-      console.log(a[sortBy[0]], b[sortBy[0]], a[sortBy[0]].localeCompare(b[sortBy[0]]))
-      return a[sortBy[0]].localeCompare(b[sortBy[0]]);
+    if (typeof a[sortColumn] === "string") {
+      return a[sortColumn].localeCompare(b[sortColumn]);
     }
-    return a[sortBy[0]] - b[sortBy[0]];
-  }
-
-  function setSort(
-    column: IColumn,
-    ascendingOrder: boolean,
-    sortFn: (a: IUser, b: IUser) => number = defaultSort
-  ) {
-    console.log(column, "this")
-    setSortBy([column.id, ascendingOrder, sortFn]);
-  }
-
-  if (typeof dbUsers === "string") {
-    return (
-      <Layout title="User Manager - Error">
-        <p>No valid MongoDB URI provided</p>
-      </Layout>
-    );
+    return a[sortColumn] - b[sortColumn];
   }
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -145,6 +147,23 @@ export default function UserManager({
     setPage(0);
   };
 
+  const columnsWithFormats = columns.filter(column => column.format !== undefined)
+
+  let displayUsers = dbUsers
+  
+  if (search.length > 0) displayUsers = displayUsers.filter((user) => {
+    const tempUser = { ...user }
+    columnsWithFormats.forEach(column => {
+      // @ts-expect-error
+      tempUser[column.id] = column.format(user)
+    })
+
+    return !Object.values(tempUser).every(value => !(value ?? "").toString().toLowerCase().startsWith(search))
+  })
+  
+  displayUsers.sort(defaultSort).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  if (!ascending) displayUsers = displayUsers.reverse()
+
   return (
     <Layout title="User Manager">
       <Paper sx={{ width: "100%" }}>
@@ -156,33 +175,39 @@ export default function UserManager({
                   <TableCell
                     key={column.id}
                     onClick={(event) => {
-                      console.log(event.target, column.id)
-                      setSort(column, true, column.sort);
-                      setTest(column.id)
+                      if (column.id === sortColumn) setAscending(!ascending)
+                      else {
+                        setSortColumn(column.id)
+                        setAscending(true)
+                      }
                     }}
                   >
-                    {sortBy[0] === column.id ? "| " : ""}
+                    {sortColumn === column.id ? "| " : ""}
                     {column.label}
                   </TableCell>
                 ))}
+                <TableCell><input type={"search"} placeholder="Search"  onChange={(event) => {
+                  setSearch(event.target.value)
+                }}/></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {dbUsers
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .sort(sortBy[2])
-                .map((user) => {
+              {displayUsers.map((user) => {
                   return (
                     <TableRow hover role="checkbox" key={user._id.toString()}>
                       {columns.map((column) => (
-                        <TableCell key={`${column.id}-${user._id.toString()}`}>
-                          {typeof column.format !== "undefined"
+                        <TableCell key={`${column.id}-${user._id.toString()}`} contentEditable={(column.editable ?? true) && editRow === user._id.toString() && column.editState === undefined}>
+                          {(editRow === user._id.toString() && column.editState !== undefined) ? column.editState(user) : (typeof column.format !== "undefined"
                             ? column.format(user)
-                            : user[column.id as "firstName"]}
+                            : user[column.id as "firstName"])}
                         </TableCell>
                       ))}
                       <TableCell>
-                        <button>edit</button>
+                        <button disabled={editRow !== false && editRow !== user._id.toString()} onClick={() => {
+                          if (editRow === user._id.toString()) setEditRow(false)
+                          else setEditRow(user._id.toString())
+                        }}>{editRow !== user._id.toString() ? "Edit" : "Save"}</button>
+                        <button disabled={editRow !== false}>Delete</button>
                       </TableCell>
                     </TableRow>
                   );
