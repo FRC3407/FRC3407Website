@@ -12,7 +12,7 @@ export default async function handler(
 
   if (
     !token ||
-    req.method !== "POST" ||
+    req.method !== "DELETE" ||
     req.headers["sec-fetch-site"] !== "same-origin" ||
     !req.headers.referer ||
     new URL(req.headers.referer).host !== req.headers.host

@@ -1,0 +1,16 @@
+.ButtonLink {
+  &,&:visited {
+    color: white;
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 5px;
+    background-color: rgb(83, 76, 76);
+    justify-content: center;
+    text-align: center;
+    margin-top: 5px;
+
+    &:hover {
+      background-color: rgb(107, 98, 98);
+    }
+  }
+}

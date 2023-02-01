@@ -1,7 +1,7 @@
 import Layout from "@components/layout";
 import { FormEvent, useState } from "react";
 import { adminAuth } from "..";
-import formStyles from "styles/form.module.scss";
+import formStyles from "styles/components/Form.module.scss";
 import { useSession } from "next-auth/react";
 import { IUserSchema } from "db/schemas/user.schema";
 import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";

@@ -35,7 +35,9 @@ export default async function handler(
     const user = await UserSchema.findByIdAndUpdate(
       req.body.user._id,
       req.body.user
-    ).exec();
+    )
+      .lean()
+      .exec();
     res.status(200).send({ user });
   } catch (error) {
     res.status(500).send({ error });

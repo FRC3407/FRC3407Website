@@ -1,5 +1,5 @@
 import type { NextComponentType } from "next";
-import style from "../../styles/Navbar.module.scss";
+import style from "../../styles/components/Navbar.module.scss";
 import NavLink from "./link";
 
 const Navbar: NextComponentType = () => {

@@ -42,13 +42,13 @@ export default function Calendar({
           );
       if (
         (typeof router.query.date === "string" ||
-          typeof router.query.day === "string") &&
+          typeof router.query.day === "string" || typeof day !== "undefined") &&
         Math.max(new Date().getTime(), current.getTime()) -
           Math.min(new Date().getTime(), current.getTime()) <
           1000
       ) {
         const newDate = new Date(
-          (router.query.date as string) ?? (router.query.day as string)
+          (router.query.date as string) ?? (router.query.day as string) ?? day
         );
         if (!isNaN(Number(newDate))) {
           setCurrent(newDate);
@@ -68,10 +68,11 @@ export default function Calendar({
     unit,
     current,
     dateCountdown,
+    day
   ]);
 
   if (dateCountdown) {
-    if (typeof (router.query.date ?? router.query.day) === "undefined") {
+    if (typeof (router.query.date ?? router.query.day ?? day) === "undefined") {
       return <div>No Date Provided for the countdown</div>;
     }
 
