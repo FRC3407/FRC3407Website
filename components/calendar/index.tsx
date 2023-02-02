@@ -9,7 +9,7 @@ import { makeNiceUnit } from "util/calendar";
 
 export default function Calendar({
   unit = "month",
-  day = new Date(),
+  day,
   countdown = false,
   overrideUrlParams = false,
 }: {
