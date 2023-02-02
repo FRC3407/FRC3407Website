@@ -1,4 +1,4 @@
-import Back from "@components/buttons/back";
+import Back from "@components/buttons/Back";
 import Layout from "@components/layout";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
