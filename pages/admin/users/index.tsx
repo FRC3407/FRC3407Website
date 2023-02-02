@@ -327,8 +327,8 @@ export default function UserManager({
                         >
                           {editRow !== user._id.toString() ? "Edit" : "Save"}
                         </button>
-                        { /* This needs a loading screen */ }
-                        <button 
+                        {/* This needs a loading screen */}
+                        <button
                           disabled={editRow !== false || userDelete}
                           onClick={async () => {
                             setDelete(true);
@@ -353,7 +353,7 @@ export default function UserManager({
                             setDelete(false);
                           }}
                         >
-                          Delete 
+                          Delete
                         </button>
                       </TableCell>
                     </TableRow>
@@ -362,7 +362,8 @@ export default function UserManager({
             </TableBody>
           </Table>
         </TableContainer>
-        <button onClick={() => router.push("./users/add")}>Add a User</button> { /* This needs a loading screen */}
+        <button onClick={() => router.push("./users/add")}>Add a User</button>{" "}
+        {/* This needs a loading screen */}
         <TablePagination
           rowsPerPageOptions={[
             parseInt(router.query.rowsPerPage as string),
@@ -380,7 +381,8 @@ export default function UserManager({
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <button onClick={() => router.push("./")}>Back</button> { /* This needs a loading screen */}
+      <button onClick={() => router.push("./")}>Back</button>{" "}
+      {/* This needs a loading screen */}
     </Layout>
   );
 }
