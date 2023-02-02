@@ -1,4 +1,4 @@
-import styles from "styles/Back.component.module.scss";
+import styles from "styles/buttons/Back.component.module.scss";
 
 export default function Back({ url }: { url: string | (() => void) }) {
   if (typeof url === "function") {

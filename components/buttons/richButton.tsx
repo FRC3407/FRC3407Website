@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "styles/RichButton.component.module.scss";
+import styles from "styles/buttons/RichButton.component.module.scss";
 import {
   faFileCode,
   IconDefinition,

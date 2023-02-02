@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import style from "../../styles/AuthError.module.scss";
+import style from "../../styles/pages/AuthError.module.scss";
 
 export default function Error() {
   const router = useRouter();

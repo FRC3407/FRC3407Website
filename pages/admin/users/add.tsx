@@ -5,9 +5,11 @@ import formStyles from "styles/components/Form.module.scss";
 import { useSession } from "next-auth/react";
 import { IUserSchema } from "db/schemas/user.schema";
 import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
+import { useRouter } from "next/router";
 
 export default function AddUser() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [adding, setAdding] = useState(false);
   const [color, setColor] = useState("red");
 
@@ -139,6 +141,7 @@ export default function AddUser() {
           />
         </div>
         <input type={"submit"} disabled={adding} />
+        <button onClick={() => router.push("./")}>Back</button>
       </form>
     </Layout>
   );

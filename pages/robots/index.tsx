@@ -1,3 +1,9 @@
+import Layout from "@components/layout";
+
 export default function Robots() {
-  return <h1>hi</h1>;
+  return (
+    <Layout title="Our Robots">
+      <h1>Our Robots</h1>
+    </Layout>
+  )
 }

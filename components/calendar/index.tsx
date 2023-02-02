@@ -42,7 +42,8 @@ export default function Calendar({
           );
       if (
         (typeof router.query.date === "string" ||
-          typeof router.query.day === "string" || typeof day !== "undefined") &&
+          typeof router.query.day === "string" ||
+          typeof day !== "undefined") &&
         Math.max(new Date().getTime(), current.getTime()) -
           Math.min(new Date().getTime(), current.getTime()) <
           1000
@@ -68,7 +69,7 @@ export default function Calendar({
     unit,
     current,
     dateCountdown,
-    day
+    day,
   ]);
 
   if (dateCountdown) {

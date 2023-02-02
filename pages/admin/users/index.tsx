@@ -14,7 +14,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useRouter } from "next/router";
-import ButtonLink from "@components/buttons/ButtonLink";
 
 interface IColumn {
   id: keyof IUser;
@@ -328,7 +327,8 @@ export default function UserManager({
                         >
                           {editRow !== user._id.toString() ? "Edit" : "Save"}
                         </button>
-                        <button
+                        { /* This needs a loading screen */ }
+                        <button 
                           disabled={editRow !== false || userDelete}
                           onClick={async () => {
                             setDelete(true);
@@ -353,18 +353,16 @@ export default function UserManager({
                             setDelete(false);
                           }}
                         >
-                          Delete
+                          Delete 
                         </button>
                       </TableCell>
                     </TableRow>
                   );
                 })}
-                <TableRow>
-                  <ButtonLink href="./users/add">+</ButtonLink>
-                </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
+        <button onClick={() => router.push("./users/add")}>Add a User</button> { /* This needs a loading screen */}
         <TablePagination
           rowsPerPageOptions={[
             parseInt(router.query.rowsPerPage as string),
@@ -382,6 +380,7 @@ export default function UserManager({
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <button onClick={() => router.push("./")}>Back</button> { /* This needs a loading screen */}
     </Layout>
   );
 }
