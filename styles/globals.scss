@@ -5,6 +5,8 @@ html,
 body {
   padding: 0;
   margin: 0;
+  background-color: $bg-color;
+  color: white;
   font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -82,16 +84,15 @@ td {
   cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: $bg-color;
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   html {
+//     color-scheme: dark;
+//   }
+//   body {
+//     color: white;
+//     background: $bg-color;
+//   }
+// }
 
 .titanic {
-  float: none;
-}
+  float: none; /* bruh */
