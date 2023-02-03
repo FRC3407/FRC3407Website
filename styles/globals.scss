@@ -1,8 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
-
-$bg-color: rgb(26, 26, 27);
-$page-header-color: rgb(19, 101, 19);
-$home-header-color: rgb(23, 110, 49);
+@import "./variables.scss";
 
 html,
 body {
@@ -83,6 +80,10 @@ td {
   padding: 5px;
 }
 
+.fc-event {
+  cursor: pointer;
+}
+
 // @media (prefers-color-scheme: dark) {
 //   html {
 //     color-scheme: dark;
@@ -94,5 +95,4 @@ td {
 // }
 
 .titanic {
-  float: none;
-}
+  float: none; /* bruh */

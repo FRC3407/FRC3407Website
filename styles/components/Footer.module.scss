@@ -1,0 +1,43 @@
+@import "../variables.scss";
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: $footer-color;
+  align-items: center;
+  z-index: 99999;
+
+  box-shadow: 0px -5px 50px black;
+  display: flex;
+
+  & .leftFooter {
+    padding: 1px;
+    width: 20%;
+  }
+
+  & .centerFooter {
+    // margin-left: auto;
+    // margin-right: auto;
+    width: 60%;
+    text-align: center;
+
+    & * {
+      padding: 0px;
+      margin: 0px;
+    }
+  }
+
+  & .rightFooter {
+    width: 20%;
+    text-align: center;
+  }
+
+  & .mediaIcon {
+    display: inline-block;
+    color: white;
+    cursor: pointer;
+  }
+}

@@ -9,7 +9,6 @@ import getMD from "@components/markUpFileInitalRenderer/import";
 export default function BradysTestWorld({
   paths,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(paths)
   return (
     <Layout title="Brady's Test World">
       <h1 className="centeredText">Brady&apos;s Test World</h1>

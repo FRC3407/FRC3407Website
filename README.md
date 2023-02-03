@@ -7,7 +7,7 @@ Install [NodeJS](https://nodejs.org/en/) and [Yarn Package Manager](https://yarn
 After install those, clone this repo and run the following command:
 
 ```bash
-yarn
+yarn install
 ```
 
 <br/>

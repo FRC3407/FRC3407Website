@@ -1,0 +1,42 @@
+@import "../variables.scss";
+
+.nav {
+  font-size: small;
+  display: flex;
+  background-color: $navbar-color;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  padding: 10px;
+  z-index: 99999;
+}
+
+.nav a {
+  color: white;
+}
+
+.button {
+  width: auto;
+  margin: 0px 5px;
+  font-size: 16pt;
+  padding: 5px 15px;
+  background-color: $link-color;
+
+  color: white;
+  text-decoration: none;
+
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button.currentPath {
+  background-color: $active-link-color;
+}
+
+.button:hover {
+  background-color: lighten($link-color, 10%);
+}
+
+.button.currentPath:hover {
+  background-color: lighten($active-link-color, 10%);
+}
