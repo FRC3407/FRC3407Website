@@ -11,6 +11,8 @@
     "devbuild": "next build && next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
@@ -18,16 +20,20 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@fullcalendar/core": "^6.0.2",
     "@fullcalendar/daygrid": "^6.0.2",
+    "@fullcalendar/google-calendar": "^6.0.3",
     "@fullcalendar/interaction": "^6.0.2",
     "@fullcalendar/react": "^6.0.2",
     "@fullcalendar/timegrid": "^6.0.2",
     "@mdx-js/loader": "^2.2.1",
     "@mdx-js/react": "^2.2.1",
+    "@mui/material": "^5.11.6",
     "@next/mdx": "^13.1.1",
     "@types/node": "^18.11.17",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.8",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "axios": "^1.2.3",
     "eslint": "^8.31.0",
     "eslint-config-next": "13.0.2",
     "gray-matter": "^4.0.3",
@@ -38,6 +44,9 @@
     "next-pwa": "^5.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-responsive-carousel": "^3.2.23",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-transition-group": "^4.4.5",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
     "sass": "^1.56.1",
@@ -47,8 +56,8 @@
     "typescript": "4.8.4"
   },
   "devDependencies": {
+    "@types/react-syntax-highlighter": "^15.5.6",
     "eslint-plugin-import": "^2.27.4",
     "prettier": "2.8.1"
-  },
-  "packageManager": "yarn@1.21.1"
+  }
 }

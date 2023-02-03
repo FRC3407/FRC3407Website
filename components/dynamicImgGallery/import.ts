@@ -3,11 +3,9 @@ import path from "path";
 import imageSize from "image-size";
 import { ISizeCalculationResult } from "image-size/dist/types/interface";
 
-const supportedFileTypes: string[] = ["png", "jpg"]
+const supportedFileTypes: string[] = ["png", "jpg"];
 
-const getImages: (
-  ...folders: string[]
-) => Promise<
+const getImages: (...folders: string[]) => Promise<
   {
     file: string;
     url: string;
@@ -16,7 +14,7 @@ const getImages: (
       description: string;
       title: string;
       fileType: string;
-      imageSize: ISizeCalculationResult
+      imageSize: ISizeCalculationResult;
     };
   }[]
 > = async (...folder: string[]) =>
@@ -54,7 +52,13 @@ const getImages: (
       )
     )) as any
   )
-    .filter((element) => element.startsWith("/") && supportedFileTypes.includes(path.extname(element).toLowerCase().replaceAll(".", "")))
+    .filter(
+      (element) =>
+        element.startsWith("/") &&
+        supportedFileTypes.includes(
+          path.extname(element).toLowerCase().replaceAll(".", "")
+        )
+    )
     .map((image: any) => {
       return {
         file: path.basename(image),
@@ -66,7 +70,7 @@ const getImages: (
             path.parse(image).name.replaceAll("-", " ").split("_").at(-1) ??
             path.parse(image).name,
           fileType: path.extname(image),
-          imageSize: imageSize(path.join(process.cwd(), "public", image))
+          imageSize: imageSize(path.join(process.cwd(), "public", image)),
         },
       };
     });

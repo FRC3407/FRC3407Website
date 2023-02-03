@@ -12,11 +12,12 @@ export const authOptions: AuthOptions = {
 
     async jwt({ token }) {
       if (typeof token.accessLevel !== "number") {
-        let accessLevel = 1;
+        let accessLevel = 0;
 
-        if ((await connect()) !== "NO URI PROVIDED") {
-          const dbUser = await Users.findOne({ email: token.email });
-
+        if ((await connect()) === "NO URI PROVIDED") {
+          throw new Error("No Mongo URI");
+        } else {
+          const dbUser = await Users.findOne({ email: token.email }).exec();
           if (dbUser) accessLevel = dbUser.accessLevel;
         }
 

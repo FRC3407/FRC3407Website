@@ -1,5 +1,5 @@
 import Link from "next/link";
-import style from "../../styles/Navbar.module.scss";
+import style from "../../styles/components/Navbar.module.scss";
 import { useRouter } from "next/router";
 
 /**

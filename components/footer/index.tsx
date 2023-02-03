@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { NextComponentType } from "next";
-import styles from "../../styles/Footer.module.scss";
+import styles from "../../styles/components/Footer.module.scss";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const Footer: NextComponentType = () => {
