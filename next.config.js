@@ -31,7 +31,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.firstinspires.org',
-        port: '',
         pathname: '**',
       },
     ],

@@ -53,6 +53,11 @@
   text-align: center;
   & .challenge {
     text-align: left;
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    & .ytEmbed {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
   }
 }
