@@ -35,9 +35,6 @@ function Banner() {
         <CarouselElement src={MemberSaw2} />
         <CarouselElement src={BrainStorm} />
       </Carousel>
-      <div className={styles.informationContainer}>
-        <h1>We are the Wild Cards</h1>
-      </div>
     </div>
   );
 }
@@ -46,6 +43,19 @@ export default function Home() {
   return (
     <Layout title="Home" ignoreStandardContentStyle>
       <Banner />
+      <div className={styles.informationContainer}>
+        <h1>Who We Are</h1>
+        <p className={styles.intro}>We are the Mounds View High School&apos;s Robotics team, Team 3407 aka the Wild Cards. Every year we compete in the <a href="https://www.firstinspires.org/about/vision-and-mission">FIRST</a> Robotics Competition, our team is given 6 weeks to design, prototype, build, test, and perfect a robot to complete the tasks required in the competition, we then bring our robot to the University of Minnesota&apos;s Williams Arena in Minneapolis Minnesota to compete against other teams in the FRC 10,000 Lakes Competition.</p>
+        <p className={styles.intro}>We strive to teach our students skills that will not only help our team and robot but also help them develop skills such as programming, leadership, wiring, building, how to work in a team, how to work through problems, and an endless list of other skills that help them succeed in their future STEM or even non-STEM endeavors. We also work to encourage others to advance their knowledge of STEM fields and help spark the interest of the next generation of students, teachers, and ultimately leaders.</p>
+      </div>
+      <div className={styles.announcements}>
+        <h1>Announcements</h1>
+        <div className={styles.challenge}>
+          <h2>This Years Challenge: </h2><br />
+          <Image src="https://www.firstinspires.org/sites/default/files/first-energize/charged-up-gs-update.svg" alt="Charged Up Logo" width={128} height={128} />
+          <h3>Charged Up</h3>
+        </div>
+      </div>
     </Layout>
   );
 }

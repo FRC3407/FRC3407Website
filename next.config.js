@@ -26,6 +26,16 @@ const nextConfig = {
     PROJECT_ROOT: __dirname
   },
   redirects: async () => [],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.firstinspires.org',
+        port: '',
+        pathname: '**',
+      },
+    ],
+  }
 };
 
 module.exports = withMDX(withPWA(nextConfig));

@@ -22,6 +22,7 @@ export default function Layout({
       ) : (
         <div className="content">{children}</div>
       )}
+      <div className="footerBuffer" />
       <Footer />
     </div>
   );
