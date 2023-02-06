@@ -96,15 +96,15 @@ export default function Home() {
         </div>
         <h2>Next Competition</h2>
         <p>
-        <a href="https://frc-events.firstinspires.org/2023/MNMI">
-                  {" "}
-                  Minnesota 10,000 Lakes Regional
-                </a>{" "}
-                on Wednesday, March 29 to Saturday, April 1, 2023 at{" "}
-                <a href="https://www.google.com/maps?q=1925+University+Avenue+SE,+Minneapolis,+MN,+USA">
-                  Williams Arena/The Sports Pavilion Univ of MN
-                </a>
-                .
+          <a href="https://frc-events.firstinspires.org/2023/MNMI">
+            {" "}
+            Minnesota 10,000 Lakes Regional
+          </a>{" "}
+          on Wednesday, March 29 to Saturday, April 1, 2023 at{" "}
+          <a href="https://www.google.com/maps?q=1925+University+Avenue+SE,+Minneapolis,+MN,+USA">
+            Williams Arena/The Sports Pavilion Univ of MN
+          </a>
+          .
         </p>
       </div>
     </Layout>
