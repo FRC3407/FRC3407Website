@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "yarn prettier --write . && next build",
     "prebuild": "yarn prettier --write . && node prebuild",
+    "clean": "yarn prettier --write .",
     "start": "next start",
     "lint": "next lint",
     "devbuild": "next build && next start"
@@ -27,6 +28,7 @@
     "@mdx-js/loader": "^2.2.1",
     "@mdx-js/react": "^2.2.1",
     "@mui/material": "^5.11.6",
+    "@mui/x-data-grid": "^5.17.22",
     "@next/mdx": "^13.1.1",
     "@types/node": "^18.11.17",
     "@types/prismjs": "^1.26.0",

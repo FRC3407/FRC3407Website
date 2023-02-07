@@ -4,7 +4,7 @@ export interface IUserSchema {
   firstName: string;
   lastName: string;
   email: string; // Email
-  teams: string[]; // Team Mongo ID
+  team: string;
   accessLevel: number;
   isJohnLofton: boolean; // Are they John Lofton Safety Manager?
   accessExpires?: Date;
@@ -19,10 +19,7 @@ const UserSchema = new mongoose.Schema<IUserSchema>({
   firstName: reqString,
   lastName: reqString,
   email: reqString,
-  teams: {
-    type: [String],
-    required: true,
-  },
+  team: reqString,
   accessLevel: {
     type: Number,
     required: true,
