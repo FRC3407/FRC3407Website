@@ -33,6 +33,10 @@ const nextConfig = {
         hostname: 'www.firstinspires.org',
         pathname: '**',
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com"
+      }
     ],
   }
 };

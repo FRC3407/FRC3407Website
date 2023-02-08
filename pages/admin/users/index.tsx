@@ -3,7 +3,10 @@ import connect from "db/connection";
 import Users, { IUser } from "db/schemas/user.schema";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useState } from "react";
-import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
+import {
+  TeamDisplayNames,
+  UserAccessLevelRolesDisplayNameEnum,
+} from "util/enums";
 import { adminAuth } from "..";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -94,6 +97,24 @@ const columns: IColumn[] = [
       if (isNaN(Number(date))) return undefined;
       return date;
     },
+  },
+  {
+    id: "team",
+    label: "Team",
+    format(user) {
+      return TeamDisplayNames[user.team as "admin"];
+    },
+    editState: (user) => (
+      <select defaultValue={user.team}>
+        {Object.entries(TeamDisplayNames)
+          .filter((x) => x[0] === x[0].toLowerCase())
+          .map((val) => (
+            <option key={val[0]} value={val[0]}>
+              {val[1]}
+            </option>
+          ))}
+      </select>
+    ),
   },
 ];
 
@@ -320,7 +341,7 @@ export default function UserManager({
                                     val._id.toString() ===
                                     resUser._id.toString()
                                 )
-                              ] = resUser;
+                              ] = temp as any;
                               setEditRow(false);
                             } else setEditRow(user._id.toString());
                           }}

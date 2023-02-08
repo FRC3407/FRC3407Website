@@ -1,5 +1,4 @@
 import Layout from "@components/layout";
-import MemberList from "@components/members/list";
 import connect from "db/connection";
 import userSchema, { IUser, IUserSchema } from "db/schemas/user.schema";
 import { LeanDocument, Types, Document } from "mongoose";
@@ -14,12 +13,14 @@ export default function Members({
       <Layout title="Our Members">
         <h1>No DB connection</h1>
       </Layout>
-    )
+    );
   }
   return (
     <Layout title="Our Members">
       <div>
-        <MemberList members={members}/>
+        {members.map((member) => (
+          <div key={member._id.toString()}>{member._id.toString()}</div>
+        ))}
       </div>
     </Layout>
   );

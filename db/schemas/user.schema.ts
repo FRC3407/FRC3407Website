@@ -8,6 +8,22 @@ export interface IUserSchema {
   accessLevel: number;
   isJohnLofton: boolean; // Are they John Lofton Safety Manager?
   accessExpires?: Date;
+  personalData?: {
+    primaryImage?: string;
+    images?: string[];
+    name?: string;
+    description?: string;
+    shortDescription?: string;
+    highlights?: string[];
+    yearJoined?: number;
+    whyJoined?: string;
+    favorites?: string[];
+    interests?: string[];
+    facts?: string[];
+    career?: string;
+    futurePlans?: string;
+    yearsOnTeam?: number[];
+  };
 }
 
 const reqString = {
@@ -33,6 +49,27 @@ const UserSchema = new mongoose.Schema<IUserSchema>({
   accessExpires: {
     type: Date,
     required: false,
+  },
+  personalData: {
+    required: false,
+    default: {},
+    primaryImage: String,
+    images: [String],
+    name: String,
+    description: String,
+    shortDescription: {
+      type: String,
+      maxlength: 150,
+    },
+    highlights: [String],
+    yearJoined: Number,
+    whyJoined: String,
+    favorites: [String],
+    interests: [String],
+    facts: [String],
+    career: String,
+    futurePlans: String,
+    yearsOnTeam: [Number],
   },
 });
 

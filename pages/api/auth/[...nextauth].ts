@@ -18,7 +18,22 @@ export const authOptions: AuthOptions = {
           throw new Error("No Mongo URI");
         } else {
           const dbUser = await Users.findOne({ email: token.email }).exec();
-          if (dbUser) accessLevel = dbUser.accessLevel;
+          if (dbUser) {
+            accessLevel = dbUser.accessLevel;
+            token.userId = dbUser._id.toString();
+
+            if (
+              typeof dbUser.personalData?.primaryImage !== "string" &&
+              typeof token.picture === "string"
+            ) {
+              await Users.findByIdAndUpdate(dbUser._id.toString(), {
+                personalData: {
+                  ...(dbUser.personalData ?? {}),
+                  primaryImage: token.picture,
+                },
+              });
+            }
+          }
         }
 
         token.accessLevel = accessLevel;
@@ -29,6 +44,7 @@ export const authOptions: AuthOptions = {
 
     async session({ token, session }) {
       session.user.accessLevel = token.accessLevel;
+      session.user.id = token.userId;
       return session;
     },
   },
