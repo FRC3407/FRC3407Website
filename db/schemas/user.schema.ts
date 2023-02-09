@@ -14,15 +14,21 @@ export interface IUserSchema {
     name?: string;
     description?: string;
     shortDescription?: string;
-    highlights?: string[];
+    achievements?: string[];
     yearJoined?: number;
     whyJoined?: string;
-    favorites?: string[];
     interests?: string[];
     facts?: string[];
     career?: string;
     futurePlans?: string;
     yearsOnTeam?: number[];
+    contact?: {
+      github?: string
+      email?: string
+      personalSite?: string
+    },
+    importUrl?: string
+    displayUrl?: string
   };
 }
 
@@ -59,18 +65,30 @@ const UserSchema = new mongoose.Schema<IUserSchema>({
     description: String,
     shortDescription: {
       type: String,
-      maxlength: 150,
+      maxlength: 70,
     },
-    highlights: [String],
+    achievements: [String],
     yearJoined: Number,
     whyJoined: String,
-    favorites: [String],
     interests: [String],
     facts: [String],
     career: String,
     futurePlans: String,
     yearsOnTeam: [Number],
+    contact: {
+      github: String,
+      email: String,
+      personalSite: String
+    },
+    importUrl: String,
+    displayUrl: String
   },
+}, {
+  statics: {
+    findOneByDisplayUrl(url: string) {
+      return this.findOne({ displayUrl: url })
+    }
+  }
 });
 
 export type IUser = HydratedDocument<IUserSchema>;
