@@ -66,7 +66,7 @@ const UserSchema = new mongoose.Schema<IUserSchema>(
       description: String,
       shortDescription: {
         type: String,
-        maxlength: 70,
+        maxlength: 350,
       },
       achievements: [String],
       yearJoined: Number,

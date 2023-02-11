@@ -1,3 +1,8 @@
+export function aOrAn(nextWord: string) {
+  if (nextWord.trim().match(/^[aieouAIEOU].*/)) return "an"
+  return "a"
+}
+
 export function mergeObjects(
   ob1: { [key: string]: any },
   ob2: { [key: string]: any }

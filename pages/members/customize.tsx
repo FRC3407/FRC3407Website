@@ -180,11 +180,11 @@ export default function Customize() {
           margin="normal"
           id="shortDescription"
           InputProps={{ readOnly: saving }}
-          inputProps={{ maxLength: 70 }}
+          inputProps={{ maxLength: 350 }}
           label="Short Description"
           defaultValue={data?.personalData?.shortDescription}
           placeholder="I'm just too cool but in a short way"
-          helperText="Describe yourself, but in under 70 characters"
+          helperText="Describe yourself, but in 350 characters or less!"
         />{" "}
         <TextField
           fullWidth
