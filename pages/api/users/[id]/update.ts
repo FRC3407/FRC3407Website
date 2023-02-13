@@ -9,10 +9,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const user = await getToken({ req })
+    const user = await getToken({ req });
 
     if ((await connect()) === "NO URI PROVIDED")
-    return res.status(500).send({ error: { message: "No DB connection" } });
+      return res.status(500).send({ error: { message: "No DB connection" } });
 
     if (
       !user ||
@@ -23,36 +23,41 @@ export default async function handler(
     ) {
       return res.status(401).send("How bout not");
     }
-  
+
     if (
-      ((await userSchema.findOne({ email: user.email }).exec())?.accessLevel ?? 0) <
-      UserAccessLevelRolesDisplayNameEnum.Member
+      ((await userSchema.findOne({ email: user.email }).exec())?.accessLevel ??
+        0) < UserAccessLevelRolesDisplayNameEnum.Member
     ) {
       return res.status(403).json("Just get higher permissions lol");
     }
 
-  if (
-    (
-      await (userSchema as any).findOneByDisplayUrl(req.body.data.displayUrl)
-    )._id.toString() !== req.query.id
-  )
-    return res
-      .status(400)
-      .send({ error: { message: "That Display URL is taken" }});
+    if (
+      (
+        await (userSchema as any).findOneByDisplayUrl(req.body.data.displayUrl)
+      )._id.toString() !== req.query.id
+    )
+      return res
+        .status(400)
+        .send({ error: { message: "That Display URL is taken" } });
 
-  let newUser = (await userSchema.findById(req.query.id)) as any;
-  const doc = await userSchema.findByIdAndUpdate(
-    newUser._id,
-    {
-      displayUrl: req.body.data.displayUrl ?? newUser?.displayUrl,
-      importUrl: req.body.data.importUrl ?? newUser?.importUrl,
-      personalData: { ...newUser.personalData, ...req.body.data.personalData },
-    },
-    { new: true }
-  );
+    let newUser = (await userSchema.findById(req.query.id)) as any;
+    const doc = await userSchema.findByIdAndUpdate(
+      newUser._id,
+      {
+        displayUrl: req.body.data.displayUrl ?? newUser?.displayUrl,
+        importUrl: req.body.data.importUrl ?? newUser?.importUrl,
+        personalData: {
+          ...newUser.personalData,
+          ...req.body.data.personalData,
+        },
+      },
+      { new: true }
+    );
 
-  res.status(200).send(doc?.toJSON());
+    res.status(200).send(doc?.toJSON());
   } catch (error: any) {
-    res.status(error.code ?? 500).send({ error: { message: error.message ?? "Unknown Error"}})
+    res
+      .status(error.code ?? 500)
+      .send({ error: { message: error.message ?? "Unknown Error" } });
   }
 }

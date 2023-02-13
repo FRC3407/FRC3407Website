@@ -78,7 +78,7 @@ async function getFilePath(
   const files = await fs.readdir(
     path.join(
       config.serverRuntimeConfig.PROJECT_ROOT,
-      ".next/static/chunks/pages",
+      "build/static/chunks/pages",
       currPath
     )
   );
@@ -98,7 +98,7 @@ async function getFilePath(
   if (filteredFiles.length)
     return path.join(
       config.serverRuntimeConfig.PROJECT_ROOT,
-      ".next/static/chunks/pages",
+      "build/static/chunks/pages",
       currPath,
       filteredFiles[0]
     );

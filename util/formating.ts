@@ -1,6 +1,6 @@
 export function aOrAn(nextWord: string) {
-  if (nextWord.trim().match(/^[aieouAIEOU].*/)) return "an"
-  return "a"
+  if (nextWord.trim().match(/^[aieouAIEOU].*/)) return "an";
+  return "a";
 }
 
 export function mergeObjects(

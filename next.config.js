@@ -35,10 +35,15 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "googleusercontent.com"
+        hostname: "**.googleusercontent.com"
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com"
       }
     ],
-  }
+  },
+  distDir: "build"
 };
 
 module.exports = withMDX(withPWA(nextConfig));

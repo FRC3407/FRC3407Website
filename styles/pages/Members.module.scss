@@ -75,3 +75,61 @@
     }
   }
 }
+
+.memberPage {
+  & .titleDescription {
+    & .img {
+      height: auto;
+      width: 45vw;
+      border-radius: 5px;
+      margin: 5px;
+      max-height: 450px;
+
+      @media screen and (max-width: 600px) {
+        width: 80vw;
+      }
+    }
+
+    & .title {
+      margin: 10px;
+      display: block;
+      text-align: center;
+      width: 55vw;
+
+      @media screen and (max-width: 600px) {
+        width: auto;
+      }
+
+      & h1,
+      h4 {
+        margin: 0px;
+      }
+
+      & h4 {
+        font-weight: 100;
+      }
+    }
+
+    display: flex;
+
+    @media screen and (max-width: 600px) {
+      text-align: center;
+      display: block;
+    }
+  }
+
+  & .personalData {
+    text-align: center;
+
+    & .dataPoints {
+      display: flex;
+      flex-wrap: wrap;
+
+      & .dataPoint {
+        min-width: 48%;
+        max-width: 98%;
+        margin: 1%;
+      }
+    }
+  }
+}
