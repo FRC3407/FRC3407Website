@@ -15,8 +15,9 @@ import { aOrAn } from "util/formating";
 import Avatar from "@mui/material/Avatar";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
-import WebsiteIcon from "@mui/icons-material/AddLink";
+import WebsiteIcon from "@mui/icons-material/Link";
 import Link from "next/link";
+import Button from "@mui/material/Button"
 
 export default function MemberPage({
   user,
@@ -45,24 +46,30 @@ export default function MemberPage({
 
   const dataAttributes: IDataAttribute[] = [
     {
-      label: "Achievements",
+      label: "Some of my (many) Achievements",
       id: "achievements",
       displayFn(val: string[]) {
-        return val.map((subval) => <p key={subval}>{subval}</p>);
+        return <ul>
+          {val.map((subval) => <li key={subval}>{subval}</li>)}
+        </ul>;
       },
     },
     {
-      label: "Interests",
+      label: "A couple of my interesting Interests",
       id: "interests",
       displayFn(val: string[]) {
-        return val.map((subval) => <p key={subval}>{subval}</p>);
+        return <ul>
+          {val.map((subval) => <li key={subval}>{subval}</li>)}
+        </ul>;
       },
     },
     {
       label: "Fun Facts",
       id: "facts",
       displayFn(val: string[]) {
-        return val.map((subval) => <p key={subval}>{subval}</p>);
+        return <ul>
+          {val.map((subval) => <li key={subval}>{subval}</li>)}
+        </ul>;
       },
     },
     {
@@ -112,8 +119,6 @@ export default function MemberPage({
     );
   }).filter((val) => val != null)
 
-  console.log(userElements, contactElements)
-
   return (
     <Layout title={`${user.firstName} ${user.lastName}`}>
       <main className={styles.memberPage}>
@@ -155,16 +160,20 @@ export default function MemberPage({
           </div>
         </div>
         <div className={styles.personalData}>
-          <h3>A little more about me!</h3>
+          {userElements.length > 0 ? <div><h3>A little more about me!</h3><hr /></div> : null}
           <div className={styles.dataPoints}>
             {userElements}
           </div>
         </div>
         <div className={styles.contact}>
-          {(contactElements.length > 0) ? <h4>Contact Me!</h4> : null }
+          {(contactElements.length > 0) ? <div><hr /><h4>Contact Me!</h4></div> : null }
           <div className={styles.contactButtons}>
             {contactElements}
           </div>
+        </div>
+        <hr />
+        <div className={styles.memberPageNav}>
+          <Button variant="outlined" href="./" className={styles.backButton}>All Team Members</Button>
         </div>
       </main>
     </Layout>

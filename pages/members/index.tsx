@@ -33,6 +33,26 @@ export default function Members({
     );
   }
 
+  interface IContactAttribute {
+    id: string;
+    icon: any;
+  }
+
+  const contactAttributes: IContactAttribute[] = [
+    {
+      id: "email",
+      icon: EmailIcon,
+    },
+    {
+      id: "personalSite",
+      icon: WebsiteIcon,
+    },
+    {
+      id: "github",
+      icon: GithubIcon,
+    },
+  ];
+
   function ModalContent() {
     if (!open) return null;
 
