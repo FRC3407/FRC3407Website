@@ -59,8 +59,9 @@ export default function Customize() {
             Object.values(form)
               .filter(
                 (val) =>
-                  ((val.value !== undefined &&
-                  val.value.length > 1) || (data[val.key] != null || data.personalData[val.key] != null)) &&
+                  ((val.value !== undefined && val.value.length > 1) ||
+                    data[val.key] != null ||
+                    data.personalData[val.key] != null) &&
                   val.type !== "submit"
               )
               .map((val) => [val.id, val.value])

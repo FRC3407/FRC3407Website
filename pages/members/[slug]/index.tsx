@@ -17,7 +17,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import WebsiteIcon from "@mui/icons-material/Link";
 import Link from "next/link";
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 
 export default function MemberPage({
   user,
@@ -42,34 +42,66 @@ export default function MemberPage({
   interface IContactAttribute {
     id: string;
     icon: any;
+    formatFn?: (user: any) => string | null;
   }
+
+  const contactAttributes: IContactAttribute[] = [
+    {
+      id: "email",
+      icon: EmailIcon,
+      formatFn(user) {
+          if (user?.personalData?.contact?.email) return `mailto:${user?.personalData?.contact?.email}`
+          return null
+      },
+    },
+    {
+      id: "personalSite",
+      icon: WebsiteIcon,
+    },
+    {
+      id: "github",
+      icon: GitHubIcon,
+    },
+  ];
 
   const dataAttributes: IDataAttribute[] = [
     {
       label: "Some of my (many) Achievements",
       id: "achievements",
       displayFn(val: string[]) {
-        return <ul>
-          {val.map((subval) => <li key={subval}>{subval}</li>)}
-        </ul>;
+        return (
+          <ul>
+            {val.map((subval) => (
+              <li key={subval}>{subval}</li>
+            ))}
+          </ul>
+        );
       },
     },
     {
       label: "A couple of my interesting Interests",
       id: "interests",
       displayFn(val: string[]) {
-        return <ul>
-          {val.map((subval) => <li key={subval}>{subval}</li>)}
-        </ul>;
+        return (
+          <ul>
+            {val.map((subval) => (
+              <li key={subval}>{subval}</li>
+            ))}
+          </ul>
+        );
       },
     },
     {
       label: "Fun Facts",
       id: "facts",
       displayFn(val: string[]) {
-        return <ul>
-          {val.map((subval) => <li key={subval}>{subval}</li>)}
-        </ul>;
+        return (
+          <ul>
+            {val.map((subval) => (
+              <li key={subval}>{subval}</li>
+            ))}
+          </ul>
+        );
       },
     },
     {
@@ -82,42 +114,36 @@ export default function MemberPage({
     },
   ];
 
-  const contactAttributes: IContactAttribute[] = [
-    {
-      id: "email",
-      icon: EmailIcon,
-    },
-    {
-      id: "personalSite",
-      icon: WebsiteIcon,
-    },
-    {
-      id: "github",
-      icon: GitHubIcon,
-    },
-  ];
-
-  const contactElements = contactAttributes.filter((val) => typeof (user.personalData.contact || {})[val.id] === "string").map((contact, index) =>
-    <div key={index}>
-      <Link href={user.personalData.contact[contact.id]}>{contact.icon.type.render({ className: styles.contactButton })}</Link>
-    </div>
-  )
-
-  const userElements = dataAttributes.map((val) => {
-    if (
-      (user.personalData[val.id] == null || user.personalData[val.id].length < 1) &&
-      (val.ignoreIfUndefined ?? true)
+  const contactElements = contactAttributes
+    .filter(
+      (val) => typeof (user.personalData.contact || {})[val.id] === "string"
     )
-      return null;
-    return (
-      <div key={val.id} className={styles.dataPoint}>
-        <h4>{val.label}</h4>
-        {(
-          val.displayFn || ((displayVal: any) => <p>{displayVal}</p>)
-        )(user.personalData[val.id])}
+    .map((contact, index) => (
+      <div key={index}>
+        <Link href={(contact.formatFn ?? (() => user.personalData.contact[contact.id]))(user)}>
+          {contact.icon.type.render({ className: styles.contactButton })}
+        </Link>
       </div>
-    );
-  }).filter((val) => val != null)
+    ));
+
+  const userElements = dataAttributes
+    .map((val) => {
+      if (
+        (user.personalData[val.id] == null ||
+          user.personalData[val.id].length < 1) &&
+        (val.ignoreIfUndefined ?? true)
+      )
+        return null;
+      return (
+        <div key={val.id} className={styles.dataPoint}>
+          <h4>{val.label}</h4>
+          {(val.displayFn || ((displayVal: any) => <p>{displayVal}</p>))(
+            user.personalData[val.id]
+          )}
+        </div>
+      );
+    })
+    .filter((val) => val != null);
 
   return (
     <Layout title={`${user.firstName} ${user.lastName}`}>
@@ -160,20 +186,28 @@ export default function MemberPage({
           </div>
         </div>
         <div className={styles.personalData}>
-          {userElements.length > 0 ? <div><h3>A little more about me!</h3><hr /></div> : null}
-          <div className={styles.dataPoints}>
-            {userElements}
-          </div>
+          {userElements.length > 0 ? (
+            <div>
+              <h3>A little more about me!</h3>
+              <hr />
+            </div>
+          ) : null}
+          <div className={styles.dataPoints}>{userElements}</div>
         </div>
         <div className={styles.contact}>
-          {(contactElements.length > 0) ? <div><hr /><h4>Contact Me!</h4></div> : null }
-          <div className={styles.contactButtons}>
-            {contactElements}
-          </div>
+          {contactElements.length > 0 ? (
+            <div>
+              <hr />
+              <h4>Contact Me!</h4>
+            </div>
+          ) : null}
+          <div className={styles.contactButtons}>{contactElements}</div>
         </div>
         <hr />
         <div className={styles.memberPageNav}>
-          <Button variant="outlined" href="./" className={styles.backButton}>All Team Members</Button>
+          <Button variant="outlined" href="./" className={styles.backButton}>
+            All Team Members
+          </Button>
         </div>
       </main>
     </Layout>

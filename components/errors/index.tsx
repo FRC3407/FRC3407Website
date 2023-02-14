@@ -1,3 +1,4 @@
+import Layout from "@components/layout";
 import React from "react";
 
 class ErrorBoundary extends React.Component<
@@ -7,7 +8,7 @@ class ErrorBoundary extends React.Component<
   constructor(props: React.DetailedHTMLProps<any, any>) {
     super(props);
 
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: true, error: null };
   }
 
   public static getDerivedStateFromError(error: Error) {
@@ -19,16 +20,10 @@ class ErrorBoundary extends React.Component<
   public render() {
     if (this.state.hasError) {
       return (
-        <div>
-          <h2>Oops, there is an error!</h2>
-          <h3>{this.state.error?.message}</h3>
-          <button
-            type="button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            Try again?
-          </button>
-        </div>
+        <Layout title={`Error`}>
+          <h1>Colin is a zingus</h1>
+          {/* <h1>There was an error</h1> */}
+        </Layout>
       );
     }
 

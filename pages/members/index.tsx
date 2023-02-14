@@ -19,11 +19,16 @@ import {
 import { useState } from "react";
 import { aOrAn } from "util/formating";
 import Link from "next/link";
+import Button from "@mui/material/Button";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function Members({
   members,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [open, setOpen] = useState<string | false>(false);
+  const [sortBy, setSortBy] = useState("role");
 
   if (members === "NO CONNECTION") {
     return (
@@ -36,12 +41,17 @@ export default function Members({
   interface IContactAttribute {
     id: string;
     icon: any;
+    formatFn?: (user: any) => string | null;
   }
 
   const contactAttributes: IContactAttribute[] = [
     {
       id: "email",
       icon: EmailIcon,
+      formatFn(user) {
+          if (user?.personalData?.contact?.email) return `mailto:${user?.personalData?.contact?.email}`
+          return null
+      },
     },
     {
       id: "personalSite",
@@ -53,6 +63,52 @@ export default function Members({
     },
   ];
 
+  interface ISortBy {
+    header: string;
+    members: any[];
+  }
+
+  const sortByRole: ISortBy[] = [
+    {
+      header: "Coleads",
+      members: members.filter(
+        (member) =>
+          member.accessLevel === UserAccessLevelRolesDisplayNameEnum["Colead"]
+      ),
+    },
+    {
+      header: "Team Members",
+      members: members.filter(
+        (member) =>
+          member.accessLevel === UserAccessLevelRolesDisplayNameEnum["Member"]
+      ),
+    },
+    {
+      header: "Mentors and Administrators",
+      members: members.filter(
+        (member) =>
+          member.accessLevel ===
+            UserAccessLevelRolesDisplayNameEnum["Mentor"] ||
+          member.accessLevel ===
+            UserAccessLevelRolesDisplayNameEnum["Administrator"]
+      ),
+    },
+  ];
+
+  const sortByTeam: ISortBy[] = [
+    "admin",
+    "build",
+    "controls",
+    "programming",
+  ].map((team) => {
+    return {
+      header: TeamDisplayNames[team as "admin"] + " Team",
+      members: members
+        .filter((member) => member.team === team)
+        .sort((a, b) => b.accessLevel - a.accessLevel),
+    };
+  });
+
   function ModalContent() {
     if (!open) return null;
 
@@ -61,6 +117,20 @@ export default function Members({
     );
 
     if (!currentModelUser) return null;
+
+    const contactElements = contactAttributes
+      .filter(
+        (val) =>
+          typeof (currentModelUser.personalData.contact || {})[val.id] ===
+          "string"
+      )
+      .map((contact, index) => (
+        <div key={index}>
+          <Link href={(contact.formatFn ?? (() => currentModelUser.personalData.contact[contact.id]))(currentModelUser)}>
+            {contact.icon.type.render({ className: styles.contactButton })}
+          </Link>
+        </div>
+      ));
 
     return (
       <div className={styles.memberModal}>
@@ -103,74 +173,13 @@ export default function Members({
               currentModelUser.firstName
             }!`}
         </div>
-        <div className={styles.personalPage}>
-          {typeof currentModelUser?.displayUrl === "string" ? (
-            <Link href={`./members/${currentModelUser?.displayUrl}`}>
-              Check Out my Personal Page
-            </Link>
+        <div className={styles.contact}>
+          {typeof currentModelUser.displayUrl === "string" ? (
+            <Button href={`./members/${currentModelUser?.displayUrl}`}>
+              Check out my personal page
+            </Button>
           ) : null}
-        </div>
-        <div className={styles.socials}>
-          {typeof currentModelUser?.personalData?.contact?.email ===
-          "string" ? (
-            <Link
-              href={`mailto:${currentModelUser?.personalData?.contact?.email}`}
-              target="_blank"
-              className={styles.icon}
-            >
-              <Avatar
-                sx={{
-                  color: "white",
-                  ":hover": {
-                    bgcolor: "grey",
-                  },
-                  transition: "0.5s",
-                }}
-              >
-                <EmailIcon />
-              </Avatar>
-            </Link>
-          ) : null}
-          {typeof currentModelUser?.personalData?.contact?.personalSite ===
-          "string" ? (
-            <Link
-              href={`${currentModelUser?.personalData?.contact?.personalSite}`}
-              target="_blank"
-              className={styles.icon}
-            >
-              <Avatar
-                sx={{
-                  color: "white",
-                  ":hover": {
-                    bgcolor: "grey",
-                  },
-                  transition: "0.5s",
-                }}
-              >
-                <WebsiteIcon />
-              </Avatar>
-            </Link>
-          ) : null}
-          {typeof currentModelUser?.personalData?.contact?.email ===
-          "string" ? (
-            <Link
-              href={`${currentModelUser?.personalData?.contact?.github}`}
-              target="_blank"
-              className={styles.icon}
-            >
-              <Avatar
-                sx={{
-                  color: "white",
-                  ":hover": {
-                    bgcolor: "grey",
-                  },
-                  transition: "0.5s",
-                }}
-              >
-                <GithubIcon />
-              </Avatar>
-            </Link>
-          ) : null}
+          <div className={styles.contactButtons}>{contactElements}</div>
         </div>
       </div>
     );
@@ -178,7 +187,25 @@ export default function Members({
 
   return (
     <Layout title="Our Members">
-      <div className={styles.members}>
+      <div className={styles.pageHeader}>
+        <h2>Our Members</h2>
+        <FormControl>
+          <Select
+            value={sortBy}
+            onChange={(event) => {
+              setSortBy(event.target.value);
+            }}
+            variant={"outlined"}
+            sx={{
+              height: "70%",
+            }}
+          >
+            <MenuItem value={"role"}>Sort By Member Role</MenuItem>
+            <MenuItem value={"team"}>Sort By Member Team</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      <div className={styles.membersContainer}>
         <Modal
           open={!!open}
           onClose={() => setOpen(false)}
@@ -203,31 +230,48 @@ export default function Members({
             </Box>
           </Fade>
         </Modal>
-        {members.map((member) => (
-          <div
-            key={member._id.toString()}
-            className={styles.member}
-            onClick={() => setOpen(member._id.toString())}
-          >
-            <Avatar
-              alt={member.firstName}
-              src={member?.personalData?.primaryImage ?? ""}
-              variant="square"
-              sx={{
-                height: "200px",
-                width: "200px",
-                borderRadius: "5px",
-              }}
-            />
-            <p className={styles.name}>
-              {member.firstName} {member.lastName}
-            </p>
-            <p className={styles.job}>
-              {TeamDisplayNames[member.team as "admin"]}{" "}
-              {UserAccessLevelRolesDisplayNameEnum[member.accessLevel]}
-            </p>
-          </div>
-        ))}
+        {(sortBy === "role" ? sortByRole : sortByTeam)
+          .filter((sort) => sort.members.length > 0)
+          .map((section) => (
+            <div
+              key={section.header}
+              id={section.header}
+              className={styles.memberGroup}
+            >
+              <div className={styles.header}>
+                <hr />
+                <h3>{section.header}</h3>
+                <hr style={{ width: "80%" }} />
+              </div>
+              <div className={styles.members}>
+                {section.members.map((member) => (
+                  <div
+                    key={member._id.toString()}
+                    className={styles.member}
+                    onClick={() => setOpen(member._id.toString())}
+                  >
+                    <Avatar
+                      alt={member.firstName}
+                      src={member?.personalData?.primaryImage ?? ""}
+                      variant="square"
+                      sx={{
+                        height: "200px",
+                        width: "200px",
+                        borderRadius: "5px",
+                      }}
+                    />
+                    <p className={styles.name}>
+                      {member.firstName} {member.lastName}
+                    </p>
+                    <p className={styles.job}>
+                      {TeamDisplayNames[member.team as "admin"]}{" "}
+                      {UserAccessLevelRolesDisplayNameEnum[member.accessLevel]}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
       </div>
     </Layout>
   );
