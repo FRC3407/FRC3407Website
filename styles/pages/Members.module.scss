@@ -132,4 +132,21 @@
       }
     }
   }
+
+  & .contact {
+    text-align: center;
+    & .contactButtons {
+      display: flex;
+      column-gap: 5px;
+      justify-content: center;
+      & .contactButton {
+        background-color: grey;
+        height: 40px;
+        width: 40px;
+        color: white;
+        padding: 5px;
+        border-radius: 50%;
+      }
+    }
+  }
 }

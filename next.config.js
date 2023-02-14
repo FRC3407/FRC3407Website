@@ -42,8 +42,7 @@ const nextConfig = {
         hostname: "avatars.githubusercontent.com"
       }
     ],
-  },
-  distDir: "build"
+  }
 };
 
 module.exports = withMDX(withPWA(nextConfig));

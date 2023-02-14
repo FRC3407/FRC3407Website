@@ -25,13 +25,12 @@ export default async function handler(
     }
 
     if (
-      ((await userSchema.findOne({ email: user.email }).exec())?.accessLevel ??
-        0) < UserAccessLevelRolesDisplayNameEnum.Member
-    ) {
-      return res.status(403).json("Just get higher permissions lol");
+      ((await userSchema.findOne({ email: user.email }).exec())?._id.toString() ?? "") !== req.query.id ?? "") {
+      return res.status(403).json("You can't modify other user's information");
     }
 
     if (
+      req.body.data.displayUrl === "customize" ||
       (
         await (userSchema as any).findOneByDisplayUrl(req.body.data.displayUrl)
       )._id.toString() !== req.query.id
@@ -47,7 +46,6 @@ export default async function handler(
         displayUrl: req.body.data.displayUrl ?? newUser?.displayUrl,
         importUrl: req.body.data.importUrl ?? newUser?.importUrl,
         personalData: {
-          ...newUser.personalData,
           ...req.body.data.personalData,
         },
       },

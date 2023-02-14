@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
 import WebsiteIcon from "@mui/icons-material/AddLink";
+import Link from "next/link";
 
 export default function MemberPage({
   user,
@@ -38,8 +39,8 @@ export default function MemberPage({
   }
 
   interface IContactAttribute {
-    id: string
-    icon: any
+    id: string;
+    icon: any;
   }
 
   const dataAttributes: IDataAttribute[] = [
@@ -77,17 +78,41 @@ export default function MemberPage({
   const contactAttributes: IContactAttribute[] = [
     {
       id: "email",
-      icon: EmailIcon
+      icon: EmailIcon,
     },
     {
       id: "personalSite",
-      icon: WebsiteIcon
+      icon: WebsiteIcon,
     },
     {
       id: "github",
-      icon: GitHubIcon
+      icon: GitHubIcon,
     },
-  ]
+  ];
+
+  const contactElements = contactAttributes.filter((val) => typeof (user.personalData.contact || {})[val.id] === "string").map((contact, index) =>
+    <div key={index}>
+      <Link href={user.personalData.contact[contact.id]}>{contact.icon.type.render({ className: styles.contactButton })}</Link>
+    </div>
+  )
+
+  const userElements = dataAttributes.map((val) => {
+    if (
+      (user.personalData[val.id] == null || user.personalData[val.id].length < 1) &&
+      (val.ignoreIfUndefined ?? true)
+    )
+      return null;
+    return (
+      <div key={val.id} className={styles.dataPoint}>
+        <h4>{val.label}</h4>
+        {(
+          val.displayFn || ((displayVal: any) => <p>{displayVal}</p>)
+        )(user.personalData[val.id])}
+      </div>
+    );
+  }).filter((val) => val != null)
+
+  console.log(userElements, contactElements)
 
   return (
     <Layout title={`${user.firstName} ${user.lastName}`}>
@@ -130,27 +155,16 @@ export default function MemberPage({
           </div>
         </div>
         <div className={styles.personalData}>
-        <h3>A little more about me!</h3>
+          <h3>A little more about me!</h3>
           <div className={styles.dataPoints}>
-            {dataAttributes.map((val) => {
-              if (
-                user.personalData[val.id] == null &&
-                (val.ignoreIfUndefined ?? true)
-              )
-                return;
-              return (
-                <div key={val.id} className={styles.dataPoint}>
-                  <h4>{val.label}</h4>
-                  {(val.displayFn || ((displayVal: any) => <p>{displayVal}</p>))(
-                    user.personalData[val.id]
-                  )}
-                </div>
-              );
-            })}
+            {userElements}
           </div>
         </div>
         <div className={styles.contact}>
-          {contactAttributes.map(contact => contact.icon.type.render({ className: "hello" }))}
+          {(contactElements.length > 0) ? <h4>Contact Me!</h4> : null }
+          <div className={styles.contactButtons}>
+            {contactElements}
+          </div>
         </div>
       </main>
     </Layout>
@@ -161,44 +175,61 @@ export const getStaticProps: GetStaticProps<{
   user?: any;
   error?: string;
 }> = async (context) => {
-  if ((await connect()) === "NO URI PROVIDED")
-    return { props: { error: "No DB Connection" } };
-  const user = JSON.parse(
-    JSON.stringify(
-      await (userSchema as any).findOneByDisplayUrl(context.params?.slug).lean()
-    )
-  );
+  try {
+    if ((await connect()) === "NO URI PROVIDED")
+      return { props: { error: "No DB Connection" } };
+    const user = JSON.parse(
+      JSON.stringify(
+        await (userSchema as any)
+          .findOneByDisplayUrl(context.params?.slug)
+          .lean()
+      )
+    );
 
-  if (!user)
+    if (!user)
+      return {
+        notFound: true,
+      };
+
+    delete user.email;
+
     return {
-      notFound: true,
+      props: {
+        user,
+      },
+      revalidate: 86400,
     };
-
-  delete user.email;
-
-  return {
-    props: {
-      user,
-    },
-    revalidate: 604800
-  };
+  } catch (error: any) {
+    return {
+      props: {
+        error: error.message ?? "Unknown Error",
+      },
+    };
+  }
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  if ((await connect()) === "NO URI PROVIDED") {
+  try {
+    if ((await connect()) === "NO URI PROVIDED") {
+      return {
+        paths: [],
+        fallback: false,
+      };
+    }
+
+    const users = await userSchema
+      .find({ accessLevel: { $gt: 1 } })
+      .nor([{ displayUrl: undefined }]);
+    return {
+      paths: users.map((user) => {
+        return { params: { slug: user.displayUrl } };
+      }),
+      fallback: "blocking",
+    };
+  } catch (error) {
     return {
       paths: [],
       fallback: false,
     };
   }
-
-  const users = await userSchema
-    .find({ accessLevel: { $gt: 1 } })
-    .nor([{ displayUrl: undefined }]);
-  return {
-    paths: users.map((user) => {
-      return { params: { slug: user.displayUrl } };
-    }),
-    fallback: "blocking",
-  };
 };

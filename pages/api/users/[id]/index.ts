@@ -26,13 +26,6 @@ export default async function handler(
       return res.status(401).send("How bout not");
     }
 
-    if (
-      ((await userSchema.findOne({ email: user.email }).exec())?.accessLevel ??
-        0) < UserAccessLevelRolesDisplayNameEnum.Member
-    ) {
-      return res.status(403).json("Just get higher permissions lol");
-    }
-
     try {
       const user = await userSchema.findById(req.query.id).lean().exec();
 
