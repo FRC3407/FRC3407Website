@@ -12,6 +12,7 @@ import { useState } from "react";
 import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
 import React from "react";
 import axios from "axios";
+import Loading from "@components/loading";
 
 export default function Customize() {
   const [avatarError, setAvatarError] = useState(false);
@@ -29,7 +30,7 @@ export default function Customize() {
   }
 
   if (!data) {
-    return <Layout title="Customize Your Page">loading...</Layout>;
+    return <Loading />
   }
 
   if (!url && data?.personalData?.primaryImage)
