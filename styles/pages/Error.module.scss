@@ -12,7 +12,8 @@
     align-items: center;
     justify-content: center;
     column-gap: 20px;
-    & .button, .button:visited {
+    & .button,
+    .button:visited {
       height: auto;
       color: white;
       font-weight: bold;

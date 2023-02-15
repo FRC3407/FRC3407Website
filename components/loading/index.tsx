@@ -1,5 +1,5 @@
 import Layout from "@components/layout";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Loading() {
   return (
@@ -8,5 +8,5 @@ export default function Loading() {
         <CircularProgress />
       </div>
     </Layout>
-  )
+  );
 }
