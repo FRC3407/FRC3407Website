@@ -50,8 +50,9 @@ export default function MemberPage({
       id: "email",
       icon: EmailIcon,
       formatFn(user) {
-          if (user?.personalData?.contact?.email) return `mailto:${user?.personalData?.contact?.email}`
-          return null
+        if (user?.personalData?.contact?.email)
+          return `mailto:${user?.personalData?.contact?.email}`;
+        return null;
       },
     },
     {
@@ -120,7 +121,11 @@ export default function MemberPage({
     )
     .map((contact, index) => (
       <div key={index}>
-        <Link href={(contact.formatFn ?? (() => user.personalData.contact[contact.id]))(user)}>
+        <Link
+          href={(
+            contact.formatFn ?? (() => user.personalData.contact[contact.id])
+          )(user)}
+        >
           {contact.icon.type.render({ className: styles.contactButton })}
         </Link>
       </div>

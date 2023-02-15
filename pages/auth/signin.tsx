@@ -8,6 +8,7 @@ import {
   useSession,
 } from "next-auth/react";
 import { UserAccessDashboardsEnum } from "util/enums";
+import Avatar from "@mui/material/Avatar"
 
 function SigninPage({
   providers,
@@ -26,6 +27,7 @@ function SigninPage({
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>
           <button onClick={() => signIn(provider.id)}>
+            <Avatar src={`https://authjs.dev/img/providers/${provider.name.toLowerCase()}.svg`}/>
             Sign in with {provider.name}
           </button>
         </div>

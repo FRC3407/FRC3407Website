@@ -30,7 +30,7 @@ export default function Customize() {
   }
 
   if (!data) {
-    return <Loading />
+    return <Loading />;
   }
 
   if (!url && data?.personalData?.primaryImage)
