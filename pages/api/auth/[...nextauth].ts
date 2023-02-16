@@ -60,7 +60,9 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    error: "/auth/error",
+    error: "/error",
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
   },
 };
 
