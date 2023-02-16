@@ -1,7 +1,4 @@
-import {
-  getProviders,
-  signIn,
-} from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import styles from "styles/pages/Auth.module.scss";
 import Button from "@mui/material/Button";

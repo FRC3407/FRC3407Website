@@ -7,7 +7,7 @@ export default function Layout({
   title,
   ignoreStandardContentStyle = false,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title: string;
   ignoreStandardContentStyle?: boolean;
 }) {
