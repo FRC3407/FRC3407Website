@@ -1,9 +1,5 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { BuiltInProviderType } from "next-auth/providers";
 import {
-  ClientSafeProvider,
   getProviders,
-  LiteralUnion,
   signIn,
 } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
@@ -11,17 +7,23 @@ import styles from "styles/pages/Auth.module.scss";
 import Button from "@mui/material/Button";
 import Layout from "@components/layout";
 import { useRouter } from "next/router";
-import { getServerSession } from "next-auth";
 import Alert from "@mui/material/Alert";
+import { useEffect, useState } from "react";
+import Loading from "@components/loading";
 
-function SigninPage({
-  providers,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function SigninPage() {
   const router = useRouter();
+  const [providers, setProviders] = useState<any>(null);
 
-  if (providers === null) {
-    router.push("/error/500/NoAuthProviders");
-    return;
+  useEffect(() => {
+    (async () => {
+      const res = await getProviders();
+      setProviders(res);
+    })();
+  }, []);
+
+  if (!providers) {
+    return <Loading />;
   }
 
   const ErrorMessage = () => {
@@ -60,7 +62,7 @@ function SigninPage({
       <div className={styles.signIn}>
         <ErrorMessage />
         <h1>Sign in</h1>
-        {Object.values(providers).map((provider) => (
+        {Object.values(providers).map((provider: any) => (
           <div key={provider.name}>
             <Button
               onClick={() =>
@@ -74,7 +76,7 @@ function SigninPage({
               className={styles.signInButton}
             >
               <Avatar
-                src={`https://authjs.dev/img/providers/${provider.name.toLowerCase()}.svg`}
+                src={`https://authjs.dev/img/providers/${provider.id}.svg`}
                 className={styles.signInButtonImage}
               />
               Sign in with {provider.name}
@@ -85,24 +87,5 @@ function SigninPage({
     </Layout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<{
-  providers:
-    | Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>
-    | null
-    | {};
-}> = async (context) => {
-  const session = await getServerSession(context.req, context.res, {});
-
-  if (session)
-    return { redirect: { destination: "/" }, props: { providers: null } };
-  const providers = await getProviders();
-
-  return {
-    props: {
-      providers,
-    },
-  };
-};
 
 export default SigninPage;

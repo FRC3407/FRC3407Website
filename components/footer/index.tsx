@@ -1,21 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { NextComponentType } from "next";
 import styles from "../../styles/components/Footer.module.scss";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import GithubIcon from "@mui/icons-material/GitHub"
+import Avatar from "@mui/material/Avatar"
 
 const Footer: NextComponentType = () => {
   return (
     <div className={styles.footer}>
-      <div className={styles.leftFooter}>
-        <a
-          className={styles.mediaIcon}
-          href={"https://github.com/FRC3407"}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <FontAwesomeIcon icon={faGithub} size="2x" />
-        </a>
-      </div>
+      <a href="https://github.com/FRC3407/"><Avatar className={styles.icon}><GithubIcon fontSize="large" /></Avatar></a>
       <div className={styles.centerFooter}>
         <p>This site is still under development</p>
       </div>
