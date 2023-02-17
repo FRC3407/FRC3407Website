@@ -6,19 +6,16 @@ import Button from "@mui/material/Button";
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
   { hasError: boolean; error: null | Error }
-  { hasError: boolean; error: null | Error }
 > {
   constructor(props: React.DetailedHTMLProps<any, any>) {
     super(props);
 
-    this.state = { hasError: false, error: null };
     this.state = { hasError: false, error: null };
   }
 
   public static getDerivedStateFromError(error: Error) {
     console.error(error);
 
-    return { hasError: true, error };
     return { hasError: true, error };
   }
 

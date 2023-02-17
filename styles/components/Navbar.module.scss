@@ -3,25 +3,18 @@
 .nav {
   font-size: small;
   display: flex;
-<<<<<<< HEAD:styles/components/Navbar.module.scss
   background-color: $navbar-color;
-=======
-  background-color: rgb(57, 60, 71);
->>>>>>> origin/main:styles/Navbar.module.scss
   position: fixed;
   width: 100%;
   top: 0;
   padding: 10px;
   z-index: 99999;
-<<<<<<< HEAD:styles/components/Navbar.module.scss
 }
 
 .navBufferDiv {
   height: 7.5vh;
   top: 0;
   width: 100%;
-=======
->>>>>>> origin/main:styles/Navbar.module.scss
 }
 
 .nav a {
