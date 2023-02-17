@@ -4,11 +4,14 @@ import NavLink from "./link";
 
 const Navbar: NextComponentType = () => {
   return (
-    <div className={style.nav}>
-      <NavLink href="/">Home</NavLink>
-      <NavLink href="/calendar">Calendar</NavLink>
-      <NavLink href="/frc-resources">FRC Resources</NavLink>
-      <NavLink href="/student-resources">Student Resources</NavLink>
+    <div>
+      <div className={style.nav}>
+        <NavLink href="/">Home</NavLink>
+        <NavLink href="/calendar">Calendar</NavLink>
+        <NavLink href="/frc-resources">FRC Resources</NavLink>
+        <NavLink href="/student-resources">Student Resources</NavLink>
+      </div>
+      <div className={style.navBufferDiv} />
     </div>
   );
 };

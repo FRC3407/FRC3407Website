@@ -26,6 +26,27 @@ const nextConfig = {
     PROJECT_ROOT: __dirname
   },
   redirects: async () => [],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.firstinspires.org',
+        pathname: '**',
+      },
+      {
+        protocol: "https",
+        hostname: "**.googleusercontent.com"
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com"
+      },
+      {
+        protocol: "https",
+        hostname: "authjs.dev"
+      }
+    ],
+  }
 };
 
 module.exports = withMDX(withPWA(nextConfig));

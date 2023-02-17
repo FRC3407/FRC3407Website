@@ -5,9 +5,11 @@ import Head from "next/head";
 export default function Layout({
   children,
   title,
+  ignoreStandardContentStyle = false,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title: string;
+  ignoreStandardContentStyle?: boolean;
 }) {
   return (
     <div>
@@ -15,7 +17,12 @@ export default function Layout({
         <title>{title + " | FRC 3407"}</title>
       </Head>
       <Navbar />
-      <div className="content">{children}</div>
+      {ignoreStandardContentStyle ? (
+        children
+      ) : (
+        <div className="content">{children}</div>
+      )}
+      <div className="footerBuffer" />
       <Footer />
     </div>
   );

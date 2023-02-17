@@ -3,7 +3,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { AccessLevels, IAuthOptions } from "../../types/component";
 import { UserAccessLevelRolesEnum } from "../../util/enums";
-import AccessControlledLoading from "../loading/accessControlLoading";
+import Loading from "@components/loading";
 
 export default function AccessControlLayer({
   children,
@@ -39,5 +39,5 @@ export default function AccessControlLayer({
     window.location.replace(auth.unauthorized ?? "/error/access-denied");
   }
 
-  return (auth.loading || AccessControlledLoading()) as JSX.Element;
+  return (auth.loading || Loading()) as JSX.Element;
 }

@@ -42,7 +42,10 @@ export default function AddUser() {
       email: form.email.value,
       accessLevel: parseInt(form.accessLevel.value),
       isJohnLofton: form.userName.value.trim().toLowerCase() === "john lofton",
-      teams: [],
+      team: form.team.value,
+      personalData: {
+        name: form.userName.value,
+      },
     } as IUserSchema;
 
     if (!isNaN(Number(new Date(form.accessExpires.value))))
@@ -125,8 +128,22 @@ export default function AddUser() {
             <option value={1}>Visitor</option>
             <option value={2}>Member</option>
             <option value={3}>Colead</option>
-            <option value={4}>Website Developer</option>
-            <option value={5}>System Administrator</option>
+            <option value={4}>Mentor</option>
+            <option value={5}>Website Developer</option>
+            <option value={6}>System Administrator</option>
+          </select>
+        </div>
+        <div className={formStyles.formInput}>
+          <label htmlFor="team">Team</label>
+          <br />
+          <select id="team" name="team" defaultValue={-1} required>
+            <option value={-1} unselectable="on">
+              (Select a Team)
+            </option>
+            <option value={"admin"}>Administrative</option>
+            <option value={"build"}>Build</option>
+            <option value={"controls"}>Controls</option>
+            <option value={"programming"}>Programming</option>
           </select>
         </div>
         <div className={formStyles.formInput}>

@@ -1,5 +1,5 @@
-import Layout from "../../components/layout";
-import { IAuthOptions } from "../../types/component";
+import Layout from "@components/layout";
+import { IAuthOptions } from "types/component";
 
 const auth: IAuthOptions = {
   accessLevel: "tm",

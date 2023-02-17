@@ -8,6 +8,7 @@ body {
   background-color: $bg-color;
   color: white;
   font-family: "Source Sans Pro", sans-serif;
+  scroll-behavior: smooth;
 }
 
 // a {
@@ -22,8 +23,8 @@ body {
 
 .content {
   padding: 10px 40px;
-  margin-bottom: 100px;
-  margin-top: 60px;
+  // margin-bottom: 100px;
+  // margin-top: 60px;
   // text-align: center;
   font-size: larger;
 }
@@ -84,6 +85,10 @@ td {
   cursor: pointer;
 }
 
+.footerBuffer {
+  height: 20vh;
+}
+
 // @media (prefers-color-scheme: dark) {
 //   html {
 //     color-scheme: dark;
@@ -93,6 +98,12 @@ td {
 //     background: $bg-color;
 //   }
 // }
+.loadingIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 .titanic {
   float: none; /* bruh */
