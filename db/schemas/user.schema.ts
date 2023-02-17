@@ -1,5 +1,6 @@
 import mongoose, { HydratedDocument } from "mongoose";
 
+<<<<<<< HEAD
 export interface IUserSchema {
   firstName: string;
   lastName: string;
@@ -30,6 +31,16 @@ export interface IUserSchema {
   };
   importUrl?: string;
   displayUrl?: string;
+=======
+interface IUserSchema {
+  firstName: string;
+  lastName: string;
+  email: string; // Email
+  teams: string[]; // Team Mongo ID
+  accessLevel: number;
+  isJohnLofton: boolean; // Are they John Lofton Safety Manager?
+  virtuals: {};
+>>>>>>> origin/main
 }
 
 const reqString = {
@@ -37,6 +48,7 @@ const reqString = {
   type: String,
 };
 
+<<<<<<< HEAD
 const UserSchema = new mongoose.Schema<IUserSchema>(
   {
     firstName: reqString,
@@ -105,3 +117,27 @@ export default (global as any).userSchema as mongoose.Model<
   {},
   IUserSchema
 >;
+=======
+const UserSchema = new mongoose.Schema<IUserSchema>({
+  firstName: reqString,
+  lastName: reqString,
+  email: reqString,
+  teams: {
+    type: [String],
+    required: true,
+  },
+  accessLevel: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 5,
+  },
+  isJohnLofton: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+export type IUser = HydratedDocument<IUserSchema>;
+export default mongoose.model<IUserSchema>("user", UserSchema);
+>>>>>>> origin/main

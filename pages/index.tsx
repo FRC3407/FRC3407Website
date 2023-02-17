@@ -39,7 +39,7 @@ function Banner() {
   );
 }
 
-export default function Home() {
+function Home() {
   return (
     <Layout title="Home" ignoreStandardContentStyle>
       <Banner />
@@ -110,3 +110,5 @@ export default function Home() {
     </Layout>
   );
 }
+
+export default Home;

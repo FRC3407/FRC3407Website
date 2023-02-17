@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { NextComponentType } from "next";
 import styles from "../../styles/components/Footer.module.scss";
 import GithubIcon from "@mui/icons-material/GitHub";

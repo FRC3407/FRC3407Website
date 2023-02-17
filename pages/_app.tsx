@@ -3,6 +3,8 @@
 
 import "styles/globals.scss";
 import type { AppProps, NextWebVitalsMetric } from "next/app";
+import "styles/globals.scss";
+import type { AppProps, NextWebVitalsMetric } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import ErrorBoundary from "@components/errors";
 import { Session } from "next-auth";

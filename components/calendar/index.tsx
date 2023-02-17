@@ -166,3 +166,9 @@ enum CalViewEnum {
   "dayGridWeek" = "week",
   "dayGridDay" = "day",
 }
+
+enum CalViewEnum {
+  "month" = "dayGridMonth",
+  "week" = "dayGridWeek",
+  "day" = "dayGridDay"
+}

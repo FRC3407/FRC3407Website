@@ -23,8 +23,13 @@ body {
 
 .content {
   padding: 10px 40px;
+<<<<<<< HEAD
   // margin-bottom: 100px;
   // margin-top: 60px;
+=======
+  margin-bottom: 100px;
+  margin-top: 60px;
+>>>>>>> origin/main
   // text-align: center;
   font-size: larger;
 }
@@ -85,6 +90,7 @@ td {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .footerBuffer {
   height: 20vh;
 }
@@ -107,4 +113,18 @@ td {
 
 .titanic {
   float: none; /* bruh */
+=======
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: $bg-color;
+  }
+>>>>>>> origin/main
+}
+
+.titanic {
+  float: none;
 }
