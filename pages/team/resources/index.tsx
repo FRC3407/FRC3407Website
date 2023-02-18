@@ -1,26 +1,55 @@
 import Layout from "@components/layout";
-import Avatar from "@mui/material/Avatar";
 import { GetStaticProps } from "next";
 import { FileTypeIcons } from "util/images";
 import getResources from "util/resources";
-import styles from "styles/pages/Resources.module.scss"
+import styles from "styles/pages/Resources.module.scss";
+import DownloadIcon from "@mui/icons-material/Download";
+import Link from "next/link";
 
 export default function Resources({ resources }: { [key: string]: any[] }) {
   return (
     <Layout title="Team Resources" ignoreStandardContentStyle>
-      <div>
+      <div
+        style={{
+          textAlign: "center",
+        }}
+      >
         <h1>Team Resources</h1>
-        <div>
-          {resources.map((val, index) => 
+        <div className={styles.resources}>
+          {resources.map((val, index) => (
             <div key={index} className={styles.resource}>
-              <Avatar>
+              <h1>
                 {FileTypeIcons[val.type as "pdf"] ?? FileTypeIcons.default}
-              </Avatar>
-              <h1>{val.file}</h1>
-              <h1>{val.meta?.title}</h1>
-              <h1>{val.meta?.description}</h1>
-          </div>
-          )}
+              </h1>
+              <h3>
+                {typeof val.url === "string" ||
+                ((val.meta?.link ?? true) && val.meta?.link !== "false") ? (
+                  <Link
+                    target={"_blank"}
+                    href={val.url ?? `/static/resources/${val.file}`}
+                  >
+                    {val.title ?? val.url ?? val.file}
+                  </Link>
+                ) : (
+                  val.file
+                )}
+              </h3>
+              {(val.meta?.download ?? true) &&
+              val.meta?.download !== "false" &&
+              typeof val.url !== "string" ? (
+                <h3 className={styles.download}>
+                  <Link
+                    className={styles.download}
+                    target={"_blank"}
+                    href={`/static/resources/${val.file}`}
+                    download
+                  >
+                    <DownloadIcon />
+                  </Link>
+                </h3>
+              ) : null}
+            </div>
+          ))}
         </div>
       </div>
     </Layout>
@@ -28,11 +57,11 @@ export default function Resources({ resources }: { [key: string]: any[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const resources = await getResources()
+  const resources = await getResources();
 
   return {
     props: {
-      resources
+      resources,
     },
   };
 };

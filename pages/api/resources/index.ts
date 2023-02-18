@@ -6,9 +6,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
   if (req.query.format === "json") {
-    return res.status(200).send(await getResources())
+    return res.status(200).send(await getResources());
   }
 
   res
