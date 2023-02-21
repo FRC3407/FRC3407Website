@@ -1,43 +1,67 @@
 @import "../variables.scss";
 
 .footer {
-  margin-top: 2vh;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
+  display: block;
+  margin: 0px;
   background-color: $footer-color;
-  align-items: center;
-  z-index: 99999;
+  width: 100%;
+  & .upperFooter {
+    display: flex;
+    background-color: $footer-color;
+    height: max-content;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
 
-  box-shadow: 0px -5px 50px black;
-  display: flex;
-  justify-content: center;
+    @media screen and (max-width: 400px) {
+      flex-direction: column;
+    }
 
-  & .leftFooter {
-    padding: 1px;
-    width: 20%;
-  }
+    & .socialMediaContainer {
+      & a {
+        height: min-content;
+        align-items: center;
+        display: flex;
+      }
 
-  & .centerFooter {
-    width: 60%;
-    text-align: center;
+      & .githubIcon {
+        background-color: transparent;
+        color: white;
+        font-size: 4vh;
+        height: 4vh;
+        width: 4vh;
+        margin: 10px;
+      }
+    }
 
-    & * {
-      padding: 0px;
-      margin: 0px;
+    & h4 {
+      font-weight: normal;
+      margin-right: 10px;
     }
   }
 
-  & .rightFooter {
-    width: 20%;
-    text-align: center;
-  }
+  & .lowerFooter {
+    display: flex;
+    background-color: $lower-footer-color;
+    justify-content: space-evenly;
+    padding: 5px;
 
-  & .icon {
-    color: white;
-    cursor: pointer;
-    background-color: transparent;
+    & .linkColumn {
+      text-align: center;
+      & .linkColumnHeader {
+        text-decoration: underline;
+        margin: 0px;
+        font-weight: 100;
+      }
+
+      & .linkColumnLink {
+        color: white;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }

@@ -1,24 +1,34 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { NextComponentType } from "next";
 import styles from "../../styles/components/Footer.module.scss";
 import GithubIcon from "@mui/icons-material/GitHub";
 import Avatar from "@mui/material/Avatar";
 
+
+
+const LinkColumn = (columnName: string, links: [string, string][]) => {
+  return (
+    <div className={styles.linkColumn}>
+      <h3 className={styles.linkColumnHeader}>{columnName}</h3>
+      {links.map(([displayUrl, url]) => <a key={displayUrl} href={url} className={styles.linkColumnLink}>{displayUrl}</a>)}
+    </div>
+  )
+}
+
+const links: [string, [string, string][]][] = [["Hello", [["hello", "https://hello.com"]]]]
+
 const Footer: NextComponentType = () => {
   return (
-    <div className={styles.footer}>
-      <a href="https://github.com/FRC3407/">
-        <Avatar className={styles.icon}>
-          <GithubIcon fontSize="large" />
-        </Avatar>
-      </a>
-      <div className={styles.centerFooter}>
-        <p>This site is still under development</p>
+    <footer className={styles.footer}>
+      <div className={styles.upperFooter}>
+        <div className={styles.socialMediaContainer}>
+          <a><Avatar className={styles.githubIcon}><GithubIcon fontSize="inherit" /></Avatar></a>
+        </div>
+        <h4>Official Website of FRC Team 3407</h4>
       </div>
-      <div className={styles.rightFooter}>
-        Official Website of the FRC 3407 Robotics Team
+      <div className={styles.lowerFooter}>
+        {links.map(([title, links]) => LinkColumn(title, links))}
       </div>
-    </div>
+    </footer>
   );
 };
 
