@@ -12,18 +12,15 @@
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-
     @media screen and (max-width: 400px) {
       flex-direction: column;
     }
-
     & .socialMediaContainer {
       & a {
         height: min-content;
         align-items: center;
         display: flex;
       }
-
       & .githubIcon {
         background-color: transparent;
         color: white;
@@ -33,33 +30,37 @@
         margin: 10px;
       }
     }
-
     & h4 {
       font-weight: normal;
       margin-right: 10px;
     }
   }
-
   & .lowerFooter {
-    display: flex;
+    display: block;
     background-color: $lower-footer-color;
-    justify-content: space-evenly;
-    padding: 5px;
-
-    & .linkColumn {
-      text-align: center;
-      & .linkColumnHeader {
-        text-decoration: underline;
-        margin: 0px;
-        font-weight: 100;
-      }
-
-      & .linkColumnLink {
-        color: white;
-        text-decoration: none;
-
-        &:hover {
+    text-align: center;
+    padding: 10px;
+    & > h3 {
+      margin: 0px;
+    }
+    & .links {
+      display: flex;
+      justify-content: space-evenly;
+      & .linkColumn {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        & .linkColumnHeader {
           text-decoration: underline;
+          margin: 0px;
+          font-weight: 100;
+        }
+        & .linkColumnLink {
+          color: white;
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
