@@ -17,7 +17,11 @@ export default function Layout({
         <title>{title + " | FRC 3407"}</title>
       </Head>
       <Navbar />
-        <div className={ignoreStandardContentStyle ? "noStyleContent" : "content"}>{children}</div>
+      <div
+        className={ignoreStandardContentStyle ? "noStyleContent" : "content"}
+      >
+        {children}
+      </div>
       <Footer />
     </div>
   );
