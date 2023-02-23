@@ -51,7 +51,6 @@ export default function Pictures({
         <div className={styles.imageCaption}>
           <h1>{open.name}</h1>
           <h5>Taken during the {open.year} season</h5>
-          <h5>{open.path}</h5>
         </div>
       </div>
     );

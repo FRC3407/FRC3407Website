@@ -42,6 +42,7 @@ const links: [string, [string, string][]][] = [
       ["Sponsors", "/sponsors"],
     ],
   ],
+  ["Website", []],
 ];
 
 const Footer: NextComponentType = () => {
@@ -49,7 +50,7 @@ const Footer: NextComponentType = () => {
     <footer className={styles.footer}>
       <div className={styles.upperFooter}>
         <div className={styles.socialMediaContainer}>
-          <a>
+          <a href="https://github.com/FRC3407">
             <Avatar className={styles.githubIcon}>
               <GithubIcon fontSize="inherit" />
             </Avatar>
