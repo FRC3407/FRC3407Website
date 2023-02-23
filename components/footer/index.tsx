@@ -12,7 +12,7 @@ const LinkColumn = (
     <div className={styles.linkColumn} key={key}>
       <h3 className={styles.linkColumnHeader}>{columnName}</h3>
       {links.map(([displayUrl, url]) => (
-        <a key={displayUrl} href={url} className={styles.linkColumnLink}>
+        <a key={displayUrl} href={url} className={styles.linkColumnLink} target={url.startsWith("http") ? "_blank" : "_self"}  rel="noreferrer">
           {displayUrl}
         </a>
       ))}

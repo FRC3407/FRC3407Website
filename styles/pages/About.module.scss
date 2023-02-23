@@ -1,0 +1,50 @@
+@import "../variables.scss";
+
+.about {
+  text-align: center;
+  display: block;
+
+  & .header {
+    height: 30%;
+    width: 100%;
+    overflow: hidden;
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/images/assets/2023_Team-Working-On-Robot.jpg");
+    background-position: center;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    & h1 {
+      font-size: 500%;
+    }
+  }
+
+  & .aboutTheTeam {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 5px;
+    & .aboutUsContainer {
+      margin: 5px;
+      border: 1px solid white;
+      border-radius: 5px;
+      overflow: hidden;
+      width: 45%;
+
+      @media screen and (max-width: 800px) {
+        width: 100%;
+      }
+
+      & .aboutUsContainerHeader {
+        background-color: $navbar-color;
+        margin: 0px;
+        padding: 5px;
+      }
+
+      & .aboutUsContent {
+        margin: 5px;
+      }
+    }
+  }
+}

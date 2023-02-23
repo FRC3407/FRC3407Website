@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Image, { StaticImageData } from "next/image";
 import JOHN from "public/static/images/dynamic/gallery/2022_MRI-Robot.jpg";
-import MemberSaw2 from "public/static/images/dynamic/gallery/2022_Members-Using-A-Saw 2.jpg";
+import MemberSaw2 from "public/static/images/dynamic/gallery/2022_Members-Using-A-Saw-2.jpg";
 import BrainStorm from "public/static/images/dynamic/gallery/2023_Kickoff-Brainstorming.jpg";
 import styles from "styles/pages/Home.module.scss";
 

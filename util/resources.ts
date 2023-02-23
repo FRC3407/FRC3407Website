@@ -96,3 +96,10 @@ export async function readdir(dirPath?: string): Promise<string[]> {
 
   return dirContent;
 }
+
+export async function recursiveReadFolder(folderPath: string): Promise<string[]> {
+  let files: string[] = []
+  await Promise.all((await fsp.readdir(folderPath)).map(async (folder) => (await fsp.lstat(path.join(folderPath, folder))).isDirectory() ? files.push(...await recursiveReadFolder(path.join(folderPath, folder))) : files.push(path.join(folderPath, folder))))
+
+  return files
+}
