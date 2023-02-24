@@ -20,8 +20,8 @@ export default async function handler(
       !user ||
       req.method !== "GET" ||
       req.headers["sec-fetch-site"] !== "same-origin" ||
-      !req.headers.referer ||
-      new URL(req.headers.referer).host !== req.headers.host
+      (req.headers.referer &&
+      new URL(req.headers.referer).host !== req.headers.host)
     ) {
       return res.status(401).send("How bout not");
     }

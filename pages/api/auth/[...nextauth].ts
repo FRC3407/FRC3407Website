@@ -22,17 +22,27 @@ export const authOptions: AuthOptions = {
             accessLevel = dbUser.accessLevel;
             token.userId = dbUser._id.toString();
 
+            let changed = false
+
             if (
               typeof dbUser.personalData?.primaryImage !== "string" &&
               typeof token.picture === "string"
             ) {
-              await Users.findByIdAndUpdate(dbUser._id.toString(), {
-                personalData: {
-                  ...(dbUser.personalData ?? {}),
-                  primaryImage: token.picture,
-                },
-              });
+              if (!dbUser.personalData) dbUser.personalData = {}
+              dbUser.personalData.primaryImage = token.picture
+              changed = true
             }
+
+            if (dbUser.accessExpires && dbUser.accessExpires.getTime() <= new Date().getTime()) {
+              dbUser.accessExpires = undefined
+              dbUser.accessLevel = 1
+              changed = true
+            }
+
+            if (changed) await dbUser.save()
+          } else {
+            // Check for slack Users w/ same email
+            // https://api.slack.com/methods/users.list/code
           }
         }
 
@@ -64,6 +74,9 @@ export const authOptions: AuthOptions = {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
   },
+  session: {
+    maxAge: 60 * 60 * 24
+  }
 };
 
 export default NextAuth(authOptions);
