@@ -3,6 +3,8 @@ import Users from "db/schemas/user.schema";
 import NextAuth, { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import { removeImageParams } from "util/images";
+import slack from "util/services/slack";
 
 export const authOptions: AuthOptions = {
   callbacks: {
@@ -29,7 +31,7 @@ export const authOptions: AuthOptions = {
               typeof token.picture === "string"
             ) {
               if (!dbUser.personalData) dbUser.personalData = {}
-              dbUser.personalData.primaryImage = token.picture
+              dbUser.personalData.primaryImage = removeImageParams(token.picture)
               changed = true
             }
 
@@ -41,8 +43,27 @@ export const authOptions: AuthOptions = {
 
             if (changed) await dbUser.save()
           } else {
-            // Check for slack Users w/ same email
-            // https://api.slack.com/methods/users.list/code
+            const slackUserEmails = (await slack().users.list()).members?.filter((member) => !member.is_bot && member.is_email_confirmed).map(member => member?.profile?.email)
+
+            accessLevel = 1;
+            
+            if (slackUserEmails?.includes(token.email?.toString())) {
+              accessLevel = 2
+            }
+
+            const splitName = token.name?.split(" ")
+
+            await new Users({
+              firstName: splitName?.shift(),
+              lastName: splitName?.join(),
+              accessLevel,
+              email: token.email,
+              team: "noteam",
+              isJohnLofton: token.email === "2024loftj12@moundsviewschools.org",
+              personalData: {
+                primaryImage: removeImageParams(token.picture as any)
+              }
+            }).save()
           }
         }
 

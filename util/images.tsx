@@ -11,3 +11,8 @@ export const FileTypeIcons = {
   json: <DataObjectIcon fontSize={"inherit"} />,
   default: <SummarizeIcon fontSize={"inherit"} />,
 };
+
+export function removeImageParams(imageUrl: string) {
+  if (imageUrl.includes("googleusercontent")) return serializeGoogleImageUrl(imageUrl)
+  return imageUrl
+}
