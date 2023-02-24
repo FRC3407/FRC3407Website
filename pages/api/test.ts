@@ -5,6 +5,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<string[] | string>
 ) {
-  console.log(await slack().api.test())
+  const result = await slack().api.test()
+  console.log(result)
   res.send("hi")
 }
