@@ -6,6 +6,7 @@ export default async function handler(
   res: NextApiResponse<string[] | string>
 ) {
   const result = await slack().api.test()
+  // so it will push
   console.log(result)
   res.send("hi")
 }
