@@ -19,7 +19,7 @@ export default async function handler(
       req.method !== "PUT" ||
       req.headers["sec-fetch-site"] !== "same-origin" ||
       (req.headers.referer &&
-      new URL(req.headers.referer).host !== req.headers.host)
+        new URL(req.headers.referer).host !== req.headers.host)
     ) {
       return res.status(401).send("How bout not");
     }

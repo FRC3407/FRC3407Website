@@ -34,5 +34,5 @@ export enum TeamDisplayNames {
   "build" = "Build",
   "controls" = "Controls",
   "programming" = "Programming",
-  "noteam" = "No Team"
+  "noteam" = "No Team",
 }

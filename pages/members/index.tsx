@@ -307,16 +307,18 @@ export const getServerSideProps: GetServerSideProps<{
       props: {
         members: JSON.parse(
           JSON.stringify(
-            (await userSchema
-              .find({ accessLevel: { $gt: 1 } })
-              .lean()
-              .exec()).filter(member => member.team !== "noteam")
+            (
+              await userSchema
+                .find({ accessLevel: { $gt: 1 } })
+                .lean()
+                .exec()
+            ).filter((member) => member.team !== "noteam")
           )
         ),
       },
     };
   } catch (error: any) {
-    console.error(error)
+    console.error(error);
     return {
       props: {
         members: "NO CONNECTION",

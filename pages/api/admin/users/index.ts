@@ -14,7 +14,7 @@ export default async function handler(
     !token ||
     req.headers["sec-fetch-site"] !== "same-origin" ||
     (req.headers.referer &&
-    new URL(req.headers.referer).host !== req.headers.host)
+      new URL(req.headers.referer).host !== req.headers.host)
   ) {
     return res.status(401).send("How bout not");
   }
@@ -30,16 +30,18 @@ export default async function handler(
   if (req.method?.toUpperCase() === "GET") {
     try {
       const users = await Users.find(req.body.query);
-      const queryTime = new Date().getTime()
-      await Promise.all(users.map(async user => {
-        if (user.accessExpires && user.accessExpires.getTime() < queryTime) {
-          user.accessLevel = 1
-          user.accessExpires = undefined
-          await user.save()
-          return user
-        }
-        return user
-      }))
+      const queryTime = new Date().getTime();
+      await Promise.all(
+        users.map(async (user) => {
+          if (user.accessExpires && user.accessExpires.getTime() < queryTime) {
+            user.accessLevel = 1;
+            user.accessExpires = undefined;
+            await user.save();
+            return user;
+          }
+          return user;
+        })
+      );
       return res.status(200).send(users);
     } catch (error) {
       return res.status(500).send(error);

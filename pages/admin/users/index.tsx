@@ -300,7 +300,7 @@ export default function UserManager({
                             userDelete
                           }
                           style={{
-                            margin: "2.5px"
+                            margin: "2.5px",
                           }}
                           onClick={async () => {
                             if (editRow === user._id.toString()) {
@@ -355,7 +355,7 @@ export default function UserManager({
                         <button
                           disabled={editRow !== false || userDelete}
                           style={{
-                            margin: "2.5px"
+                            margin: "2.5px",
                           }}
                           onClick={async () => {
                             setDelete(true);
@@ -425,17 +425,21 @@ export const getServerSideProps: GetServerSideProps<{
     };
   }
 
-  const queryTime = new Date().getTime()
-  const users = await Promise.all((await Users.find()).map(async user => {
-    if (user.accessExpires && user.accessExpires.getTime() <= queryTime) {
-      user.accessLevel = 1
-      user.accessExpires = undefined
-      await user.save()
-      return user
-    }
+  const queryTime = new Date().getTime();
+  const users = await Promise.all(
+    (
+      await Users.find()
+    ).map(async (user) => {
+      if (user.accessExpires && user.accessExpires.getTime() <= queryTime) {
+        user.accessLevel = 1;
+        user.accessExpires = undefined;
+        await user.save();
+        return user;
+      }
 
-    return user
-  }))
+      return user;
+    })
+  );
 
   return {
     props: {

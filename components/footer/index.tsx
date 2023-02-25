@@ -42,9 +42,7 @@ const links: [string, [string, string][]][] = [
       ["Sponsors", "/sponsors"],
     ],
   ],
-  ["Website", [
-    ["Privacy", "/"]
-  ]],
+  ["Website", [["Privacy", "/"]]],
 ];
 
 const Footer: NextComponentType = () => {

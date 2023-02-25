@@ -24,34 +24,41 @@ export const authOptions: AuthOptions = {
             accessLevel = dbUser.accessLevel;
             token.userId = dbUser._id.toString();
 
-            let changed = false
+            let changed = false;
 
             if (
               typeof dbUser.personalData?.primaryImage !== "string" &&
               typeof token.picture === "string"
             ) {
-              if (!dbUser.personalData) dbUser.personalData = {}
-              dbUser.personalData.primaryImage = removeImageParams(token.picture)
-              changed = true
+              if (!dbUser.personalData) dbUser.personalData = {};
+              dbUser.personalData.primaryImage = removeImageParams(
+                token.picture
+              );
+              changed = true;
             }
 
-            if (dbUser.accessExpires && dbUser.accessExpires.getTime() <= new Date().getTime()) {
-              dbUser.accessExpires = undefined
-              dbUser.accessLevel = 1
-              changed = true
+            if (
+              dbUser.accessExpires &&
+              dbUser.accessExpires.getTime() <= new Date().getTime()
+            ) {
+              dbUser.accessExpires = undefined;
+              dbUser.accessLevel = 1;
+              changed = true;
             }
 
-            if (changed) await dbUser.save()
+            if (changed) await dbUser.save();
           } else {
-            const slackUserEmails = (await slack().users.list()).members?.filter((member) => !member.is_bot && member.is_email_confirmed).map(member => member?.profile?.email)
+            const slackUserEmails = (await slack().users.list()).members
+              ?.filter((member) => !member.is_bot && member.is_email_confirmed)
+              .map((member) => member?.profile?.email);
 
             accessLevel = 1;
-            
+
             if (slackUserEmails?.includes(token.email?.toString())) {
-              accessLevel = 2
+              accessLevel = 2;
             }
 
-            const splitName = token.name?.split(" ")
+            const splitName = token.name?.split(" ");
 
             await new Users({
               firstName: splitName?.shift(),
@@ -61,9 +68,9 @@ export const authOptions: AuthOptions = {
               team: "noteam",
               isJohnLofton: token.email === "2024loftj12@moundsviewschools.org",
               personalData: {
-                primaryImage: removeImageParams(token.picture as any)
-              }
-            }).save()
+                primaryImage: removeImageParams(token.picture as any),
+              },
+            }).save();
           }
         }
 
@@ -96,8 +103,8 @@ export const authOptions: AuthOptions = {
     signOut: "/auth/signout",
   },
   session: {
-    maxAge: 60 * 60 * 24
-  }
+    maxAge: 60 * 60 * 24,
+  },
 };
 
 export default NextAuth(authOptions);
