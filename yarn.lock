@@ -3281,6 +3281,11 @@ client-only@0.0.1:
   resolved "https://registry.yarnpkg.com/client-only/-/client-only-0.0.1.tgz#38bba5d403c41ab150bff64a95c85013cf73bca1"
   integrity sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==
 
+clowncryption@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/clowncryption/-/clowncryption-2.0.2.tgz#ea936d350c69b700e47f74980220a79ae7d02ce6"
+  integrity sha512-MN8/xUO2grmVrLcDeMgawuVWQWGF+scYZdGKi8uxx/R6+d9iIPQco7VQDlN/TrBlQ4beWembrvsu3g66zFCCqA==
+
 clsx@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
@@ -5828,6 +5833,11 @@ next-auth@^4.18.4:
     preact "^10.6.3"
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
+
+next-build-id@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/next-build-id/-/next-build-id-3.0.0.tgz#bfb7a1e2df03882688758f0a4a67e6e837043f42"
+  integrity sha512-B3JCsL/9Z/wkmo3EySukQHCgx89Aw0i4LPi2MEhCboQBJ6wpkYTIu1z6hOYKuw/S1Wy8ZRqCEq0dVY/ST6jGqg==
 
 next-pwa@^5.6.0:
   version "5.6.0"

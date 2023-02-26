@@ -4,6 +4,7 @@ import connect from "db/connection";
 import { getToken } from "next-auth/jwt";
 import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
 import Feedback from "db/schemas/feedback.schema";
+import getConfig from "next/config";
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,7 +26,7 @@ export default async function handler(
     //   return res.status(503).json({ message: "Missing Mongo URI Error" });
     // }
 
-    // console.log(new Feedback(req.query))
+    console.log(getConfig())
 
     res.status(200).redirect("/feedback/thanks")
 

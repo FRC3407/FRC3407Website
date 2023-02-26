@@ -55,7 +55,7 @@ function AboutContainer({
 export default function About() {
   return (
     <Layout title="About Us">
-      {/* <main className={styles.about}>
+      <main className={styles.about}>
         <div className={styles.header}>
           <h1>About Us</h1>
         </div>
@@ -68,7 +68,7 @@ export default function About() {
             />
           ))}
         </div>
-      </main> */}
+      </main>
     </Layout>
   );
 }

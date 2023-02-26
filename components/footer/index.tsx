@@ -37,12 +37,12 @@ const links: [string, [string, string][]][] = [
   [
     "About Us",
     [
-      // ["About Us", "/about"],
+      ["About Us", "/about"],
       ["Pictures", "/pictures"],
-      // ["Sponsors", "/sponsors"],
+      ["Sponsors", "/sponsors"],
     ],
   ],
-  // ["Website", [["Privacy", "/"]]],
+  ["Website", [["Privacy", "/"]]],
 ];
 
 const Footer: NextComponentType = () => {
