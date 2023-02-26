@@ -4,6 +4,8 @@ import DataObjectIcon from "@mui/icons-material/DataObject";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import Jimp from "jimp";
 
+const imageCache: Map<string, Jimp> = new Map();
+
 export const serializeGoogleImageUrl = (url: string) => url.split("=")[0];
 
 export const FileTypeIcons = {
@@ -19,9 +21,19 @@ export function removeImageParams(imageUrl: string) {
   return imageUrl;
 }
 
-export function modifyImage(
-  image: Jimp,
-  {
+export async function modifyImage(
+  src: string,
+  imageOptions: { [key: string]: string | undefined }
+): Promise<Jimp | string> {
+  if (
+    typeof imageCache.get(`${src}:${JSON.stringify(imageOptions)}`) !==
+    "undefined"
+  )
+    return imageCache.get(`${src}:${JSON.stringify(imageOptions)}`) as Jimp;
+
+  const image = await Jimp.read(src);
+
+  const {
     height,
     width,
     rotate,
@@ -40,8 +52,8 @@ export function modifyImage(
     scaleToFit,
     cover,
     contain,
-  }: { [key: string]: string | undefined }
-): true | string {
+  } = imageOptions;
+
   try {
     if (blur && !isNaN(parseInt(blur))) image.blur(parseInt(blur));
     if (width || height) {
@@ -66,8 +78,8 @@ export function modifyImage(
         );
       } else {
         image.resize(
-          parseInt(width ?? Jimp.AUTO.toString()),
-          parseInt(height ?? Jimp.AUTO.toString())
+          parseInt(width ?? image.getWidth().toString()),
+          parseInt(height ?? image.getHeight().toString())
         );
       }
     }
@@ -111,7 +123,11 @@ export function modifyImage(
     if (rotate && !isNaN(parseInt(rotate)))
       image.rotate(360 - (parseInt(rotate) % 360));
 
-    return true;
+    if (imageCache.size > 15) imageCache.delete(imageCache.keys().next().value);
+
+    imageCache.set(`${src}:${JSON.stringify(imageOptions)}`, image);
+
+    return image;
   } catch (error: any) {
     return error.message;
   }
