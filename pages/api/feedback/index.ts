@@ -21,11 +21,11 @@ export default async function handler(
   // }
 
   try {
-    if ((await connect()) === "NO URI PROVIDED") {
-      return res.status(503).json({ message: "Missing Mongo URI Error" });
-    }
+    // if ((await connect()) === "NO URI PROVIDED") {
+    //   return res.status(503).json({ message: "Missing Mongo URI Error" });
+    // }
 
-    console.log(new Feedback(req.query))
+    // console.log(new Feedback(req.query))
 
     res.status(200).end()
 
