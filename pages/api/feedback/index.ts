@@ -11,25 +11,18 @@ export default async function handler(
 ) {
   const user = await getToken({ req });
 
-  if (
-    !user ||
-    req.headers["sec-fetch-site"] !== "same-origin" ||
-    (req.headers.referer &&
-      new URL(req.headers.referer).host !== req.headers.host)
-  ) {
-    return res.status(401).send("How bout not");
-  }
+  // if (
+  //   !user ||
+  //   req.headers["sec-fetch-site"] !== "same-origin" ||
+  //   (req.headers.referer &&
+  //     new URL(req.headers.referer).host !== req.headers.host)
+  // ) {
+  //   return res.status(401).send("How bout not");
+  // }
 
   try {
     if ((await connect()) === "NO URI PROVIDED") {
       return res.status(503).json({ message: "Missing Mongo URI Error" });
-    }
-
-    if (
-      (await UserSchema.findOne({ email: user.email }).exec())?.accessLevel !==
-      UserAccessLevelRolesDisplayNameEnum.Administrator
-    ) {
-      return res.status(403).json("Just get higher permissions lol");
     }
 
     console.log(new Feedback(req.query))

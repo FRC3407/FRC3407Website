@@ -59,7 +59,7 @@ const nextConfig = {
             "style-src":
               "'self' fonts.googleapis.com fonts.gstatic.com 'unsafe-inline'",
             "connect-src":
-              "'self' fonts.googleapis.com lh3.googleusercontent.com fonts.gstatic.com www.firstinspires.org www.googleapis.com",
+              "'self' fonts.googleapis.com lh3.googleusercontent.com fonts.gstatic.com www.firstinspires.org www.googleapis.com authjs.dev",
             "img-src":
               "'self' www.firstinspires.org lh3.googleusercontent.com avatars.githubusercontent.com authjs.dev",
             "font-src": "'self' fonts.googleapis.com fonts.gstatic.com data:",
