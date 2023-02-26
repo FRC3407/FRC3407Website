@@ -1,0 +1,32 @@
+@import "../variables.scss";
+
+.robotPreview {
+  border: 1px solid white;
+  display: flex;
+  overflow: hidden;
+  border-radius: 25px;
+  width: fit-content;
+  background-color: $navbar-color;
+  max-height: 128px;
+}
+
+.metaDataContainer {
+  margin: 5px;
+  padding: 5px;
+  & p,
+  h4 {
+    margin: 0px;
+  }
+
+  & .robotTitle {
+    font-size: x-large;
+  }
+
+  & .robotYear {
+    font-size: large;
+  }
+
+  & .robotDescription {
+    font-size: small;
+  }
+}

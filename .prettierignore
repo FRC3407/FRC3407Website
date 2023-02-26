@@ -4,4 +4,4 @@ node_modules
 yarn.lock
 .eslintrc.json
 .yarnrc.yml
-next.config.js
+build

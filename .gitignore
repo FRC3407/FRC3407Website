@@ -41,3 +41,5 @@ public/workbox-*
 .yarn
 public/sw *.js
 public/sw.js.map
+build
+yarn.lock

@@ -3,7 +3,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { AccessLevels, IAuthOptions } from "../../types/component";
 import { UserAccessLevelRolesEnum } from "../../util/enums";
-import AccessControlledLoading from "../loading/accessControlLoading";
+import Loading from "@components/loading";
 
 export default function AccessControlLayer({
   children,
@@ -15,7 +15,6 @@ export default function AccessControlLayer({
   const auth = ((children as any).type.auth ?? {}) as IAuthOptions;
   const requiredSignIn = auth.requireSignIn || !!auth.unauthorized;
   auth.accessLevel = auth.accessLevel ?? "tm";
-
   useEffect(() => {
     if (status === "loading") return;
     if (requiredSignIn && !loggedInUser) signIn();
@@ -32,12 +31,13 @@ export default function AccessControlLayer({
       return <>{children}</>;
     if (
       !Array.isArray(auth.accessLevel) &&
-      UserAccessLevelRolesEnum[auth.accessLevel as AccessLevels] <=
-        session.user.accessLevel
+      (UserAccessLevelRolesEnum[auth.accessLevel as AccessLevels] <=
+        session.user.accessLevel ||
+        session.user.accessLevel === UserAccessLevelRolesEnum.dev) // So devs can see all pages
     )
       return <>{children}</>;
     window.location.replace(auth.unauthorized ?? "/error/access-denied");
   }
 
-  return (auth.loading || AccessControlledLoading()) as JSX.Element;
+  return (auth.loading || Loading()) as JSX.Element;
 }

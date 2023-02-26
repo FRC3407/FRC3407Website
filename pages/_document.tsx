@@ -79,15 +79,17 @@ class _Document extends Document {
             sizes="16x16"
             href="/static/icons/icon_16x16.png"
           />
-          <link rel="manifest" href="/manifest.json" />
           <link
             rel="mask-icon"
             href="/static/icons/icon_512x512.png"
             color="#5bbad5"
           />
 
-          <meta name="twitter:card" content="summary" />
-          <meta name="twitter:url" content="https://yourdomain.com" />
+          <meta
+            name="twitter:card"
+            content="The Official Site of the FRC Team 3407"
+          />
+          <meta name="twitter:url" content="https://frcteam3407.com" />
           <meta name="twitter:title" content={APP_NAME} />
           <meta name="twitter:description" content={APP_DESCRIPTION} />
           <meta
@@ -98,7 +100,7 @@ class _Document extends Document {
           <meta property="og:title" content={APP_NAME} />
           <meta property="og:description" content={APP_DESCRIPTION} />
           <meta property="og:site_name" content={APP_NAME} />
-          <meta property="og:url" content="https://yourdomain.com" />
+          <meta property="og:url" content="https://frcteam3407.com" />
           <meta
             property="og:image"
             content="https://yourdomain.com/icons/icon_72x72.png"
