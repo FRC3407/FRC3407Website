@@ -3,6 +3,7 @@ import UserSchema, { IUser } from "db/schemas/user.schema";
 import connect from "db/connection";
 import { getToken } from "next-auth/jwt";
 import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
+import Feedback from "db/schemas/feedback.schema";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +13,6 @@ export default async function handler(
 
   if (
     !user ||
-    req.method !== "POST" ||
     req.headers["sec-fetch-site"] !== "same-origin" ||
     (req.headers.referer &&
       new URL(req.headers.referer).host !== req.headers.host)
@@ -32,14 +32,11 @@ export default async function handler(
       return res.status(403).json("Just get higher permissions lol");
     }
 
-    const newUser = new UserSchema(req.body.user) as IUser;
-    await newUser.validate();
+    console.log(new Feedback(req.query))
 
-    if ((await UserSchema.find({ email: newUser.email })).length) {
-      return res.status(400).json({ message: "User already exists" });
-    }
+    res.status(200).end()
 
-    res.status(200).send({ user: await newUser.save() });
+    
   } catch (error: any) {
     res.status(400).send(error);
   }
