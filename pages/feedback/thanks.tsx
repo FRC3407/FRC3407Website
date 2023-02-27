@@ -5,5 +5,5 @@ export default function Thanks() {
     <Layout title="Thanks">
       <h1>Thanks</h1>
     </Layout>
-  )
+  );
 }

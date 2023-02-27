@@ -22,14 +22,13 @@ export default async function handler(
 
   if (req.method?.toUpperCase() === "GET") {
     try {
-
       if ((await connect()) === "NO URI PROVIDED") {
         return res.status(503).send("Couldn't connect to Mongo Database");
       }
 
       if (
-        (await UserSchema.findOne({ email: user.email }).exec())?.accessLevel !==
-        UserAccessLevelRolesDisplayNameEnum.Administrator
+        (await UserSchema.findOne({ email: user.email }).exec())
+          ?.accessLevel !== UserAccessLevelRolesDisplayNameEnum.Administrator
       ) {
         return res.status(403).json("Just get higher permissions lol");
       }

@@ -26,11 +26,9 @@ export default async function handler(
     //   return res.status(503).json({ message: "Missing Mongo URI Error" });
     // }
 
-    console.log(getConfig())
+    console.log(req.query);
 
-    res.status(200).redirect("/feedback/thanks")
-
-    
+    res.status(200).redirect("/feedback/thanks");
   } catch (error: any) {
     res.status(400).send(error);
   }
