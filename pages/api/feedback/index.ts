@@ -28,7 +28,7 @@ export default async function handler(
 
     console.log(req.query);
 
-    res.status(200).redirect("/feedback/thanks");
+    res.status(200).redirect("/feedback");
   } catch (error: any) {
     res.status(400).send(error);
   }

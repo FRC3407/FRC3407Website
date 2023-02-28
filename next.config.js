@@ -31,7 +31,8 @@ const buildTime = new Date();
 const nextBuildId = require("next-build-id");
 
 const generateBuildId = () =>
-  (!isDev ? nextBuildId.sync({ dir: __dirname }) : `dev`) +
+  process.env.NODE_ENV + "-" +
+  nextBuildId.sync({ dir: __dirname }) +
   "-" +
   utf8ToHex(buildTime.toISOString());
 
@@ -48,8 +49,12 @@ const nextConfig = {
     buildId: generateBuildId(),
     buildTime,
   },
+  publicRuntimeConfig: {
+    buildId: generateBuildId(),
+  },
   generateBuildId,
   devIndicators: {
+    buildActivity: true,
     buildActivityPosition: "bottom-right",
   },
   redirects: async () => [],

@@ -1,0 +1,32 @@
+.feedbackForm {
+  & .centered {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  & .errorMessageDiv {
+    width: fit-content;
+    justify-content: center;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.thanksPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: auto;
+
+  & .header {
+    font-size: 600%;
+
+    @media screen and (max-width: 450px) {
+      font-size: 400%;
+    }
+  }
+}
