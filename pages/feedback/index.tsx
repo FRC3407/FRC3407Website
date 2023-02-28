@@ -7,7 +7,9 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Typography from "@mui/material/Typography"
 import Alert from "@mui/material/Alert"
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import getConfig from "next/config";
+import Loading from "@components/loading";
 
 export default function Feedback() {
 
@@ -17,7 +19,15 @@ export default function Feedback() {
   const [visualAppealRating, setVisualAppealRating] = useState<number | null>(null)
   const [errorMessage, setErrorMessage] = useState<string>()
 
-  if (true) {
+  const {data: session, status } = useSession({ required: true })
+
+  if (status === "loading") {
+    return (
+      <Loading />
+    )
+  }
+
+  if (false) {
     const config = getConfig()
 
     return (
@@ -37,6 +47,7 @@ export default function Feedback() {
       <div className={styles.feedbackForm}>
       {errorMessage ? <Alert severity="error" className={styles.errorMessageDiv} sx={{ textAlign: "center" }}><div>{errorMessage}</div></Alert> : null}
       <form action="/api/feedback" method="PUT">
+        <input id="contact" name="contact" hidden readOnly value={session.user.email} />
         <FormControl fullWidth margin={"normal"} sx={{
           textAlign: "center",
           alignItems: "center"
