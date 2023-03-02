@@ -22,10 +22,15 @@ export interface IFeedbackSchema {
   easeOfUseFeedback?: string;
   visualAppealStarRating: number;
   visualAppealFeedback?: string;
+  buildId: string
 }
 
 const feedbackSchema = new mongoose.Schema<IFeedbackSchema>({
   contact: {
+    type: String,
+    required: true,
+  },
+  buildId: {
     type: String,
     required: true,
   },

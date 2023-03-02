@@ -10,6 +10,8 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import getConfig from "next/config";
 import Loading from "@components/loading";
+import useSWR from "swr"
+import Router from "next/router";
 
 export default function Feedback() {
 
@@ -19,15 +21,11 @@ export default function Feedback() {
   const [visualAppealRating, setVisualAppealRating] = useState<number | null>(null)
   const [errorMessage, setErrorMessage] = useState<string>()
 
-  const {data: session, status } = useSession({ required: true })
+  const { data, error } = useSWR("/api/feedback/check", async (url) => {
+    return await (await fetch(url)).text()
+  })
 
-  if (status === "loading") {
-    return (
-      <Loading />
-    )
-  }
-
-  if (false) {
+  if ((Router.query.thanks && typeof data !== "string") || data === "false") {
     const config = getConfig()
 
     return (
@@ -42,12 +40,22 @@ export default function Feedback() {
     );
   }
 
+
+  if (data === undefined) {
+    return (
+      <Loading />
+    )
+  }
+
+  if (error || Router.query.error) {
+    Router.push(`/error/${error.message ?? Router.query.error ?? "Unknown Error"}/${error.code ?? 400}`)
+  }
+
   return (
     <Layout title="Website Feedback">
       <div className={styles.feedbackForm}>
       {errorMessage ? <Alert severity="error" className={styles.errorMessageDiv} sx={{ textAlign: "center" }}><div>{errorMessage}</div></Alert> : null}
-      <form action="/api/feedback" method="PUT">
-        <input id="contact" name="contact" hidden readOnly value={session.user.email} />
+      <form action="/api/feedback" method="get">
         <FormControl fullWidth margin={"normal"} sx={{
           textAlign: "center",
           alignItems: "center"
@@ -97,3 +105,5 @@ export default function Feedback() {
     </Layout>
   );
 }
+
+Feedback.auth = {}
