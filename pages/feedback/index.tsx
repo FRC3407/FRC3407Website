@@ -228,5 +228,5 @@ export default function Feedback() {
 
 Feedback.auth = {
   requireSignIn: true,
-  accessLevel: "vis"
+  accessLevel: "vis",
 };
