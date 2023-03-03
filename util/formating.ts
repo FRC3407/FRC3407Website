@@ -22,8 +22,9 @@ export function mergeObjects(
 
 export function hexToUtf8(s: string) {
   return decodeURIComponent(
-     s.replace(/\s+/g, '') // remove spaces
-      .replace(/[0-9a-f]{2}/g, '%$&') // add '%' before each 2 characters
+    s
+      .replace(/\s+/g, "") // remove spaces
+      .replace(/[0-9a-f]{2}/g, "%$&") // add '%' before each 2 characters
   );
 }
 
@@ -31,12 +32,11 @@ const utf8encoder = new TextEncoder();
 
 export function utf8ToHex(s: string) {
   const rb = utf8encoder.encode(s);
-  let r = '';
+  let r = "";
 
   // @ts-expect-error
   for (const b of rb) {
-    r += ('0' + b.toString(16)).slice(-2);
+    r += ("0" + b.toString(16)).slice(-2);
   }
   return r;
 }
-

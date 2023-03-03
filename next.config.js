@@ -31,7 +31,8 @@ const buildTime = new Date();
 const nextBuildId = require("next-build-id");
 
 const generateBuildId = () =>
-  process.env.NODE_ENV + "-" +
+  process.env.NODE_ENV +
+  "-" +
   nextBuildId.sync({ dir: __dirname }) +
   "-" +
   utf8ToHex(buildTime.toISOString());

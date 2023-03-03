@@ -4,7 +4,7 @@
     width: 100%;
     justify-content: center;
   }
-  
+
   & .errorMessageDiv {
     width: fit-content;
     justify-content: center;
@@ -32,7 +32,11 @@
 }
 
 .devFeedbackPage {
+  text-align: center;
   & .ratingsContainer {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
     & .ratingContainer {
       display: flex;
       flex-direction: column;
@@ -41,11 +45,29 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-  
+      width: auto;
+
       & h4 {
         margin: 5px;
         width: 6rem;
       }
     }
   }
+
+  & .feedbackResponses {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+    
+    & .feedbackResponse {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+    }
+  }
 }
+

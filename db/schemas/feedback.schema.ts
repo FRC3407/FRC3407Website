@@ -22,7 +22,7 @@ export interface IFeedbackSchema {
   easeOfUseFeedback?: string;
   visualAppealStarRating: number;
   visualAppealFeedback?: string;
-  buildId: string
+  buildId: string;
 }
 
 const feedbackSchema = new mongoose.Schema<IFeedbackSchema>({

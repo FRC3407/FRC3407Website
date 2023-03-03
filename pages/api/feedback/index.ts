@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const user = await getToken({ req });
-  const config = getConfig()
+  const config = getConfig();
 
   if (
     !user ||
@@ -26,9 +26,17 @@ export default async function handler(
       return res.status(503).redirect("/feedback?error=no_uri");
     }
 
-    if (!user.email) return res.status(400).redirect("/feedback?thanks=t")
+    if (!user.email) return res.status(400).redirect("/feedback?thanks=t");
 
-    if ((await Feedback.find({ contact: user.email, buildId: config.serverRuntimeConfig.buildId }).exec()).length > 0) return res.status(403).redirect("/feedback?thanks=t")
+    if (
+      (
+        await Feedback.find({
+          contact: user.email,
+          buildId: config.serverRuntimeConfig.buildId,
+        }).exec()
+      ).length > 0
+    )
+      return res.status(403).redirect("/feedback?thanks=t");
 
     await new Feedback({
       buildId: config.serverRuntimeConfig.buildId,
@@ -37,8 +45,10 @@ export default async function handler(
       overallStarRating: parseFloat(req.query.overallStarRating as string),
       speedStarRating: parseFloat(req.query.speedStarRating as string),
       easeOfUseStarRating: parseFloat(req.query.easeOfUseStarRating as string),
-      visualAppealStarRating: parseFloat(req.query.visualAppealStarRating as string)
-    }).save()
+      visualAppealStarRating: parseFloat(
+        req.query.visualAppealStarRating as string
+      ),
+    }).save();
 
     res.status(200).redirect("/feedback?thanks=t");
   } catch (error: any) {
