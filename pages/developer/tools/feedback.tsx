@@ -29,13 +29,9 @@ export default function FeedbackDisplay({
   const [displayBuildId, setDisplayBuildId] = useState(buildId);
   const [page, setPage] = useState(1);
 
-  return <p>{JSON.stringify({
-    feedback, error, date, buildId
-  })}</p>
-
   const ids = Object.keys(feedback);
 
-  if (error || !feedback)
+  if (error)
     return (
       <Layout title="Error">
         <h1>Error accessing Database</h1>
