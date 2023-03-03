@@ -46,3 +46,71 @@
 .button.currentPath:hover {
   background-color: lighten($active-link-color, 10%);
 }
+
+.profilePictureContainer {
+  height: 45px;
+  width:  45px;
+  margin: -4px 10px; /* im a genius */
+  margin-left: 5px;
+  position: relative;
+
+  .profilePicture {
+    width: 100%;
+    height: 100%;
+    position: relative !important;
+
+    border-radius: 50%;
+    // height: 40px;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.575);
+
+    transition: border-radius 0.2s ease;
+
+    cursor: pointer;
+  }
+  .profilePicture:active, .profilePicture:hover, .profilePicture:focus-within {
+    border-radius: 10%;
+  }
+  .profileMenu {
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.575);
+    background-color: rgb(25, 25, 37);
+
+    padding: 15px 25px;
+    border-radius: 5px;
+
+    width: fit-content;
+
+    position: relative;
+    top: 15px;
+
+    h1 {
+      border-bottom: 1px white solid;
+      margin-top: 0px;
+    }
+    a {
+      margin: 5px 0px;
+      padding-bottom: 5px;
+      display: block;
+      border-bottom: 1px white dashed;
+
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    animation: profileMenuEnter 0.5s ease;
+  }
+}
+
+@keyframes profileMenuEnter {
+  from {
+    top: 0px;
+    opacity: 0;
+  }
+
+  to {
+    top: 15px;
+    opacity: 1;
+  }
+}
