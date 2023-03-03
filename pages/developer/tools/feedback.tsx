@@ -278,26 +278,6 @@ export default function FeedbackDisplay({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-
-  const config = getConfig();
-
-  if ((await connect()) === "NO URI PROVIDED")
-    return {
-      props: {
-        error: {
-          message: "NO MONGO URI",
-        },
-        // date: new Date(),
-      },
-    };
-
-  const feedback: { [key: string]: any[] } = {};
-
-  return {
-    props: {
-      feedback
-    }
-  }
   try {
     const config = getConfig();
 
@@ -307,7 +287,7 @@ export const getStaticProps: GetStaticProps = async () => {
           error: {
             message: "NO MONGO URI",
           },
-          date: new Date(),
+          date: new Date().toISOString(),
         },
       };
 
@@ -333,7 +313,7 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     };
   } catch (error: any) {
-    return { props: { error } };
+    return { props: { error, date: new Date().toISOString() } };
   }
 };
 
