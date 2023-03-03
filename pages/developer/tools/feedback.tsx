@@ -279,9 +279,23 @@ export default function FeedbackDisplay({
 
 export const getStaticProps: GetStaticProps = async () => {
 
+  const config = getConfig();
+
+  if ((await connect()) === "NO URI PROVIDED")
+    return {
+      props: {
+        error: {
+          message: "NO MONGO URI",
+        },
+        date: new Date(),
+      },
+    };
+
+  const feedback: { [key: string]: any[] } = {};
+
   return {
     props: {
-      feedback: {}
+      feedback
     }
   }
   try {
