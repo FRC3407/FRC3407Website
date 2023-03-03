@@ -282,6 +282,12 @@ export default function FeedbackDisplay({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+
+  return {
+    props: {
+      feedback: {}
+    }
+  }
   try {
     const config = getConfig();
 
