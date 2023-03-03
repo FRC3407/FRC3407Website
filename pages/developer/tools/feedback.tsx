@@ -287,7 +287,7 @@ export const getStaticProps: GetStaticProps = async () => {
         error: {
           message: "NO MONGO URI",
         },
-        date: new Date(),
+        // date: new Date(),
       },
     };
 
