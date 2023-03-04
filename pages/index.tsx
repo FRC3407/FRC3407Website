@@ -6,40 +6,79 @@ import JOHN from "public/static/images/dynamic/gallery/2022_MRI-Robot.jpg";
 import MemberSaw2 from "public/static/images/dynamic/gallery/2022_Members-Using-A-Saw-2.jpg";
 import BrainStorm from "public/static/images/dynamic/gallery/2023_Kickoff-Brainstorming.jpg";
 import styles from "styles/pages/Home.module.scss";
+import useSWR from "swr";
 
-function CarouselElement({
-  src,
-  alt = "Team 3407 Picture",
-  description,
-}: {
-  src: StaticImageData;
-  alt?: string;
-  description?: string;
-}) {
-  return (
-    <div className={styles.bannerContainer}>
-      <div className={styles.bannerOverlay}>
-        <h1>Mounds View Robotics</h1>
-        <h2>Team 3407</h2>
+export default function Home() {
+  const { data, error } = useSWR(
+    "/api/team/events/next",
+    async (url) => await (await fetch(url)).json()
+  );
+
+  function CarouselElement({
+    src,
+    alt = "Team 3407 Picture",
+    description,
+  }: {
+    src: StaticImageData;
+    alt?: string;
+    description?: string;
+  }) {
+    return (
+      <div className={styles.bannerContainer}>
+        <div className={styles.bannerOverlay}>
+          <h1>Mounds View Robotics</h1>
+          <h2>Team 3407</h2>
+        </div>
+        <Image src={src} alt={alt} className={styles.banner} priority />
       </div>
-      <Image src={src} alt={alt} className={styles.banner} priority />
-    </div>
-  );
-}
+    );
+  }
 
-function Banner() {
-  return (
-    <div>
-      <Carousel autoPlay infiniteLoop showThumbs={false} interval={5000}>
-        <CarouselElement src={JOHN} />
-        <CarouselElement src={MemberSaw2} />
-        <CarouselElement src={BrainStorm} />
-      </Carousel>
-    </div>
-  );
-}
+  function Banner() {
+    return (
+      <div>
+        <Carousel autoPlay infiniteLoop showThumbs={false} interval={5000}>
+          <CarouselElement src={JOHN} />
+          <CarouselElement src={MemberSaw2} />
+          <CarouselElement src={BrainStorm} />
+        </Carousel>
+      </div>
+    );
+  }
 
-function Home() {
+  function displayNextEvent() {
+    if (error)
+      return (
+        <p>There was an error loading the next event, please try again later</p>
+      );
+
+    if (!data) return <p>No next Event</p>;
+
+    return (
+      <div>
+        <p>
+          <a href={data.website} target={"_blank"} rel="noreferrer">
+            {data.name}
+          </a>{" "}
+          at{" "}
+          <a href={data.gmaps_url} target={"_blank"} rel="noreferrer">
+            {data.address}
+          </a>
+          , starting on{" "}
+          {new Date(data.start_date + "T24:00:00.000+08:00").toLocaleDateString(
+            "en-US",
+            { timeZone: "America/New_York" }
+          )}{" "}
+          and ending on{" "}
+          {new Date(data.end_date + "T24:00:00.000+08:00").toLocaleDateString(
+            "en-US",
+            { timeZone: "America/New_York" }
+          )}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <Layout title="Home" ignoreStandardContentStyle>
       <Banner />
@@ -95,20 +134,8 @@ function Home() {
           ></iframe>
         </div>
         <h1>Next Competition</h1>
-        <p>
-          <a href="https://frc-events.firstinspires.org/2023/MNMI">
-            {" "}
-            Minnesota 10,000 Lakes Regional
-          </a>{" "}
-          on Wednesday, March 29 to Saturday, April 1, 2023 at{" "}
-          <a href="https://www.google.com/maps?q=1925+University+Avenue+SE,+Minneapolis,+MN,+USA">
-            Williams Arena/The Sports Pavilion Univ of MN
-          </a>
-          .
-        </p>
+        {displayNextEvent()}
       </div>
     </Layout>
   );
 }
-
-export default Home;
