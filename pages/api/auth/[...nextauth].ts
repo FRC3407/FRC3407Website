@@ -60,7 +60,7 @@ export const authOptions: AuthOptions = {
 
             const splitName = token.name?.split(" ");
 
-            await new Users({
+            const user = await new Users({
               firstName: splitName?.shift(),
               lastName: splitName?.join(),
               accessLevel,
@@ -71,6 +71,8 @@ export const authOptions: AuthOptions = {
                 primaryImage: removeImageParams(token.picture as any),
               },
             }).save();
+
+            token.userId = user._id.toString();
           }
         }
 
