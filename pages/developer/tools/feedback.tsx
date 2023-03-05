@@ -311,9 +311,11 @@ export const getStaticProps: GetStaticProps = async () => {
         date: new Date().toISOString(),
         buildId: config.serverRuntimeConfig.buildId,
       },
+      revalidate: 60 * 60 * 6
     };
   } catch (error: any) {
-    return { props: { error, date: new Date().toISOString() } };
+    return { props: { error, date: new Date().toISOString() },
+    revalidate: 60 * 60 };
   }
 };
 
