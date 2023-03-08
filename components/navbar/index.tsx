@@ -7,7 +7,7 @@ function profileClick() {
   console.log("omg you clicked the john!"); // this better make it into production
   let profileMenu=document.getElementById("profileMenu");
   if (profileMenu) {
-    profileMenu.hidden=!profileMenu.hidden; // toggle visibility
+    profileMenu.hidden=!profileMenu.hidden; // toggle the menu visibility
   } else {
     console.error("oh no");
   }

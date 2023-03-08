@@ -9,16 +9,16 @@
   top: 0;
   padding: 10px;
   z-index: 99999;
+
+  a {
+    color: white;
+  }
 }
 
 .navBufferDiv {
   height: 7.5vh;
   top: 0;
   width: 100%;
-}
-
-.nav a {
-  color: white;
 }
 
 .button {
@@ -33,18 +33,17 @@
 
   border-radius: 5px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-}
 
-.button.currentPath {
-  background-color: $active-link-color;
-}
+  &.currentPath {
+    background-color: $active-link-color;
 
-.button:hover {
-  background-color: lighten($link-color, 10%);
-}
-
-.button.currentPath:hover {
-  background-color: lighten($active-link-color, 10%);
+    &:hover {
+      background-color: lighten($active-link-color, 10%);
+    }
+  }
+  &:hover {
+    background-color: lighten($link-color, 10%);
+  }
 }
 
 .profilePictureContainer {
@@ -100,6 +99,9 @@
       text-decoration: none;
       &:hover {
         text-decoration: underline;
+      }
+      &:last-child {
+        border: none;
       }
     }
 
