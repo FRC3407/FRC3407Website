@@ -3,15 +3,27 @@
 .nav {
   font-size: small;
   display: flex;
-  background-color: $navbar-color;
+  background: $navbar-color;
   position: fixed;
   width: 100%;
   top: 0;
-  padding: 10px;
+  padding: 0 10px;
   z-index: 99999;
+  height: 60px;
 
-  a {
-    color: white;
+  nav {
+    display: block;
+    margin-left: auto;
+    
+    * {
+      display: inline-block;
+    }
+    a {
+      color: white;
+    }
+  }
+  h1 {
+    margin-top: 12px;
   }
 }
 
@@ -24,32 +36,46 @@
 .button {
   width: auto;
   margin: 0px 5px;
-  font-size: 16pt;
+  height: 100%;
+  font-size: 12pt;
   padding: 5px 15px;
   background-color: $link-color;
 
-  color: white;
-  text-decoration: none;
+  display: inline-flex !important;
+  align-items: center;
 
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  border-bottom: 2px solid rgb(179, 179, 179);
+
+  color: white;
+  
+  a {
+    text-decoration: none;
+  }
+
+  // border-radius: 5px;
+  // box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 
   &.currentPath {
-    background-color: $active-link-color;
+    border-bottom-color: $active-link-color;
+    border-bottom-width: 5px;
 
     &:hover {
-      background-color: lighten($active-link-color, 10%);
+      background-color: adjust-color($color: $active-link-color, $alpha: -0.6);
+      border-bottom-width: 6px;
     }
   }
   &:hover {
-    background-color: lighten($link-color, 10%);
+    background-color: adjust-color($color: rgb(179,179,179), $alpha: -0.7);
+    border-bottom-width: 3px;
   }
 }
 
 .profilePictureContainer {
   height: 45px;
   width:  45px;
-  margin: -4px 10px; /* im a genius */
+  margin: auto 10px; /* im a genius */
   margin-left: 5px;
   position: relative;
 
@@ -94,6 +120,7 @@
       margin: 5px 0px;
       padding-bottom: 5px;
       display: block;
+      color: white;
       border-bottom: 1px rgba(255, 255, 255, 0.517) dashed;
 
       text-decoration: none;

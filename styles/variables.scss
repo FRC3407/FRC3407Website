@@ -1,11 +1,11 @@
-$navbar-color: rgb(57, 60, 71);
+$navbar-color: linear-gradient(146deg, rgb(37, 41, 51) 0%, rgb(43, 70, 44) 100%);
 $footer-color: rgb(57, 60, 71);
 
 $bg-color: rgb(26, 26, 27);
 $page-header-color: rgb(19, 101, 19);
 $home-header-color: rgb(23, 110, 49);
-$link-color: rgb(67, 72, 90);
-$active-link-color: rgb(59, 105, 71);
+$link-color: rgba(0, 0, 0, 0);
+$active-link-color: rgb(64, 156, 89);
 
 :export {
   footerColor: $footer-color;
