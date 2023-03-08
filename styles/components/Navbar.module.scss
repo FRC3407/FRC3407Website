@@ -36,7 +36,7 @@
 .button {
   width: auto;
   margin: 0px 5px;
-  height: 100%;
+  height: calc(100% - 12px);
   font-size: 12pt;
   padding: 5px 15px;
   background-color: $link-color;
@@ -101,7 +101,7 @@
 
   .profileMenu {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.575);
-    background-color: rgb(59, 59, 98);
+    background-color: rgb(58, 88, 55);
 
     padding: 15px 25px;
     border-radius: 5px;
