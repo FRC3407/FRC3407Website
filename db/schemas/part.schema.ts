@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 export interface IPart {
-  url: string
+  partName: string
+  partUrl: string
   priority: number
-  quanity: number
+  quantity: number
   reason: string
   image?: string
   user: {
@@ -21,14 +22,15 @@ const reqString = {
 };
 
 const PartSchema = new mongoose.Schema<IPart>({
-  url: reqString,
+  partName: reqString,
+  partUrl: reqString,
   priority: {
     max: [3, "Priority must be between 1 and 3"],
     min: [1, "Priority must be between 1 and 3"],
     required: true,
     type: Number
   },
-  quanity: {
+  quantity: {
     type: Number,
     min: [1, "Quanity must be more than 1"],
     required: true
@@ -49,7 +51,7 @@ const PartSchema = new mongoose.Schema<IPart>({
   reason: reqString,
   status: {
     max: [1, "Status must be between -1 and 1"], // 0 = denied 1 = accepted
-    min: [-1, "Status must be between -1 and 1"], // Pending
+    min: [-1, "Status must be between -1 and 1"], // -1 = Pending
     required: true,
     type: Number
   },
