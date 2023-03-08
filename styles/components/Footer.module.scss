@@ -1,43 +1,69 @@
 @import "../variables.scss";
 
 .footer {
-  margin-top: 2vh;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
+  display: block;
+  margin-top: auto;
+  height: max-content;
   background-color: $footer-color;
-  align-items: center;
-  z-index: 99999;
-
-  box-shadow: 0px -5px 50px black;
-  display: flex;
-  justify-content: center;
-
-  & .leftFooter {
-    padding: 1px;
-    width: 20%;
-  }
-
-  & .centerFooter {
-    width: 60%;
-    text-align: center;
-
-    & * {
-      padding: 0px;
-      margin: 0px;
+  width: 100%;
+  & .upperFooter {
+    display: flex;
+    background-color: $footer-color;
+    height: max-content;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    @media screen and (max-width: 400px) {
+      flex-direction: column;
+    }
+    & .socialMediaContainer {
+      & a {
+        height: min-content;
+        align-items: center;
+        display: flex;
+      }
+      & .githubIcon {
+        background-color: transparent;
+        color: white;
+        font-size: 4vh;
+        height: 4vh;
+        width: 4vh;
+        margin: 10px;
+      }
+    }
+    & h4 {
+      font-weight: normal;
+      margin-right: 10px;
     }
   }
-
-  & .rightFooter {
-    width: 20%;
+  & .lowerFooter {
+    display: block;
+    background-color: $lower-footer-color;
     text-align: center;
-  }
-
-  & .icon {
-    color: white;
-    cursor: pointer;
-    background-color: transparent;
+    padding: 10px;
+    & > h3 {
+      margin: 0px;
+    }
+    & .links {
+      display: flex;
+      justify-content: space-evenly;
+      & .linkColumn {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        & .linkColumnHeader {
+          text-decoration: underline;
+          margin: 0px;
+          font-weight: 100;
+        }
+        & .linkColumnLink {
+          color: white;
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
   }
 }

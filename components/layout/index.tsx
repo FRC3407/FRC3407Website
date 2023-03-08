@@ -12,17 +12,16 @@ export default function Layout({
   ignoreStandardContentStyle?: boolean;
 }) {
   return (
-    <div>
+    <div className="pageContent">
       <Head>
         <title>{title + " | FRC 3407"}</title>
       </Head>
       <Navbar />
-      {ignoreStandardContentStyle ? (
-        children
-      ) : (
-        <div className="content">{children}</div>
-      )}
-      <div className="footerBuffer" />
+      <div
+        className={ignoreStandardContentStyle ? "noStyleContent" : "content"}
+      >
+        {children}
+      </div>
       <Footer />
     </div>
   );

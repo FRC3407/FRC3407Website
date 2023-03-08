@@ -299,6 +299,9 @@ export default function UserManager({
                               editRow !== user._id.toString()) ||
                             userDelete
                           }
+                          style={{
+                            margin: "2.5px",
+                          }}
                           onClick={async () => {
                             if (editRow === user._id.toString()) {
                               const temp: { [key: string]: any } = {};
@@ -351,6 +354,9 @@ export default function UserManager({
                         {/* This needs a loading screen */}
                         <button
                           disabled={editRow !== false || userDelete}
+                          style={{
+                            margin: "2.5px",
+                          }}
                           onClick={async () => {
                             setDelete(true);
                             const res = await fetch("/api/admin/users/delete", {
@@ -419,9 +425,25 @@ export const getServerSideProps: GetServerSideProps<{
     };
   }
 
+  const queryTime = new Date().getTime();
+  const users = await Promise.all(
+    (
+      await Users.find()
+    ).map(async (user) => {
+      if (user.accessExpires && user.accessExpires.getTime() <= queryTime) {
+        user.accessLevel = 1;
+        user.accessExpires = undefined;
+        await user.save();
+        return user;
+      }
+
+      return user;
+    })
+  );
+
   return {
     props: {
-      dbUsers: JSON.parse(JSON.stringify(await Users.find().lean())),
+      dbUsers: JSON.parse(JSON.stringify(users)),
     },
   };
 };

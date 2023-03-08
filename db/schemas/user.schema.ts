@@ -8,6 +8,7 @@ export interface IUserSchema {
   accessLevel: number;
   isJohnLofton: boolean; // Are they John Lofton Safety Manager?
   accessExpires?: Date;
+  display: boolean;
   personalData?: {
     primaryImage?: string;
     images?: string[];
@@ -43,6 +44,10 @@ const UserSchema = new mongoose.Schema<IUserSchema>(
     lastName: reqString,
     email: reqString,
     team: reqString,
+    display: {
+      type: Boolean,
+      default: false,
+    },
     accessLevel: {
       type: Number,
       required: true,
