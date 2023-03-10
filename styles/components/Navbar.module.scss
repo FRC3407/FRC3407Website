@@ -1,5 +1,7 @@
 @import "../variables.scss";
 
+$nav-height: 60px;
+
 .nav {
   font-size: small;
   display: flex;
@@ -9,19 +11,39 @@
   top: 0;
   padding: 0 10px;
   z-index: 99999;
-  height: 60px;
+  height: $nav-height;
+  
+  a {
+    color: white;
+  }
 
-  nav {
+  nav.desktop {
     display: block;
     margin-left: auto;
     
     * {
       display: inline-block;
     }
-    a {
-      color: white;
+  }
+
+  nav.mobile {
+    display: none;
+    position: absolute;
+    top: $nav-height;
+    left: 0;
+    width: 100vw;
+    background-image: $navbar-color;
+    
+    * {
+      display: block;
+    }
+
+    .button {
+      margin: 15px 30px;
+      display: flex !important;
     }
   }
+
   h1 {
     margin-top: 12px;
   }
@@ -108,6 +130,8 @@
 
     width: fit-content;
 
+    z-index: 999;
+
     position: absolute;
     margin-top: 40px;
     top: 25px;
@@ -145,5 +169,15 @@
   to {
     top: 25px;
     opacity: 1;
+  }
+}
+
+$breakpoint-mobile: 1000px;
+@media (max-width: $breakpoint-mobile) {
+  nav.desktop {
+    display: none !important;
+  }
+  nav.mobile {
+    display: block !important;
   }
 }

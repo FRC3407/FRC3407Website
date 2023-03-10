@@ -31,12 +31,21 @@ const Navbar: NextComponentType = () => {
           <Image tabIndex={0} onClick={profileClick} src="/static/images/assets/johnl.jpg" alt="Profile picture" fill className={style.profilePicture} />
         </div>
         <h1>FRC Team 3407</h1>
-        <nav>
+
+        <nav className={style.desktop}>
           <NavLink href="/">Home</NavLink>
           <NavLink href="/calendar">Calendar</NavLink>
           <NavLink href="/frc-resources">FRC Resources</NavLink>
           <NavLink href="/student-resources">Student Resources</NavLink>
         </nav>
+
+        <nav className={style.mobile}>
+          <NavLink href="/">Home</NavLink>
+          <NavLink href="/calendar">Calendar</NavLink>
+          <NavLink href="/frc-resources">FRC Resources</NavLink>
+          <NavLink href="/student-resources">Student Resources</NavLink>
+        </nav>
+
       </div>
       <div className={style.navBufferDiv} />
     </div>
