@@ -33,7 +33,7 @@ export default function StudentResources() {
           <a href="https://github.com/FRC3407">3407 Public Github</a>
         </li>
         <li>
-          <a href="https://github.com/FRC3407/FRC3407.github.io">
+          <a href="https://github.com/FRC3407/FRC3407Website">
             3407 Team Website Github
           </a>
         </li>
@@ -84,11 +84,6 @@ export default function StudentResources() {
           </ul>
         </li>
       </ul>
-
-      <hr />
-      <p>
-        <em>This page is a work in progress, stay tune for updates.</em>
-      </p>
     </Layout>
   );
 }

@@ -1,22 +1,30 @@
-import mongoose from "mongoose";
+import mongoose, { Connection } from "mongoose";
 
-class Connection {
-  public static async createConnect() {
-    if (!process.env.MONGI_URI) return {}
-    try {
-      let connection = await mongoose.connect("");
+let cache = (global as any).mongoose;
+const mongoURI = process.env.MONGO_URI ?? "";
 
-      mongoose.connection.on("error", (error) => {
-        console.error(error);
-      });
+if (!cache)
+  cache = (global as any).mongoose = { promise: null, connection: null };
 
-      return connection;
-    } catch (error: any) {
-      console.error(error);
+async function connect() {
+  mongoose.set("strictQuery", false);
+  if (!mongoURI) return "NO URI PROVIDED";
+  if (cache.connection) return cache.connection as Connection;
 
-      return error as Error;
-    }
+  if (!cache.promise) {
+    cache.promise = mongoose
+      .connect(mongoURI)
+      .then((mongooseConnection) => mongooseConnection);
   }
+
+  try {
+    cache.connection = await cache.promise;
+  } catch (error) {
+    cache.promise = null;
+    throw error;
+  }
+
+  return cache.connection as Connection;
 }
 
-export default Connection;
+export default connect;

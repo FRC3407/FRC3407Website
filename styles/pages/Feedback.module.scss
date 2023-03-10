@@ -1,0 +1,72 @@
+.feedbackForm {
+  & .centered {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  & .errorMessageDiv {
+    width: fit-content;
+    justify-content: center;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.thanksPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: auto;
+
+  & .header {
+    font-size: 600%;
+
+    @media screen and (max-width: 450px) {
+      font-size: 400%;
+    }
+  }
+}
+
+.devFeedbackPage {
+  text-align: center;
+  & .ratingsContainer {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    & .ratingContainer {
+      display: flex;
+      flex-direction: column;
+      width: min-content;
+      padding: 5px;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: auto;
+
+      & h4 {
+        margin: 5px;
+        width: 6rem;
+      }
+    }
+  }
+
+  & .feedbackResponses {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+
+    & .feedbackResponse {
+      width: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+    }
+  }
+}

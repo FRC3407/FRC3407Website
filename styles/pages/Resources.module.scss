@@ -1,0 +1,34 @@
+.resources {
+  display: block;
+  margin-left: auto;
+  & .resource {
+    border: 1px solid white;
+    display: flex;
+    width: 80%;
+    padding: 5px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    & * {
+      margin: 0px;
+    }
+
+    & h1,
+    h3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+    }
+
+    & .download,
+    .download:visited {
+      margin-left: auto;
+      margin-top: auto;
+      color: white;
+    }
+  }
+}
