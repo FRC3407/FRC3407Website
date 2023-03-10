@@ -80,8 +80,8 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "th.bing.com"
-      }
+        hostname: "th.bing.com",
+      },
     ],
   },
   async headers() {

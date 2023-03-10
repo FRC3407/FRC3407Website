@@ -22,9 +22,7 @@ export default function NavLink({
 
   return (
     <div className={getNavLinkClass(router.pathname, href)}>
-      <Link href={href}>
-        {children}
-      </Link>
+      <Link href={href}>{children}</Link>
     </div>
   );
 }

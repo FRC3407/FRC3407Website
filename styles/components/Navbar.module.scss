@@ -12,7 +12,7 @@ $nav-height: 60px;
   padding: 0 10px;
   z-index: 99999;
   height: $nav-height;
-  
+
   a {
     color: white;
   }
@@ -20,7 +20,7 @@ $nav-height: 60px;
   nav.desktop {
     display: block;
     margin-left: auto;
-    
+
     * {
       display: inline-block;
     }
@@ -33,7 +33,7 @@ $nav-height: 60px;
     left: 0;
     width: 100vw;
     background-image: $navbar-color;
-    
+
     * {
       display: block;
     }
@@ -71,7 +71,7 @@ $nav-height: 60px;
   border-bottom: 2px solid rgb(179, 179, 179);
 
   color: white;
-  
+
   a {
     text-decoration: none;
   }
@@ -89,14 +89,14 @@ $nav-height: 60px;
     }
   }
   &:hover {
-    background-color: adjust-color($color: rgb(179,179,179), $alpha: -0.7);
+    background-color: adjust-color($color: rgb(179, 179, 179), $alpha: -0.7);
     border-bottom-width: 3px;
   }
 }
 
 .profilePictureContainer {
   height: 45px;
-  width:  45px;
+  width: 45px;
   margin: auto 10px; /* im a genius */
   margin-left: 5px;
   position: relative;
@@ -114,10 +114,10 @@ $nav-height: 60px;
     transition: border-radius 0.2s ease;
 
     cursor: pointer;
-    
   }
 
-  .profilePicture:hover, .profileMenu:hover + .profilePicture {
+  .profilePicture:hover,
+  .profileMenu:hover + .profilePicture {
     border-radius: 10%;
   }
 
