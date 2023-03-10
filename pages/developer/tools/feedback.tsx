@@ -323,4 +323,4 @@
 
 // FeedbackDisplay.auth = DeveloperAuth;
 
-export default () => <div></div>
+export default function page(){ return <div></div>;} 
