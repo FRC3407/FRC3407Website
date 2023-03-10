@@ -21,8 +21,10 @@ export default function NavLink({
   let router = useRouter();
 
   return (
-    <Link className={getNavLinkClass(router.pathname, href)} href={href}>
-      {children}
-    </Link>
+    <div className={getNavLinkClass(router.pathname, href)}>
+      <Link href={href}>
+        {children}
+      </Link>
+    </div>
   );
 }
