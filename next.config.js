@@ -78,6 +78,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "authjs.dev",
       },
+      {
+        protocol: "https",
+        hostname: "th.bing.com"
+      }
     ],
   },
   async headers() {
@@ -92,7 +96,7 @@ const nextConfig = {
             "connect-src":
               "'self' fonts.googleapis.com lh3.googleusercontent.com fonts.gstatic.com www.firstinspires.org www.googleapis.com authjs.dev",
             "img-src":
-              "'self' www.firstinspires.org lh3.googleusercontent.com avatars.githubusercontent.com authjs.dev",
+              "'self' www.firstinspires.org lh3.googleusercontent.com avatars.githubusercontent.com authjs.dev th.bing.com",
             "font-src": "'self' fonts.googleapis.com fonts.gstatic.com data:",
             "frame-src": "www.youtube.com",
           },
