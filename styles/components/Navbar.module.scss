@@ -33,7 +33,12 @@ $nav-height: 60px;
     left: 0;
     width: 100vw;
     background-image: $navbar-color;
-    
+
+    padding: 15px 0;
+
+    overflow: hidden;
+
+    box-shadow: 0 40px 50px rgba(0, 0, 0, 0.637);    
     * {
       display: block;
     }
@@ -46,6 +51,21 @@ $nav-height: 60px;
 
   h1 {
     margin-top: 12px;
+  }
+
+  .mobileMenu {
+    display: none;
+    margin-left: auto;
+    margin-right: 30px;
+
+    svg {
+      height: 100%;
+    }
+
+    background-color: transparent;
+    border: none;
+
+    cursor: pointer;
   }
 }
 
@@ -158,6 +178,8 @@ $nav-height: 60px;
 
     animation: profileMenuEnter 0.5s ease;
   }
+
+
 }
 
 @keyframes profileMenuEnter {
@@ -178,6 +200,9 @@ $breakpoint-mobile: 1000px;
     display: none !important;
   }
   nav.mobile {
+    display: block !important;
+  }
+  .mobileMenu {
     display: block !important;
   }
 }
