@@ -14,6 +14,17 @@ function profileClick() {
   }
 }
 
+function mobileMenuClick() {
+  let mobileNav=document.getElementById("mobileNav") as HTMLDivElement;
+  if (mobileNav === null) {
+    console.error("where the mobile nav go?");
+    return;
+  }
+  // mobileNav.style.height= open ? "0%" : "fit-content";
+  let open=mobileNav.style.display==="block";
+  mobileNav.setAttribute('style', `display:${open?"none":"block"} !important`);
+}
+
 const Navbar: NextComponentType = () => {
   let router = useRouter();
   let path = router.pathname;
@@ -23,9 +34,8 @@ const Navbar: NextComponentType = () => {
         <div className={style.profilePictureContainer}>
           <div id="profileMenu" className={style.profileMenu} hidden>
             <h1>Menu</h1>
-            <a href="#">ben R</a>
+            <a href="#">calvin</a>
             <a href="#">is</a>
-            <a href="#">not</a>
             <a href="#">epic</a>
           </div>
           <Image
@@ -46,7 +56,29 @@ const Navbar: NextComponentType = () => {
           <NavLink href="/student-resources">Student Resources</NavLink>
         </nav>
 
-        <nav className={style.mobile}>
+        <button className={style.mobileMenu} onClick={mobileMenuClick}>
+          <svg
+            width={100}
+            height={60}
+            viewBox="0 0 20.458 15.875"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              style={{
+                fill: "none",
+                stroke: "#fff",
+                strokeWidth: 1.32292,
+                strokeLinecap: "round",
+                strokeDasharray: "none",
+                strokeOpacity: 1,
+              }}
+              d="M2.82 7.938h17M2.82 4.068h17M2.82 11.807h17"
+            />
+          </svg>
+        </button>
+
+        <nav style={{
+          display: "none !important"
+        }} className={style.mobile} id="mobileNav">
           <NavLink href="/">Home</NavLink>
           <NavLink href="/calendar">Calendar</NavLink>
           <NavLink href="/frc-resources">FRC Resources</NavLink>
