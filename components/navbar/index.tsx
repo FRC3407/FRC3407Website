@@ -3,6 +3,7 @@ import style from "../../styles/components/Navbar.module.scss";
 import NavLink from "./link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import MenuIcon from '@mui/icons-material/Menu';
 
 function profileClick() {
   console.log("omg you clicked the john!"); // this better make it into production
@@ -50,23 +51,7 @@ const Navbar: NextComponentType = () => {
         </nav>
 
         <button className={style.mobileMenu} onClick={mobileMenuClick}>
-          <svg
-            width={100}
-            height={60}
-            viewBox="0 0 20.458 15.875"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              style={{
-                fill: "none",
-                stroke: "#fff",
-                strokeWidth: 1.32292,
-                strokeLinecap: "round",
-                strokeDasharray: "none",
-                strokeOpacity: 1,
-              }}
-              d="M2.82 7.938h17M2.82 4.068h17M2.82 11.807h17"
-            />
-          </svg>
+          <MenuIcon fontSize="inherit" />
         </button>
 
         <nav style={{
