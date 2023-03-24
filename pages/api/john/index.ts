@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import fsp from "fs/promises";
-import path from "path";
-import { modifyImage } from "util/images";
+// import fsp from "fs/promises";
+// import path from "path";
+// import { modifyImage } from "util/images";
 
 const acceptedJohnTypes = [".jpg", ".png"];
 
