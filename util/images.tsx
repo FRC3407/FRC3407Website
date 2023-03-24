@@ -4,7 +4,7 @@ import DataObjectIcon from "@mui/icons-material/DataObject";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import Jimp from "jimp";
 
-const imageCache: Map<string, Jimp> = new Map();
+// const imageCache: Map<string, Jimp> = new Map();
 
 export const serializeGoogleImageUrl = (url: string) => url.split("=")[0];
 
@@ -25,11 +25,11 @@ export async function modifyImage(
   src: string,
   imageOptions: { [key: string]: string | undefined }
 ): Promise<Jimp | string> {
-  if (
-    typeof imageCache.get(`${src}:${JSON.stringify(imageOptions)}`) !==
-    "undefined"
-  )
-    return imageCache.get(`${src}:${JSON.stringify(imageOptions)}`) as Jimp;
+  // if (
+  //   typeof imageCache.get(`${src}:${JSON.stringify(imageOptions)}`) !==
+  //   "undefined"
+  // )
+  //   return imageCache.get(`${src}:${JSON.stringify(imageOptions)}`) as Jimp;
 
   const image = await Jimp.read(src);
 
@@ -123,9 +123,9 @@ export async function modifyImage(
     if (rotate && !isNaN(parseInt(rotate)))
       image.rotate(360 - (parseInt(rotate) % 360));
 
-    if (imageCache.size > 15) imageCache.delete(imageCache.keys().next().value);
+    // if (imageCache.size > 15) imageCache.delete(imageCache.keys().next().value);
 
-    imageCache.set(`${src}:${JSON.stringify(imageOptions)}`, image);
+    // imageCache.set(`${src}:${JSON.stringify(imageOptions)}`, image);
 
     return image;
   } catch (error: any) {
