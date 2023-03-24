@@ -1,11 +1,11 @@
 import Layout from "@components/layout";
-// import sponsors from "json/sponsors.json";
-// import Image from "next/image";
+import sponsors from "json/sponsors.json";
+import Image from "next/image";
 
 export default function Sponsors() {
   return (
     <Layout title="Sponsors">
-      {/* {sponsors.map((sponsor) => (
+      {sponsors.map((sponsor) => (
         <div key={sponsor.name}>
           <Image
             src={sponsor.image}
@@ -14,7 +14,7 @@ export default function Sponsors() {
             height={400}
           />
         </div>
-      ))} */}
+      ))}
     </Layout>
   );
 }
