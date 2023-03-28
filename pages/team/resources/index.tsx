@@ -57,11 +57,11 @@ export default function Resources({ resources }: { [key: string]: any[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const resources = await getResources();
+  //const resources = await getResources();
 
   return {
     props: {
-      resources,
+      resources: [],
     },
   };
 };

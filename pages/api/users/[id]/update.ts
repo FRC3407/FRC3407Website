@@ -2,7 +2,6 @@ import connect from "db/connection";
 import userSchema from "db/schemas/user.schema";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
-import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
 
 export default async function handler(
   req: NextApiRequest,

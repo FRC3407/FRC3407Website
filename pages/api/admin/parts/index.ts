@@ -25,24 +25,18 @@ export default async function handler(
 
     if (
       ((await userSchema.findById(user.userId ?? ""))?.accessLevel || 0) <
-      UserAccessLevelRolesDisplayNameEnum.Member
+      UserAccessLevelRolesDisplayNameEnum.Administrator
     )
       throw new Error("Not authorized");
 
-    await new PartSchema({
-      ...req.query,
-      user: {
-        name: user?.name,
-        email: user?.email,
-        userId: user?.userId,
-      },
-      date: new Date(),
-      status: -1,
-    }).save();
-    res.redirect("/team/parts/request?success=t");
+    const partRequests = PartSchema.find();
+
+    res.status(200).send({
+      requests: partRequests,
+    });
   } catch (error: any) {
-    res.redirect(
-      "/team/parts/request?error=" + error.message ?? "unknown_error"
-    );
+    res.status(500).send({
+      error,
+    });
   }
 }

@@ -7,9 +7,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 function profileClick() {
   console.log("omg you clicked the john!"); // this better make it into production
-  let profileMenu=document.getElementById("profileMenu");
+  let profileMenu = document.getElementById("profileMenu");
   if (profileMenu) {
-    profileMenu.hidden=!profileMenu.hidden; // toggle the menu visibility
+    profileMenu.hidden = !profileMenu.hidden; // toggle the menu visibility
   } else {
     console.error("oh no");
   }
@@ -28,7 +28,7 @@ function mobileMenuClick() {
 
 const Navbar: NextComponentType = () => {
   let router = useRouter();
-  let path=router.pathname;
+  let path = router.pathname;
   return (
     <div>
       <div className={style.nav}>
@@ -39,7 +39,14 @@ const Navbar: NextComponentType = () => {
             <a href="#">is</a>
             <a href="#">epic</a>
           </div>
-          <Image tabIndex={0} onClick={profileClick} src="/static/images/assets/johnl.jpg" alt="Profile picture" fill className={style.profilePicture} />
+          <Image
+            tabIndex={0}
+            onClick={profileClick}
+            src="/static/images/assets/johnl.jpg"
+            alt="Profile picture"
+            fill
+            className={style.profilePicture}
+          />
         </div>
         <h1>FRC Team 3407</h1>
 
@@ -62,7 +69,6 @@ const Navbar: NextComponentType = () => {
           <NavLink href="/frc-resources">FRC Resources</NavLink>
           <NavLink href="/student-resources">Student Resources</NavLink>
         </nav>
-
       </div>
       <div className={style.navBufferDiv} />
     </div>

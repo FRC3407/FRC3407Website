@@ -1,18 +1,19 @@
 import mongoose from "mongoose";
 
 export interface IPart {
-  url: string
-  priority: number
-  quanity: number
-  reason: string
-  image?: string
+  partName: string;
+  partUrl: string;
+  priority: number;
+  quantity: number;
+  reason: string;
+  image?: string;
   user: {
-    name: string,
-    email: string,
-    userId: mongoose.Types.ObjectId
-  }
-  date: Date
-  status: number
+    name: string;
+    email: string;
+    userId: mongoose.Types.ObjectId;
+  };
+  date: Date;
+  status: number;
 }
 
 const reqString = {
@@ -21,17 +22,18 @@ const reqString = {
 };
 
 const PartSchema = new mongoose.Schema<IPart>({
-  url: reqString,
+  partName: reqString,
+  partUrl: reqString,
   priority: {
     max: [3, "Priority must be between 1 and 3"],
     min: [1, "Priority must be between 1 and 3"],
     required: true,
-    type: Number
+    type: Number,
   },
-  quanity: {
+  quantity: {
     type: Number,
     min: [1, "Quanity must be more than 1"],
-    required: true
+    required: true,
   },
   image: String,
   user: {
@@ -39,23 +41,22 @@ const PartSchema = new mongoose.Schema<IPart>({
     email: reqString,
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true
-    }
+      required: true,
+    },
   },
   date: {
     required: true,
-    type: Date
+    type: Date,
   },
   reason: reqString,
   status: {
     max: [1, "Status must be between -1 and 1"], // 0 = denied 1 = accepted
-    min: [-1, "Status must be between -1 and 1"], // Pending
+    min: [-1, "Status must be between -1 and 1"], // -1 = Pending
     required: true,
-    type: Number
+    type: Number,
   },
 });
 
 (global as any).partSchema =
-  (global as any).partSchema ??
-  mongoose.model<IPart>("Part", PartSchema);
+  (global as any).partSchema ?? mongoose.model<IPart>("Part", PartSchema);
 export default (global as any).partSchema;

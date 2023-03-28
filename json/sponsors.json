@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "name": "Costco",
+    "image": "https://th.bing.com/th/id/OIP.ABlxUK0-dReDQ0dh9e0NRgHaCC?pid=ImgDet&rs=1"
+  },
+  {
+    "name": "John",
+    "image": "/static/images/assets/john/john.gif"
+  }
+]

@@ -1,9 +1,9 @@
-import connect from "db/connection";
-import PartSchema from "db/schemas/part.schema";
 import userSchema from "db/schemas/user.schema";
+import connect from "db/connection";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { UserAccessLevelRolesDisplayNameEnum } from "util/enums";
+import partSchema from "db/schemas/part.schema";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +12,7 @@ export default async function handler(
   try {
     if (
       req.headers["sec-fetch-site"] !== "same-origin" ||
-      req.headers["sec-fetch-mode"] !== "navigate"
+      req.headers["sec-fetch-mode"] !== "cors"
     )
       throw new Error("Not Authorized");
 
@@ -25,24 +25,23 @@ export default async function handler(
 
     if (
       ((await userSchema.findById(user.userId ?? ""))?.accessLevel || 0) <
-      UserAccessLevelRolesDisplayNameEnum.Member
+      UserAccessLevelRolesDisplayNameEnum.Administrator
     )
       throw new Error("Not authorized");
 
-    await new PartSchema({
-      ...req.query,
-      user: {
-        name: user?.name,
-        email: user?.email,
-        userId: user?.userId,
-      },
-      date: new Date(),
-      status: -1,
-    }).save();
-    res.redirect("/team/parts/request?success=t");
-  } catch (error: any) {
-    res.redirect(
-      "/team/parts/request?error=" + error.message ?? "unknown_error"
+    const updated = await partSchema.findByIdAndUpdate(
+      req.query.id ?? req.body.id,
+      req.query.update ?? req.body.update,
+      { new: true }
     );
+
+    res.status(200).send({
+      updated,
+    });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({
+      error,
+    });
   }
 }
