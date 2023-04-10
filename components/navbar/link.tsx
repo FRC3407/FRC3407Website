@@ -1,5 +1,5 @@
 import Link from "next/link";
-import style from "../../styles/Navbar.module.scss";
+import style from "../../styles/components/Navbar.module.scss";
 import { useRouter } from "next/router";
 
 /**
@@ -21,8 +21,8 @@ export default function NavLink({
   let router = useRouter();
 
   return (
-    <Link className={getNavLinkClass(router.pathname, href)} href={href}>
-      {children}
-    </Link>
+    <div className={getNavLinkClass(router.pathname, href)}>
+      <Link href={href}>{children}</Link>
+    </div>
   );
 }

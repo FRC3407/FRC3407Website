@@ -1,58 +1,140 @@
-import Layout from "../components/layout";
+import Layout from "@components/layout";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Image, { StaticImageData } from "next/image";
+import JOHN from "public/static/images/dynamic/gallery/2022_MRI-Robot.jpg";
+import MemberSaw2 from "public/static/images/dynamic/gallery/2022_Members-Using-A-Saw-2.jpg";
+import BrainStorm from "public/static/images/dynamic/gallery/2023_Kickoff-Brainstorming.jpg";
+import styles from "styles/pages/Home.module.scss";
+import useSWR from "swr";
 
 export default function Home() {
-  return (
-    <Layout title="Home">
-      <h1>New Robotics Website!</h1>
-      <div className="container-narrow">
-        <div className="content">
-          <div className="row-fluid">
-            <div className="span12">
-              <div className="page-header home-header">
-                <h2>Mounds View Robotics</h2>
-                <h3>FRC TEAM 3407</h3>
-              </div>
+  const { data, error } = useSWR(
+    "/api/team/events/next",
+    async (url) => await (await fetch(url)).json()
+  );
 
-              <h3 className="center">Who are the WildCards?</h3>
-              <p>
-                The WildCards are the Robotics team from Mounds View High School
-                in Arden Hills, MN. Founded in 2009, we have competed annually
-                in FIRST (For Inspiration and Recognition of Science and
-                Technology) Robotics competition as team 3407. Each year we are
-                presented a task in January and are given six weeks to design
-                and build a robot from the ground up. We then bring our robot to
-                the Williams Arena at the University of Minnesota to compete
-                against teams from throughout the state in the 10,000 Lakes
-                Regional Competition.
-              </p>
-              <p>
-                We focus on providing students with hands-on experience in
-                science and technology, but our team consists of more than that.
-                While our primary objective is to build a robot each year, we
-                strive to have groups that focus on the behind-the-scenes
-                structure of our team, including finding sponsors to support us
-                and recruiting new members. These groups have members with
-                interests in marketing, sales, researching, graphic design, and
-                so much more, and do everything from managing our finances to
-                designing our T-shirts.
-              </p>
-
-              <h3>Announcements</h3>
-              <p>Well done at the 2021 10,000 Lakes Competition!</p>
-              <p>
-                The next competition will be{" "}
-                <a href="https://firebears.org/2022-minnesota-robotics-invitational/">
-                  Minnesota Robotics Invitational
-                </a>{" "}
-                on October 15th, 2022 at Roseville High School.
-              </p>
-              <p>
-                <br />
-                Come back soon to see the new and improved website!
-              </p>
-            </div>
-          </div>
+  function CarouselElement({
+    src,
+    alt = "Team 3407 Picture",
+    description,
+  }: {
+    src: StaticImageData;
+    alt?: string;
+    description?: string;
+  }) {
+    return (
+      <div className={styles.bannerContainer}>
+        <div className={styles.bannerOverlay}>
+          <h1>Mounds View Robotics</h1>
+          <h2>Team 3407</h2>
         </div>
+        <Image src={src} alt={alt} className={styles.banner} priority />
+      </div>
+    );
+  }
+
+  function Banner() {
+    return (
+      <div>
+        <Carousel autoPlay infiniteLoop showThumbs={false} interval={5000}>
+          <CarouselElement src={JOHN} />
+          <CarouselElement src={MemberSaw2} />
+          <CarouselElement src={BrainStorm} />
+        </Carousel>
+      </div>
+    );
+  }
+
+  function displayNextEvent() {
+    if (error)
+      return (
+        <p>There was an error loading the next event, please try again later</p>
+      );
+
+    if (!data) return <p>No next Event</p>;
+
+    return (
+      <div>
+        <p>
+          <a href={data.website} target={"_blank"} rel="noreferrer">
+            {data.name}
+          </a>{" "}
+          at{" "}
+          <a href={data.gmaps_url} target={"_blank"} rel="noreferrer">
+            {data.address}
+          </a>
+          , starting on{" "}
+          {new Date(data.start_date + "T24:00:00.000+08:00").toLocaleDateString(
+            "en-US",
+            { timeZone: "America/New_York" }
+          )}{" "}
+          and ending on{" "}
+          {new Date(data.end_date + "T24:00:00.000+08:00").toLocaleDateString(
+            "en-US",
+            { timeZone: "America/New_York" }
+          )}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <Layout title="Home" ignoreStandardContentStyle>
+      <Banner />
+      <div className={styles.informationContainer}>
+        <h1>Who We Are</h1>
+        <p className={styles.intro}>
+          We are the Mounds View High School&apos;s Robotics team, Team 3407 aka
+          the Wild Cards. Every year we compete in the{" "}
+          <a href="https://www.firstinspires.org/about/vision-and-mission">
+            FIRST
+          </a>{" "}
+          Robotics Competition, our team is given 6 weeks to design, prototype,
+          build, test, and perfect a robot to complete the tasks required in the
+          competition, we then bring our robot to the University of
+          Minnesota&apos;s Williams Arena in Minneapolis Minnesota to compete
+          against other teams in the FRC 10,000 Lakes Competition.
+        </p>
+        <p className={styles.intro}>
+          We strive to teach our students skills that will not only help our
+          team and robot but also help them develop skills such as programming,
+          leadership, wiring, building, how to work in a team, how to work
+          through problems, and an endless list of other skills that help them
+          succeed in their future STEM or even non-STEM endeavors. We also work
+          to encourage others to advance their knowledge of STEM fields and help
+          spark the interest of the next generation of students, teachers, and
+          ultimately leaders.
+        </p>
+      </div>
+      <div className={styles.announcements}>
+        <h1>Announcements</h1>
+        <h2>This Years Challenge:</h2>
+        <div className={styles.challenge}>
+          <a
+            href="https://www.firstinspires.org/robotics/frc/game-and-season"
+            target={"_blank"}
+            rel="noreferrer"
+          >
+            <Image
+              src="https://www.firstinspires.org/sites/default/files/first-energize/charged-up-gs-update.svg"
+              alt="Charged Up Logo"
+              width={315}
+              height={315}
+            />
+          </a>
+          <iframe
+            className={styles.ytEmbed}
+            width="auto"
+            height="auto"
+            src="https://www.youtube.com/embed/0zpflsYc4PA"
+            title="FRC Charged Up Challenge Reveal Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </div>
+        <h1>Next Competition</h1>
+        {displayNextEvent()}
       </div>
     </Layout>
   );

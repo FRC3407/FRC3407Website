@@ -5,18 +5,23 @@ import Head from "next/head";
 export default function Layout({
   children,
   title,
+  ignoreStandardContentStyle = false,
 }: {
-  children: any;
+  children?: React.ReactNode;
   title: string;
+  ignoreStandardContentStyle?: boolean;
 }) {
   return (
-    <div>
+    <div className="pageContent">
       <Head>
         <title>{title + " | FRC 3407"}</title>
-        <meta name="description" content="The website for FRC 3407" />
       </Head>
       <Navbar />
-      <div className="content">{children}</div>
+      <div
+        className={ignoreStandardContentStyle ? "noStyleContent" : "content"}
+      >
+        {children}
+      </div>
       <Footer />
     </div>
   );

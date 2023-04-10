@@ -1,0 +1,30 @@
+@import "../variables.scss";
+
+.errorPage {
+  text-align: center;
+  & .mainHeader {
+    font-size: 25vw;
+    margin: 0px;
+  }
+
+  & .options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 20px;
+    & .button,
+    .button:visited {
+      height: auto;
+      color: white;
+      font-weight: bold;
+      background-color: $navbar-color;
+      &:hover {
+        background-color: $link-color;
+      }
+    }
+
+    & p {
+      margin: 0px;
+    }
+  }
+}
