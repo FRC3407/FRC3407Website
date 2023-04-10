@@ -1,9 +1,32 @@
 import type { NextComponentType } from "next";
 import style from "../../styles/components/Navbar.module.scss";
 import NavLink from "./link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import MenuIcon from '@mui/icons-material/Menu';
+import { signIn, useSession } from "next-auth/react";
+import Avatar from "@mui/material/Avatar";
+import { useEffect, useState } from "react";
+
+interface INavLink {
+  text: string
+  href?: string
+  onClick?: () => any
+}
+
+const notSignedInNavLinks: INavLink[] = [
+  {
+    text: "Sign In",
+    onClick() {
+      signIn()
+    }
+  }
+]
+const signedInNavLinks: INavLink[] = [
+  {
+    text: "Customize",
+    href: "/members/customize"
+  }
+]
 
 function profileClick() {
   console.log("omg you clicked the john!"); // this better make it into production
@@ -28,23 +51,34 @@ function mobileMenuClick() {
 
 const Navbar: NextComponentType = () => {
   let router = useRouter();
-  let path = router.pathname;
+  let session = useSession()
+
+  const [image, setImage] = useState("")
+  const [navLinks, setNavLinks] = useState(notSignedInNavLinks)
+
+  useEffect(() => {
+    if (session.status === "loading") return
+    if (session.status === "unauthenticated") {
+      setImage("")
+      return
+    }
+
+    setImage(session?.data?.user?.image ?? ((session.data?.user.accessLevel > 1) ? "/static/images/assets/johnl.jpg" : ""))
+    setNavLinks(signedInNavLinks)
+  }, [session])
+
   return (
     <div>
       <div className={style.nav}>
         <div className={style.profilePictureContainer}>
           <div id="profileMenu" className={style.profileMenu} hidden>
             <h1>Menu</h1>
-            <a href="#">calvin</a>
-            <a href="#">is</a>
-            <a href="#">epic</a>
+            {navLinks.map(navLink => <a key={navLink.text} href={navLink.href} onClick={navLink.onClick}>{navLink.text}</a>)}
           </div>
-          <Image
-            tabIndex={0}
+          <Avatar
             onClick={profileClick}
-            src="/static/images/assets/johnl.jpg"
+            src={image}
             alt="Profile picture"
-            fill
             className={style.profilePicture}
           />
         </div>
