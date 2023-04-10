@@ -18,6 +18,7 @@ export default function Sponsors() {
               width: "auto",
               height: "auto"
             }}
+            priority
             
             // fill
           />
