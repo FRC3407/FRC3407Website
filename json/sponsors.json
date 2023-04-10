@@ -1,10 +1,42 @@
 [
   {
     "name": "Costco",
-    "image": "https://th.bing.com/th/id/OIP.ABlxUK0-dReDQ0dh9e0NRgHaCC?pid=ImgDet&rs=1"
+    "image": "https://th.bing.com/th/id/OIP.ABlxUK0-dReDQ0dh9e0NRgHaCC?pid=ImgDet&rs=1",
+    "link": "https://www.costco.com/"
   },
   {
     "name": "John",
-    "image": "/static/images/assets/john/john.gif"
+    "image": "/static/images/assets/johnl.jpg",
+    "link": "/robots/2023_charged-up"
+  },
+  {
+    "name": "FIRST",
+    "image": "/static/images/assets/FIRST-V.png",
+    "link": "https://www.firstinspires.org/"
+  },
+  {
+    "name": "3M",
+    "image": "/static/images/assets/3m.png",
+    "link": "https://www.3m.com/"
+  },
+  {
+    "name": "Pentair",
+    "image": "/static/images/assets/pentair.png",
+    "link": "https://www.pentair.com"
+  },
+  {
+    "name": "Tektronix",
+    "image": "/static/images/assets/tektronix.png",
+    "link": "https://www.tek.com/"
+  },
+  {
+    "name": "SolidWorks",
+    "image": "/static/images/assets/solidworks.png",
+    "link": "https://www.solidworks.com/"
+  },
+  {
+    "name": "CSI",
+    "image": "/static/images/assets/csi.png",
+    "link": "https://csi360.com/"
   }
 ]
