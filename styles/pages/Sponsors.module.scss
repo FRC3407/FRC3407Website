@@ -1,9 +1,41 @@
 .sponsorImageContainer {
   display: inline-block;
+  // align-items: center;
   // height:fit-content;
   margin: 10px;
+  border: 1px solid white;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+
+  text-decoration: none;
+
+
+  p {
+    margin: 10px;
+    color: white;
+    font-size: 28pt;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .sponsorImage {
   max-height: 300px;
+  width: 100%;
+  margin: 10px auto;
+  display: block;
+}
+
+.sponsorsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  // justify-content: space-evenly;
 }
