@@ -38,6 +38,15 @@ function profileClick() {
   }
 }
 
+function hideProfile() {
+  let profileMenu = document.getElementById("profileMenu");
+  if (profileMenu) {
+    profileMenu.hidden = true;
+  } else {
+    console.error("oh no");
+  }
+}
+
 function mobileMenuClick() {
   let mobileNav=document.getElementById("mobileNav") as HTMLDivElement;
   if (mobileNav === null) {
@@ -48,6 +57,19 @@ function mobileMenuClick() {
   let open=mobileNav.style.display==="block";
   mobileNav.setAttribute('style', `display:${open?"none":"block"} !important`);
 }
+
+const Links= (
+  <>
+    <NavLink href="/">Home</NavLink>
+    <NavLink href="/calendar">Calendar</NavLink>
+    <NavLink href="/frc-resources">FRC Resources</NavLink>
+    <NavLink href="/student-resources">Student Resources</NavLink>
+    <NavLink href="/about">About Us</NavLink>
+    <NavLink href="/sponsors">Sponsors</NavLink>
+    <NavLink href="/pictures">Pictures</NavLink>
+
+  </>
+);
 
 const Navbar: NextComponentType = () => {
   let router = useRouter();
@@ -85,10 +107,7 @@ const Navbar: NextComponentType = () => {
         <h1>FRC Team 3407</h1>
 
         <nav className={style.desktop}>
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/calendar">Calendar</NavLink>
-          <NavLink href="/frc-resources">FRC Resources</NavLink>
-          <NavLink href="/student-resources">Student Resources</NavLink>
+          {Links}
         </nav>
 
         <button className={style.mobileMenu} onClick={mobileMenuClick}>
@@ -98,10 +117,7 @@ const Navbar: NextComponentType = () => {
         <nav style={{
           display: "none !important"
         }} className={style.mobile} id="mobileNav">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/calendar">Calendar</NavLink>
-          <NavLink href="/frc-resources">FRC Resources</NavLink>
-          <NavLink href="/student-resources">Student Resources</NavLink>
+          {Links}
         </nav>
       </div>
       <div className={style.navBufferDiv} />
