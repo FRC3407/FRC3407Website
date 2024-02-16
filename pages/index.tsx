@@ -117,8 +117,8 @@ export default function Home() {
             rel="noreferrer"
           >
             <Image
-              src="https://www.firstinspires.org/sites/default/files/first-energize/charged-up-gs-update.svg"
-              alt="Charged Up Logo"
+              src="https://www.firstinspires.org/sites/default/files/first-in-show/game-and-season/crescendo-logo.svg"
+              alt="Crescendo Logo"
               width={315}
               height={315}
             />
@@ -127,8 +127,8 @@ export default function Home() {
             className={styles.ytEmbed}
             width="auto"
             height="auto"
-            src="https://www.youtube.com/embed/0zpflsYc4PA"
-            title="FRC Charged Up Challenge Reveal Video"
+            src="https://www.youtube.com/embed/9keeDyFxzY4"
+            title="2024 FIRST Robotics Competition CRESCENDO presented by Haas Game Animation"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           ></iframe>
